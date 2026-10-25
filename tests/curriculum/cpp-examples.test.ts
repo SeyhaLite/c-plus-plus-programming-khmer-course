@@ -30,7 +30,7 @@ interface CompileRunResult {
   exitCode: number | null;
 }
 
-function compileAndRun(code: string, stdin: string, label: string): CompileRunResult {
+function compileAndRun(code: string, stdin: string): CompileRunResult {
   const dir = mkdtempSync(join(tmpdir(), 'kca-cpp-'));
   const src = join(dir, 'main.cpp');
   const bin = join(dir, 'main.out');
@@ -61,8 +61,8 @@ describeG(`C++ examples compile and produce documented output (compiler: ${GXX})
     for (const example of lesson.examples) {
       if (example.expectedOutput === undefined) continue; // terminal-command examples
       it(`${lesson.id} :: ${example.title_km}`, () => {
-        const r = compileAndRun(example.code, example.stdin ?? '', `${lesson.id}-example`);
-        expect({ ...r, label: undefined }, `compile stderr:\n${r.stderr}`).toMatchObject({ compiled: true });
+        const r = compileAndRun(example.code, example.stdin ?? '');
+        expect(r.compiled, `compile stderr:\n${r.stderr}`).toBe(true);
         expect(r.exitCode, `exit code, stderr:\n${r.stderr}`).toBe(0);
         expect(r.stdout).toBe(example.expectedOutput);
       });
@@ -79,10 +79,10 @@ describeG('C++ code_challenge solutions pass their own test cases', () => {
     expect(challenges.length).toBeGreaterThan(0);
   });
 
-  for (const { lessonId, ex } of challenges) {
+  for (const { ex } of challenges) {
     it(`${ex.id} solution passes ${ex.testCases.length} test case(s)`, () => {
       for (const tc of ex.testCases) {
-        const r = compileAndRun(ex.solutionCode, tc.stdin, ex.id);
+        const r = compileAndRun(ex.solutionCode, tc.stdin);
         expect(r.compiled, `compile failed:\n${r.stderr}`).toBe(true);
         expect(r.exitCode, `runtime stderr:\n${r.stderr}`).toBe(0);
         expect(r.stdout.trimEnd()).toBe(tc.expectedOutput.trimEnd());
