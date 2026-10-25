@@ -1,6 +1,13 @@
 # កំណត់ហេតុវឌ្ឍនភាព (PROGRESS / Development Log)
 
-ស្ថានភាពបច្ចុប្បន្ន៖ **v1.0.0 — ដាក់ពង្រាយលើ GitHub Pages** · តេស្ត ៩០ ឆ្លង (២០ skip ក្នុង sandbox គ្មាន g++; រត់ពេញក្នុង CI)
+ស្ថានភាពបច្ចុប្បន្ន៖ **v1.0.0 — បាន push ទៅ GitHub; CI ឆ្លងជោគជ័យ; រង់ចាំបើក GitHub Pages (មើលខាងក្រោម)** · តេស្ត ៩០ ឆ្លងក្នុង sandbox + CI រត់តេស្ត g++ ពេញលេញជោគជ័យ
+
+## ស្ថានភាពដាក់ពង្រាយ (ផ្ទៀងផ្ទាត់ ២០២៦-១០-២៥)
+
+- Repository បានប្តូរទៅ **public** (តាមសំណើម្ចាស់គម្រោង) ក្រោយការស្កេនសម្ងាត់ពេញ git history — ស្អាត ០ លទ្ធផល។
+- CI run (attempt 2): **success** — typecheck, 110 tests (g++ compile tests រត់ពេញ), build។
+- Deploy run (attempt 2): ជំហាន ១–៨ success; **"Setup Pages" បរាជ័យព្រោះ GitHub Pages មិនទាន់បានបើក** (token គ្មាន Pages scope)។
+- ⚠️ ជំហានដែលម្ចាស់ repo ត្រូវធ្វើម្តង៖ **Settings → Pages → Source: GitHub Actions** រួច re-run workflow "Deploy to GitHub Pages" (ឬ push commit ថ្មី)។ URL នឹងជា `https://seyhalite.github.io/c-plus-plus-programming-khmer-course/`។
 
 ## ២០២៦-១០-២៥ — Milestones 0–12 (ការចាប់ផ្តើមគម្រោងពេញលេញ)
 
