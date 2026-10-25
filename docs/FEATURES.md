@@ -21,7 +21,7 @@
 | ប្រភេទ | ការពិពណ៌នា |
 | --- | --- |
 | multiple_choice | ជ្រើសរើសចម្លើយ |
-| fill_blank | បំពេញចន្លោះក្នុងកូដ/អត្ថបទ (accept variants) |
+| fill_blank | បំពេញចន្លោះក្នុងកូដ/អត្ថបទ — វិនិច្ឆ័យតាមចន្លោះ, រកកំហុសអក្សរតែមួយ («ស្ទើរតែត្រូវ!»), auto-hint លើកទី ២, បង្ហាញចម្លើយលើកទី ៣ |
 | predict_output | ទាយលទ្ធផលកម្មវិធី (whitespace-tolerant grading) |
 | arrange | តម្រៀបបន្ទាត់កូដឡើងវិញ (↑↓ buttons — keyboard accessible) |
 | find_error | ចុចបន្ទាត់ដែលមានកំហុស |

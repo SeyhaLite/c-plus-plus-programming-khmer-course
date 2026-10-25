@@ -50,6 +50,33 @@ export function codeMatches(actual: string, accepted: string[]): boolean {
   return accepted.some((acc) => norm(acc) === a || (acc.length > 0 && a.toLowerCase() === norm(acc).toLowerCase()));
 }
 
+/** Levenshtein distance (small strings only). */
+export function levenshtein(a: string, b: string): number {
+  if (a === b) return 0;
+  if (!a.length) return b.length;
+  if (!b.length) return a.length;
+  let prev = Array.from({ length: b.length + 1 }, (_, i) => i);
+  for (let i = 1; i <= a.length; i++) {
+    const cur = [i];
+    for (let j = 1; j <= b.length; j++) {
+      cur[j] = Math.min(prev[j] + 1, cur[j - 1] + 1, prev[j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+    }
+    prev = cur;
+  }
+  return prev[b.length];
+}
+
+/** True when the answer is a near-miss (single typo) of an accepted variant. */
+export function fuzzyClose(actual: string, accepted: string[]): boolean {
+  const norm = (s: string): string => s.replace(/\s+/g, ' ').trim().toLowerCase();
+  const a = norm(actual);
+  if (a.length < 4) return false;
+  return accepted.some((acc) => {
+    const t = norm(acc);
+    return levenshtein(a, t) <= 1 && a !== t;
+  });
+}
+
 export function slugDate(d = new Date()): string {
   return d.toISOString().slice(0, 10);
 }

@@ -107,23 +107,35 @@ describe('exercise engine: other types', () => {
     expect(element.classList.contains('correct')).toBe(true);
   });
 
-  it('fill_blank accepts listed variants only', () => {
+  it('fill_blank: per-blank diagnostics, near-miss state, and answer reveal', () => {
     const ex: Exercise = {
-      id: 'fb1', type: 'fill_blank', prompt_km: 'Fill', template: 'int x {{0}} 5;',
-      acceptedAnswers: [['=', '==']], hints_km: [], explanation_km: 'e',
+      id: 'fb1', type: 'fill_blank', prompt_km: 'Fill', template: '{{0}} << "Hello, World!" << std::endl;',
+      acceptedAnswers: [['std::cout']], hints_km: ['ឈ្មោះពេញគឺ std::cout'], explanation_km: 'e',
     };
     const { element } = renderExercise(ex, ctx());
     document.body.append(element);
-    // blanks must be obvious: help text, numbered badges, placeholders
-    expect(element.textContent).toContain('វាយចម្លើយរបស់អ្នកចូលក្នុងប្រអប់ទទេ');
-    expect(element.querySelectorAll('.blank-num').length).toBe(1);
-    const input0 = element.querySelector('.blank-input') as HTMLInputElement;
-    expect(input0.placeholder).toContain('ចម្លើយ');
     const input = element.querySelector('.blank-input') as HTMLInputElement;
-    input.value = '+';
+    // 1st wrong: which-blank diagnostic
+    input.value = 'nope';
     click(element.querySelector('.check-btn')!);
     expect(element.classList.contains('incorrect')).toBe(true);
-    input.value = '=';
+    expect(element.textContent).toContain('ចន្លោះទី 1: មិនទាន់ត្រឹមត្រូវទេ');
+    // 2nd wrong: auto-hint included
+    input.value = 'xyz';
+    click(element.querySelector('.check-btn')!);
+    expect(element.textContent).toContain('គន្លឹះ៖ ឈ្មោះពេញគឺ std::cout');
+    // near-miss typo: "so close" state, not plain wrong
+    input.value = 'std::cont';
+    click(element.querySelector('.check-btn')!);
+    expect(input.classList.contains('close')).toBe(true);
+    expect(element.textContent).toContain('ស្ទើរតែត្រូវហើយ');
+    // 4th wrong: reveal accepted answer so learner is never stuck
+    input.value = 'still-wrong';
+    click(element.querySelector('.check-btn')!);
+    expect(element.textContent).toContain('ចម្លើយត្រឹមត្រូវ');
+    expect(element.textContent).toContain('ចន្លោះទី 1 = std::cout');
+    // typing the correct answer still required to pass
+    input.value = 'std::cout';
     click(element.querySelector('.check-btn')!);
     expect(element.classList.contains('correct')).toBe(true);
   });

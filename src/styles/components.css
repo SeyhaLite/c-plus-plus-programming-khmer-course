@@ -478,3 +478,10 @@ table { max-width: 100%; }
 .blank-input:focus { border-style: solid; box-shadow: var(--focus-ring); outline: none; }
 .blank-input.correct { border-color: var(--c-success); border-style: solid; background: var(--c-success-soft); }
 .blank-input.incorrect { border-color: var(--c-error); border-style: solid; background: var(--c-error-soft); }
+
+/* near-miss (single typo) state for blanks */
+.blank-input.close {
+  border-color: var(--c-warning);
+  border-style: solid;
+  background: var(--c-warning-soft);
+}

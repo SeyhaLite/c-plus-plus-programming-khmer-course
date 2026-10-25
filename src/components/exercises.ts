@@ -1,7 +1,7 @@
 import type { Exercise, MultipleChoiceExercise, FillBlankExercise, PredictOutputExercise, ArrangeExercise, MatchExercise, CodeChallengeExercise } from '../types';
 import { el } from '../utils/dom';
 import { icon } from '../app/icons';
-import { outputsMatch, codeMatches } from '../utils/dom';
+import { outputsMatch, codeMatches, fuzzyClose } from '../utils/dom';
 import { recordExerciseResult, getState } from '../services/progress';
 import { playSound } from '../services/audio';
 import { runTestCases, normalizeOutput } from '../services/code-execution';
@@ -60,7 +60,7 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
     root.appendChild(feedbackEl);
   }
 
-  function grade(correct: boolean): void {
+  function grade(correct: boolean, detailKm?: string): void {
     attempts += 1;
     if (correct && !solved) {
       solved = true;
@@ -73,7 +73,7 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
       lockInputs();
     } else if (!correct) {
       root.classList.add('incorrect');
-      showFeedback('incorrect', `${pickPhrase(cheerRetry)} ចង់ឃើញគន្លឹះ? ចុចប៊ូតុងជំនួយខាងក្រោម។`);
+      showFeedback('incorrect', `${pickPhrase(cheerRetry)} ${detailKm ?? 'ចង់ឃើញគន្លឹះ? ចុចប៊ូតុងជំនួយខាងក្រោម។'}`);
       playSound('incorrect');
       recordExerciseResult(ctx.lessonId, ex.id, false, false);
       ctx.onResult(false);
@@ -176,16 +176,42 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
       });
       const template = el('div', { class: 'fill-template', dir: 'ltr' }, ...frag);
       body.append(template);
+      let blankFails = 0;
       checkFn = () => {
         let allOk = true;
+        const wrong: { i: number; empty: boolean; close: boolean }[] = [];
         inputs.forEach((inp, i) => {
           const val = inp.value;
-          const ok = codeMatches(val, exf.acceptedAnswers[i] ?? []);
+          const accepted = exf.acceptedAnswers[i] ?? [];
+          const ok = codeMatches(val, accepted);
+          const close = !ok && fuzzyClose(val, accepted);
           inp.classList.toggle('correct', ok);
-          inp.classList.toggle('incorrect', !ok && val.length > 0);
-          if (!ok) allOk = false;
+          inp.classList.toggle('incorrect', !ok && val.length > 0 && !close);
+          inp.classList.toggle('close', close);
+          if (!ok) {
+            allOk = false;
+            wrong.push({ i, empty: val.trim() === '', close });
+          }
         });
-        grade(allOk);
+        if (allOk) {
+          grade(true);
+          return;
+        }
+        blankFails += 1;
+        const parts = wrong.map((w) =>
+          w.empty
+            ? `ចន្លោះទី ${w.i + 1}: មិនទាន់បានវាយទេ — ចុចប្រអប់ ហើយវាយចម្លើយ`
+            : w.close
+              ? `ចន្លោះទី ${w.i + 1}: ស្ទើរតែត្រូវហើយ! ពិនិត្យអក្សរ/សញ្ញាម្តងទៀត (ប្រហែលខុសតែ ១ អក្សរ)`
+              : `ចន្លោះទី ${w.i + 1}: មិនទាន់ត្រឹមត្រូវទេ`
+        );
+        let extra = '';
+        if (blankFails >= 3) {
+          extra = ` ចម្លើយត្រឹមត្រូវ ${wrong.map((w) => `ចន្លោះទី ${w.i + 1} = ${exf.acceptedAnswers[w.i]?.[0] ?? '?'}`).join(', ')} — សូមវាវម្តងទៀតដើម្បីបញ្ចប់។`;
+        } else if (blankFails === 2 && ex.hints_km.length > 0) {
+          extra = ` គន្លឹះ៖ ${ex.hints_km[0]}`;
+        }
+        grade(false, parts.join(' · ') + extra);
       };
       break;
     }
