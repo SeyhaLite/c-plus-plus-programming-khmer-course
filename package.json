@@ -21,8 +21,8 @@
     "playwright": "^1.64.1",
     "tsx": "^4.23.15",
     "typescript": "^5.6.3",
-    "vite": "^5.4.10",
-    "vitest": "^2.1.4"
+    "vite": "^8.3.5",
+    "vitest": "^5.0.5"
   },
   "dependencies": {
     "@codemirror/lang-cpp": "^6.0.2",
