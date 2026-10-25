@@ -38,6 +38,14 @@ Test Files  7 passed (7)
 - Progress រស់រានឆ្លងកាត់ simulated refresh (initProgress ពី localStorage)
 - Level detail pages (published + planned)
 
+### CSS regression (`tests/unit/css-tokens.test.ts`)
+- បដិសេធ `//` line comments ក្នុង CSS (មូលហេតុនៃ incident ២០២៦-១០-២៥)
+- តុល្យភាព braces/comments · `:root` មាន tokens គ្រប់គ្រាន់ · dark theme override មាន
+- `npm run build` ឥឡូវរត់ `scripts/check-build-css.mjs` បន្ទាប់ពី vite build — បរាជ័យបើ bundled CSS បាត់ `:root`
+
+### E2E smoke (manual, មិនរត់ក្នុង CI)
+- `npm run test:e2e [url]` — Playwright Chromium: boot, tokens applied, navigation, console errors, screenshots ទៅ reports/e2e-*.png។ ប្រើលើ localhost dist ឬ URL ផលិតកម្ម។
+
 ### Security (`tests/security/`)
 - Prototype pollution (`__proto__` payloads) — Object.prototype នៅស្អាត
 - រចនាសម្ព័ន្ធ weird/cyclic, oversized strings, non-array collections

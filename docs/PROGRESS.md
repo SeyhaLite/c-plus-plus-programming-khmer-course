@@ -33,6 +33,14 @@
 - `f33ba77` test: suites + C++ compiler validation + CI/CD workflows
 - (បន្ទាប់) docs: ឯកសារទាំង ១០ + README
 
+## ២០៦-១០-២៥ — Hotfix: CSS tokens បាត់ក្នុង production (post-deploy incident)
+
+- **រោគសញ្ញា** (របាយការណ៍អ្នកប្រើ + screenshot)៖ UI គ្មាន style — អក្សរ serif, hero អក្សរសសលើផ្ទៃស។
+- **មូលហេតុ**៖ `src/styles/tokens.css` ចាប់ផ្តើមដោយ `//` comments (មិនត្រឹមត្រូវក្នុង CSS)។ CSS parser ធ្វើ error recovery ហើយលេបយក rule `:root{...}` ទាំងមូល → រាល់ `var(--token)` មិនមានតម្លៃក្នុង browser។
+- **ការរកឃើញ**៖ ប្រើ Playwright + Chromium ពិតបង្កើត reproduction (styleSheets 241 rules ប៉ុន្តែ `:root` បាត់, body = Times/transparent)។
+- **ការកែ**៖ បតូរ comments ទៅ `/* */`; បន្ថែម regression guards៖ `tests/unit/css-tokens.test.ts` (បដិសេធ `//` comments, braces/comments balanced, :root tokens) + `scripts/check-build-css.mjs` ភ្ជាប់ក្នុង `npm run build` (បរាជ័យបើ bundle បាត់ :root)។
+- **ផ្ទៀងផ្ទាត់**៖ Chromium ពិតលើ build ថ្មី — :root 51 declarations, body bg #f6f8fc, font Noto Sans Khmer, hero gradient, 0 console errors; screenshots ក្នុង reports/e2e-*.png។
+
 ## ការងារបន្ទាប់ (អាទិភាព)
 
 1. សរសេរមាតិកាពិតកម្រិត ៣ (លក្ខខណ្ឌ) — ៦ មេរៀន តាមគោលការណ៍ [CONTENT_GUIDELINES.md](./CONTENT_GUIDELINES.md)
