@@ -2,6 +2,7 @@ import type { Level, Lesson } from '../types';
 import { level00Lessons } from '../curriculum/levels/level-00/lessons';
 import { level01Lessons } from '../curriculum/levels/level-01/lessons';
 import { level02Lessons } from '../curriculum/levels/level-02/lessons';
+import { level03Lessons } from '../curriculum/levels/level-03/lessons';
 import { plannedLevels, plannedLessons } from '../curriculum/levels/planned-levels';
 
 // ============================================================
@@ -12,7 +13,7 @@ export const APP_NAME = 'Khmer C++ Academy';
 export const APP_VERSION = '1.0.0';
 export const CPP_STANDARD = 'C++17';
 
-export const allLessons: Lesson[] = [...level00Lessons, ...level01Lessons, ...level02Lessons, ...plannedLessons];
+export const allLessons: Lesson[] = [...level00Lessons, ...level01Lessons, ...level02Lessons, ...level03Lessons, ...plannedLessons];
 
 const lessonMap = new Map<string, Lesson>(allLessons.map((l) => [l.id, l]));
 
@@ -54,6 +55,20 @@ export const publishedLevels: Level[] = [
     estimated_hours: 4,
     units: [
       { id: '2-1', title_km: 'ខ្នាតទី ១ — ទិន្នន័យ និងការគណនា', lessonIds: level02Lessons.map((l) => l.id) },
+    ],
+  },
+  {
+    id: 3,
+    title_km: 'លក្ខខណ្ឌ និងតក្កវិជ្ជា',
+    title_en: 'Conditionals and Logic',
+    status: 'published',
+    objective_km: 'ប្រើ if/else, else if, switch និង logical operators ដើម្បីសម្រេចចិត្តក្នុងកម្មវិធី',
+    prerequisites_km: 'បញ្ចប់កម្រិត ២ (អថេរ និង operators)',
+    outcomes_km: ['ប្រើ if / else if / else', 'ប្រើ switch', 'ប្រើ && || !', 'ជៀសវាងកំហុស logic ទូទៅ'],
+    estimated_hours: 5,
+    units: [
+      { id: '3-1', title_km: 'ខ្នាតទី ១ — លក្ខខណ្ឌមូលដ្ឋាន', lessonIds: ['l3-if-else', 'l3-else-if', 'l3-switch'] },
+      { id: '3-2', title_km: 'ខ្នាតទី ២ — តក្កវិជ្ជាកម្រិតមធ្យម', lessonIds: ['l3-logical-ops', 'l3-nested-conditions', 'l3-logic-mistakes'] },
     ],
   },
   ...plannedLevels,

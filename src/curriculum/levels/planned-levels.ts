@@ -27,23 +27,6 @@ interface PlannedLevelSpec {
 
 const plannedSpecs: PlannedLevelSpec[] = [
   {
-    id: 3,
-    title_km: 'លក្ខខណ្ឌ និងតក្កវិជ្ជា',
-    title_en: 'Conditionals and Logic',
-    objective_km: 'ប្រើ if/else, switch និង logical operators ដើម្បីសម្រេចចិត្តក្នុងកម្មវិធី',
-    prerequisites_km: 'បញ្ចប់កម្រិត ២ (អថេរ និង operators)',
-    outcomes_km: ['ប្រើ if / else if / else', 'ប្រើ switch', 'ប្រើ && || !', 'ជៀសវាងកំហុស logic ទូទៅ'],
-    estimated_hours: 5,
-    lessons: [
-      { id: 'l3-if-else', unit: 1, title_km: 'if និង else', title_en: 'if and else', minutes: 15 },
-      { id: 'l3-else-if', unit: 1, title_km: 'else if និងលក្ខខណ្ឌច្រើន', title_en: 'else if chains', minutes: 15 },
-      { id: 'l3-switch', unit: 1, title_km: 'switch', title_en: 'switch statement', minutes: 15 },
-      { id: 'l3-logical-ops', unit: 2, title_km: 'Logical operators (&& || !)', title_en: 'Logical operators', minutes: 18 },
-      { id: 'l3-nested-conditions', unit: 2, title_km: 'លក្ខខណ្ឌបង្កប់ (nested)', title_en: 'Nested conditions', minutes: 15 },
-      { id: 'l3-logic-mistakes', unit: 2, title_km: 'កំហុស logic ទូទៅ', title_en: 'Common logic mistakes', minutes: 12 },
-    ],
-  },
-  {
     id: 4,
     title_km: 'រង្វិលជុំ (Loops)',
     title_en: 'Loops',

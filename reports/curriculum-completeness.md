@@ -1,6 +1,6 @@
 # របាយការណ៍ភាពពេញលេញនៃមាតិកា (Curriculum Completeness Report)
 
-> បង្កើតស្វ្យ័យប្រវត្តិដោយ `npm run report` — 2026-10-25T11:33:20.514Z
+> បង្កើតស្វ្យ័យប្រវត្តិដោយ `npm run report` — 2026-10-25T16:40:50.084Z
 > សូមកុំកែដោយដៃ; កែតាមរយៈ curriculum data ហើយរត់ script នេះឡើងវិញ។
 
 ## សង្ខេប (Summary)
@@ -8,13 +8,13 @@
 | រង្វាស់ | ចំនួន |
 | --- | --- |
 | កម្រិតសរុប | 13 |
-| កម្រិតមានមាតិកា published | 3 |
-| មេរៀន Published | 13 |
+| កម្រិតមានមាតិកា published | 4 |
+| មេរៀន Published | 19 |
 | មេរៀន Draft | 0 |
-| មេរៀន Planned | 58 |
-| លំហាត់សរុប (published) | 45 |
-| ឧទាហរណ៍ C++ មាន expected output (ផ្ទៀងផ្ទាត់ដោយ g++ ក្នុង CI) | 13 |
-| លំហាត់សរសេរកូដ (code challenges ជាមួយ test cases) | 6 |
+| មេរៀន Planned | 52 |
+| លំហាត់សរុប (published) | 68 |
+| ឧទាហរណ៍ C++ មាន expected output (ផ្ទៀងផ្ទាត់ដោយ g++ ក្នុង CI) | 20 |
+| លំហាត់សរសេរកូដ (code challenges ជាមួយ test cases) | 11 |
 
 ## ស្ថានភាពតាមកម្រិត (Per-level status)
 
@@ -23,7 +23,7 @@
 | 0 | ការត្រៀមខ្លួន (Getting Ready) | published | 3 | 0 |
 | 1 | មូលដ្ឋាន C++ (C++ Basics) | published | 5 | 0 |
 | 2 | អថេរ និងទិន្នន័យ (Variables and Data) | published | 5 | 0 |
-| 3 | លក្ខខណ្ឌ និងតក្កវិជ្ជា (Conditionals and Logic) | planned | 0 | 6 |
+| 3 | លក្ខខណ្ឌ និងតក្កវិជ្ជា (Conditionals and Logic) | published | 6 | 0 |
 | 4 | រង្វិលជុំ (Loops) (Loops) | planned | 0 | 6 |
 | 5 | មុខងារ (Functions) (Functions) | planned | 0 | 6 |
 | 6 | Collections និង Strings (Collections and Strings) | planned | 0 | 6 |
@@ -51,6 +51,12 @@
 | l2-operators | គណនាការ (Arithmetic Operators) | 4 | 1 | 18 | 1.0.0 |
 | l2-assignment-comparison | ការផ្តល់តម្លៃ និងការប្រៀបធៀប | 3 | 1 | 15 | 1.0.0 |
 | l2-type-conversion | ការបំលែងប្រភេទទិន្នន័យ (Type Conversion) | 3 | 1 | 15 | 1.0.0 |
+| l3-if-else | if និង else | 4 | 2 | 15 | 1.0.0 |
+| l3-else-if | else if និងលក្ខខណ្ឌច្រើន | 4 | 1 | 15 | 1.0.0 |
+| l3-switch | switch | 4 | 1 | 15 | 1.0.0 |
+| l3-logical-ops | Logical operators (&& || !) | 4 | 1 | 18 | 1.0.0 |
+| l3-nested-conditions | លក្ខខណ្ឌបង្កប់ (nested) | 3 | 1 | 15 | 1.0.0 |
+| l3-logic-mistakes | កំហុស logic ទូទៅ | 4 | 1 | 12 | 1.0.0 |
 
 ## និយមន័យស្ថានភាព (Status definitions)
 

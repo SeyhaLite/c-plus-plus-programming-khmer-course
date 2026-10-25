@@ -164,7 +164,7 @@ export function checkAchievements(): string[] {
   };
   const completedCount = Object.keys(state.completedLessons).length;
   if (completedCount >= 1) grant('first-lesson');
-  for (const levelId of [0, 1, 2]) {
+  for (const levelId of [0, 1, 2, 3]) {
     const level = getLevel(levelId);
     if (!level) continue;
     const lessons = lessonsOfLevel(levelId).filter((l) => l.status === 'published');

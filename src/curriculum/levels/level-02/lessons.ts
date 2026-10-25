@@ -667,6 +667,6 @@ double r = {{0}}<double>(a) / b;`,
     ],
     summary_km:
       'double → int កាត់ទសភាគចោល។ int/int ចែកជា int។ ប្រើ static_cast ដើម្បីបំលែងដោយចេតនា ជាពិសេសមុនការចែក។',
-    next: undefined,
+    next: 'l3-if-else',
   },
 ];
