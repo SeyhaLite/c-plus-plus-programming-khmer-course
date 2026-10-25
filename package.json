@@ -14,7 +14,7 @@
     "validate": "vitest run tests/curriculum",
     "report": "tsx scripts/build-report.ts",
     "check:cpp": "tsx scripts/check-cpp-examples.ts",
-    "test:e2e": "node scripts/e2e-smoke.mjs"
+    "test:visual": "node scripts/visual-qa.mjs"
   },
   "devDependencies": {
     "happy-dom": "^21.0.4",

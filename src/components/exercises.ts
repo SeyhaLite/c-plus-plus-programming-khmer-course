@@ -6,6 +6,9 @@ import { recordExerciseResult, getState } from '../services/progress';
 import { playSound } from '../services/audio';
 import { runTestCases, normalizeOutput } from '../services/code-execution';
 import { openConsentDialog } from '../features/playground/consent';
+import { highlightedCode } from '../utils/highlight';
+import { pickPhrase, cheerCorrect, cheerRetry } from '../data/encouragement';
+import { startStatusTimer } from '../utils/status-timer';
 
 // ============================================================
 // Exercise engine — លំហាត់អន្តរកម្ម + ការផ្តល់មតិភ្លាមៗ
@@ -63,14 +66,14 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
       solved = true;
       root.classList.add('correct');
       root.classList.remove('incorrect');
-      showFeedback('correct', `ត្រឹមត្រូវ! ${ex.explanation_km}`);
+      showFeedback('correct', `${pickPhrase(cheerCorrect)} ${ex.explanation_km}`);
       playSound('correct');
       recordExerciseResult(ctx.lessonId, ex.id, true, attempts === 1);
       ctx.onResult(true);
       lockInputs();
     } else if (!correct) {
       root.classList.add('incorrect');
-      showFeedback('incorrect', 'មិនទាន់ត្រឹមត្រូវទេ — សូមព្យាយាមម្តងទៀត ឬប្រើជំនួយ (hint)។');
+      showFeedback('incorrect', `${pickPhrase(cheerRetry)} ចង់ឃើញគន្លឹះ? ចុចប៊ូតុងជំនួយខាងក្រោម។`);
       playSound('incorrect');
       recordExerciseResult(ctx.lessonId, ex.id, false, false);
       ctx.onResult(false);
@@ -187,7 +190,7 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
 
     case 'predict_output': {
       const exp = ex as PredictOutputExercise;
-      const codeBlock = el('pre', { dir: 'ltr' }, el('code', {}, exp.code));
+      const codeBlock = el('pre', { dir: 'ltr' }, highlightedCode(exp.code));
       const input = el('textarea', { class: 'text-input', rows: '3', 'aria-label': 'ចម្លើយលទ្ធផលដែលអ្នកទាយ', placeholder: 'វាយលទ្ធផលដែលអ្នកគិតថានឹងបញ្ចេញ…', dir: 'ltr', spellcheck: 'false' }) as HTMLTextAreaElement;
       body.append(codeBlock, el('div', { class: 'output-label' }, 'ចម្លើយរបស់អ្នក៖'), input);
       checkFn = () => {
@@ -208,7 +211,7 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
           const moveUp = el('button', { 'aria-label': 'បម្លែងឡើងលើ', onclick: () => { if (pos > 0) { [order[pos - 1], order[pos]] = [order[pos], order[pos - 1]]; rerender(); } } }, '↑');
           const moveDown = el('button', { 'aria-label': 'បម្លែងចុះក្រោម', onclick: () => { if (pos < order.length - 1) { [order[pos + 1], order[pos]] = [order[pos], order[pos + 1]]; rerender(); } } }, '↓');
           listEl.append(
-            el('div', { class: 'arrange-item', role: 'listitem' }, el('span', { class: 'grip' }, icon('grip', 16)), el('span', {}, exa.lines[lineIdx]), el('span', { class: 'move-btns' }, moveUp, moveDown))
+            el('div', { class: 'arrange-item', role: 'listitem' }, el('span', { class: 'grip' }, icon('grip', 16)), highlightedCode(exa.lines[lineIdx]), el('span', { class: 'move-btns' }, moveUp, moveDown))
           );
         });
       }
@@ -251,7 +254,7 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
             },
           },
           el('span', { class: 'ln' }, String(i + 1)),
-          el('code', {}, text || ' ')
+          highlightedCode(text || ' ')
         );
         container.append(b);
         return b;
@@ -283,7 +286,7 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
         leftBtns.push(b);
       });
       rightItems.forEach((item, pos) => {
-        const b = el('button', { class: 'match-item', type: 'button', onclick: () => pick('right', pos) }, el('code', {}, item.text)) as HTMLButtonElement;
+        const b = el('button', { class: 'match-item', type: 'button', onclick: () => pick('right', pos) }, highlightedCode(item.text)) as HTMLButtonElement;
         rightBtns.push(b);
       });
 
@@ -351,8 +354,9 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
           }
         }
         checkBtn.disabled = true;
-        statusLine.textContent = 'កំពុង compile និងដំណើរការកូដ…';
+        const timer = startStatusTimer(statusLine, 'កំពុង compile និងដំណើរការកូដ…');
         const { results, error } = await runTestCases(codeArea.value, exc.testCases);
+        timer.stop();
         checkBtn.disabled = false;
         if (error) {
           statusLine.textContent = error;

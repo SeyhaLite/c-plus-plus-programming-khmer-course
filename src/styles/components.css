@@ -425,3 +425,24 @@ table { max-width: 100%; }
   color: var(--c-text-muted);
   margin-top: var(--sp-1);
 }
+
+/* ============ Code token colors ============ */
+.tok-kw { color: var(--tok-kw); font-weight: 600; }
+.tok-type { color: var(--tok-type); font-weight: 600; }
+.tok-str { color: var(--tok-str); }
+.tok-num { color: var(--tok-num); }
+.tok-comment { color: var(--tok-comment); font-style: italic; }
+.tok-pre { color: var(--tok-pre); }
+
+/* ============ Loading spinner ============ */
+.spinner {
+  width: 14px; height: 14px;
+  border: 2px solid var(--c-border);
+  border-top-color: var(--c-primary);
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: -2px;
+  margin-inline-end: 6px;
+  animation: spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }

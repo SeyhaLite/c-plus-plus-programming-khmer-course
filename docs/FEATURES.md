@@ -28,6 +28,7 @@
 | match | ផ្គូផ្គងគោលគំនិត ↔ កូដ |
 | code_challenge | សរសេរកម្មវិធីពេញលេញ ផ្ទៀងផ្ទាត់ដោយ test cases ពិត (ត្រូវការ execution consent) |
 
+- **Syntax highlighting** ក្នុងមេរៀន (tokenizer ដើម គ្មាន dependency) + **ពាក្យលើកទឹកចិត្ត ៦១** ពីម៉ាស្កុត តារា
 - **Hints បង្ហាញជាបណ្តើរៗ** (មិនបង្ហាញចម្លើយភ្លាម) · ការណាត់ត្រូវ hints ដែលបានប្រើ
 - **មតិភ្លាមៗ** + ការពន្យល់ក្រោយឆ្លើយ · សាកល្បងម្តងទៀតគ្មានដែនកំណត់
 - **Review queue** — ចម្លើយខុសត្រូវបានកត់ត្រា; ឆ្លើយត្រូវវិញ → ដកចេញ។ បង្ហាញក្នុង dashboard និងផែនការសិក្សា។
@@ -48,6 +49,7 @@
 - CodeMirror 6 (C++ syntax highlighting) + textarea fallback បើ CodeMirror ផ្ទុកមិនបាន
 - ដំណើរការកូដពិត៖ **Wandbox API, g++ 13.2, -std=c++17 -Wall -Wextra** — compile errors, stderr, exit codes, timeout (137), ពេលវេលាដំណើរការ បង្ហាញពិត
 - **Consent gate** — ផ្ញើកូដតែក្រោយការយល់ព្រមច្បាស់លាស់; ដកបានគ្រប់ពេលក្នុងការកំណត់
+- ពេលដំណើរការកូដ៖ spinner + តួលេខពេលវេលារស់ + ប៊ូតុង freeze រហូតដល់លទ្ធផល; លទ្ធផលបង្ហាញរយៈពេលពិត (ms)
 - បញ្ចូល stdin · ពិនិត្យ test cases របស់ code challenges · ប៊ូតុង Run/Reset/Copy/Save snippet/Clear output
 - Snippets រក្សាទុកក្នុង browser (អតិបរមា ៥០)
 - Limits៖ កូដ ≤32KB, output ≤16KB, timeout 20s — មិនក្លែងលទ្ធផលពេលសេវាមិនឆ្លើយតប

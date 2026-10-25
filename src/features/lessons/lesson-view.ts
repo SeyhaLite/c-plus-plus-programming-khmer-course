@@ -2,6 +2,8 @@ import type { Lesson } from '../../types';
 import { el } from '../../utils/dom';
 import { icon } from '../../app/icons';
 import { renderMarkdown } from '../../utils/markdown';
+import { highlightedCode } from '../../utils/highlight';
+import { pickPhrase, cheerIdle, cheerComplete } from '../../data/encouragement';
 import { renderExercise, type ExerciseHandle } from '../../components/exercises';
 import { renderDiagram } from '../../components/diagrams';
 import { completeLesson, getState } from '../../services/progress';
@@ -70,7 +72,7 @@ export function renderLessonView(lesson: Lesson, host: HTMLElement): void {
         showToast(ok ? 'បានចម្លងកូដហើយ' : 'មិនអាចចម្លងបានទេ — សូមចម្លងដោយដៃ', ok ? 'success' : 'error');
       },
     }, icon('copy', 14), 'ចម្លង');
-    const pre = el('pre', { dir: 'ltr', id: codeId }, el('code', {}, ex.code));
+    const pre = el('pre', { dir: 'ltr', id: codeId }, highlightedCode(ex.code));
     examplesSection.append(
       el('div', { class: 'card', style: 'margin-bottom:1rem' },
         el('h3', { style: 'font-size:1rem' }, ex.title_km),
@@ -97,8 +99,8 @@ export function renderLessonView(lesson: Lesson, host: HTMLElement): void {
     main.append(
       el('div', { class: 'card', style: 'margin-bottom:1rem;border-color:var(--c-error)' },
         el('h2', { style: 'color:var(--c-error);font-size:1.1rem' }, icon('x', 20), ' កំហុសទូទៅ'),
-        el('div', { class: 'mistake-box' }, el('div', { class: 'output-label' }, '✗ ខុស៖'), el('pre', { dir: 'ltr' }, el('code', {}, cm.wrongCode))),
-        el('div', { class: 'mistake-box right' }, el('div', { class: 'output-label' }, '✓ ត្រូវ៖'), el('pre', { dir: 'ltr' }, el('code', {}, cm.rightCode))),
+        el('div', { class: 'mistake-box' }, el('div', { class: 'output-label' }, '✗ ខុស៖'), el('pre', { dir: 'ltr' }, highlightedCode(cm.wrongCode))),
+        el('div', { class: 'mistake-box right' }, el('div', { class: 'output-label' }, '✓ ត្រូវ'), el('pre', { dir: 'ltr' }, highlightedCode(cm.rightCode))),
         el('p', {}, cm.note_km)
       )
     );
@@ -142,7 +144,7 @@ export function renderLessonView(lesson: Lesson, host: HTMLElement): void {
     panel.style.display = 'block';
     panel.innerHTML = '';
     panel.append(
-      mascotBubble({ state: 'happy', text_km: 'អបអរសាទរ! អ្នកបានបញ្ចប់មេរៀននេះហើយ។' }),
+      mascotBubble({ state: 'happy', text_km: pickPhrase(cheerComplete) }),
       el('h2', { style: 'margin-top:1rem' }, 'សង្ខេបមេរៀន'),
       el('p', {}, lesson.summary_km),
       el('p', { class: 'tag tag-success' }, `+25 XP · ពិន្ទុ ${Math.round(score * 100)}%`)
@@ -183,7 +185,7 @@ export function renderLessonView(lesson: Lesson, host: HTMLElement): void {
       ),
     ),
     el('div', { class: 'card', style: 'margin-top:1rem' },
-      mascotBubble({ state: 'neutral', text_km: 'ខ្ញុំឈ្មោះ តារា! អានការពន្យល់ រួចធ្វើលំហាត់ម្តងមួយៗ។ បើជាប់គាំង សូមចុចប៊ូតុងជំនួយ។', small: true }),
+      mascotBubble({ state: 'neutral', text_km: pickPhrase(cheerIdle), small: true }),
     ),
   );
 

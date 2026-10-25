@@ -7,6 +7,7 @@ import { basePath } from '../../app/router';
 import { getAchievement } from '../../data/achievements';
 import { playSound } from '../../services/audio';
 import { mascotBubble } from '../../app/character';
+import { pickPhrase, cheerComplete } from '../../data/encouragement';
 
 // ============================================================
 // ពិនិត្យចំណេះដឹង (Placement test)
@@ -76,7 +77,7 @@ export function renderQuiz(host: HTMLElement): void {
     playSound('complete');
     card.innerHTML = '';
     card.append(
-      mascotBubble({ state: 'happy', text_km: level > 0 ? `ល្អណាស់! អ្នកគួរចាប់ផ្តើមពីកម្រិត ${level}។` : 'សូមចាប់ផ្តើមពីកម្រិត ០ — គ្មានអ្វីត្រូវបារម្ភ យើងនឹងរៀនជាមួយគ្នាពីដំបូង!' }),
+      mascotBubble({ state: 'happy', text_km: `${pickPhrase(cheerComplete)} អ្នកគួរចាប់ផ្តើមពីកម្រិត ${level}។` }),
       el('h2', { style: 'margin-top:1rem' }, `លទ្ធផល៖ ណែនាំឲ្យចាប់ផ្តើមពី កម្រិត ${level}`),
       el('p', {}, `អ្នកឆ្លើយត្រូវ ${correctLevels.length}/${placementQuestions.length} សំណួរ។ ការណែនាំនេះជាជំនួយទេ — អ្នកអាចជ្រើសរើសកម្រិតណាក៏បានដោយខ្លួនឯង ហើយរៀនឡើងវិញបានគ្រប់ពេល។`),
       el('div', { style: 'display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem' },

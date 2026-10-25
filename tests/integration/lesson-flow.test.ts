@@ -249,7 +249,8 @@ describe('lesson completion flow', () => {
     // persisted through localStorage ("refresh" survival)
     const persisted = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '{}');
     expect(persisted.completedLessons['l0-what-is-cpp']).toBeTruthy();
-    expect(host.textContent).toContain('អបអរសាទរ');
+    expect(host.textContent).toContain('សង្ខេបមេរៀន');
+    expect(host.querySelector('.completion-panel')).toBeTruthy();
     expect(host.textContent).toContain('មេរៀនបន្ទាប់');
   });
 

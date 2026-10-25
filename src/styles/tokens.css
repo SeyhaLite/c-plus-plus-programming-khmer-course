@@ -123,3 +123,22 @@ Design tokens — Khmer C++ Academy
     transition-duration: 0.01ms !important;
   }
 }
+
+/* Code highlighting (light) */
+:root {
+  --tok-kw: #0550ae;
+  --tok-type: #953800;
+  --tok-str: #0a6e34;
+  --tok-num: #b45309;
+  --tok-comment: #6a737d;
+  --tok-pre: #8250df;
+}
+
+[data-theme='dark'] {
+  --tok-kw: #79b8ff;
+  --tok-type: #ffa657;
+  --tok-str: #7ee787;
+  --tok-num: #f2cc60;
+  --tok-comment: #8b949e;
+  --tok-pre: #d2a8ff;
+}

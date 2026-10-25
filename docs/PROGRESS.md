@@ -48,6 +48,13 @@
 - បន្ថែមតំណ **វីដេអូ/ធនធានខាងក្រៅ** (freeCodeCamp full course, LearnCpp, cppreference, ការស្វែងរកវីដេអូខ្មែរ) ក្នុងទំព័រ បណ្ណាល័យ — សម្គាល់ច្បាស់ថាជាតំណខាងក្រៅ។
 - `scripts/visual-qa.mjs` — ស្ក្រីបថត screenshot light/dark សម្រាប់ QA។
 
+## ២០-០- — UX polish តបតាមមតិអ្នកប្រើ #3
+
+- **Run button feedback**៖ ពេលដំណើរការកូដ ឥឡូវមាន spinner ក្នុងប៊ូតុង + ក្នុងផ្ទាំងលទ្ធផល + តួលេខពេលវេលារស់ (0.1s ម្តង) ក្នុង status line; ប៊ូតុងទាំងអស់ freeze រហូតដល់លទ្ធផលមកដល់; លទ្ធផលបង្ហាញពេលវេលាពិត (ឧ. 5.6s)។ ប្រើ `utils/status-timer.ts`។
+- **Syntax highlighting ក្នុងមេរៀន**៖ tokenizer C++ ដើម (`utils/highlight.ts`, គ្មាន dependency) — ពណ៌ keyword/type/string/number/comment/preprocessor តាម light/dark tokens; អនុវត្តលើឧទាហរណ៍មេរៀន, ប្រអប់កំហុស, លំហាត់ predict/arrange/find-error/match។
+- **ពាក្យលើកទឹកចិត្ត ៦១** (`data/encouragement.ts`)៖ ៤ ក្រុម (ត្រូវ/ខុស/បញ្ចប់/ណែនាំ) — តារា និយាយឃ្លាផ្សេងៗរាល់លើក ក្នុង feedback លំហាត់, បង្ហាញមេរៀន, និងផ្ទាំងបញ្ចប់។
+- Tests ថ្មី៖ highlighter (XSS, block comments, division vs comment), phrase bank (≥50, unique, Khmer)។ សរុប 118 ឆ្លង។
+
 ## ការងារបន្ទាប់ (អាទិភាព)
 
 1. សរសេរមាតិកាពិតកម្រិត ៣ (លក្ខខណ្ឌ) — ៦ មេរៀន តាមគោលការណ៍ [CONTENT_GUIDELINES.md](./CONTENT_GUIDELINES.md)

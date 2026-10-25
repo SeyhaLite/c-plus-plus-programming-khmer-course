@@ -8,6 +8,7 @@ import { copyText } from '../../services/diagnostics';
 import { allLessons } from '../../data/curriculum';
 import type { CodeChallengeExercise } from '../../types';
 import { getAchievement } from '../../data/achievements';
+import { startStatusTimer, type StatusTimer } from '../../utils/status-timer';
 import { playSound } from '../../services/audio';
 
 // ============================================================
@@ -27,6 +28,7 @@ int main() {
 interface EditorAdapter {
   getCode(): string;
   setCode(code: string): void;
+  setEditable?(editable: boolean): void;
 }
 
 async function mountEditor(host: HTMLElement, initial: string): Promise<EditorAdapter> {
@@ -42,6 +44,10 @@ async function mountEditor(host: HTMLElement, initial: string): Promise<EditorAd
     return {
       getCode: () => view.state.doc.toString(),
       setCode: (c) => view.dispatch({ changes: { from: 0, to: view.state.doc.length, insert: c } }),
+      setEditable: (b) => {
+        view.contentDOM.contentEditable = b ? 'true' : 'false';
+        view.dom.style.opacity = b ? '1' : '0.65';
+      },
     };
   } catch {
     // Fallback: plain textarea — ដំណើរការបាន គ្មាន syntax highlighting
@@ -49,7 +55,7 @@ async function mountEditor(host: HTMLElement, initial: string): Promise<EditorAd
     ta.value = initial;
     host.innerHTML = '';
     host.append(ta);
-    return { getCode: () => ta.value, setCode: (c) => { ta.value = c; } };
+    return { getCode: () => ta.value, setCode: (c) => { ta.value = c; }, setEditable: (b) => { ta.disabled = !b; } };
   }
 }
 
@@ -126,6 +132,29 @@ export async function renderPlayground(host: HTMLElement): Promise<void> {
     testPane.style.display = 'none';
   });
 
+  let runTimer: StatusTimer | null = null;
+  function setRunning(on: boolean): void {
+    for (const b of [runBtn, testBtn, resetBtn, solutionBtn]) b.disabled = on;
+    editor?.setEditable?.(!on);
+    if (on) {
+      runTimer = startStatusTimer(statusLine, 'កំពុង compile និងដំណើរការកូដ…');
+      // highly visible loading state: spinner inside the Run button + output pane
+      runBtn.replaceChildren(makeSpinner(), document.createTextNode(' កំពុងដំណើរការ…'));
+      stdoutPane.replaceChildren(makeSpinner(), document.createTextNode(' កំពុងរង់ចាំលទ្ធផលពី sandbox…'));
+      stderrPane.style.display = 'none';
+      testPane.style.display = 'none';
+    } else {
+      runTimer?.stop();
+      runTimer = null;
+      runBtn.replaceChildren(icon('play', 18), document.createTextNode(' ដំណើរការ (Run)'));
+    }
+  }
+
+  function makeSpinner(): HTMLElement {
+    const sp = el('span', { class: 'spinner', 'aria-hidden': 'true' });
+    return sp;
+  }
+
   async function doRun(runTests: boolean): Promise<void> {
     if (!editor) return;
     let consent = getState().settings.executionConsent;
@@ -136,15 +165,15 @@ export async function renderPlayground(host: HTMLElement): Promise<void> {
         return;
       }
     }
-    runBtn.setAttribute('aria-disabled', 'true');
-    statusLine.textContent = 'កំពុង compile និងដំណើរការ…';
+    setRunning(true);
     try {
       if (runTests && currentChallenge) {
         const results: string[] = [];
         let allPassed = true;
         for (let i = 0; i < currentChallenge.ex.testCases.length; i++) {
           const tc = currentChallenge.ex.testCases[i];
-          statusLine.textContent = `កំពុងដំណើរការ test ${i + 1}/${currentChallenge.ex.testCases.length}…`;
+          runTimer?.stop();
+        runTimer = startStatusTimer(statusLine, `កំពុងដំណើរការ test ${i + 1}/${currentChallenge.ex.testCases.length}…`);
           const res = await runCpp({ code: editor.getCode(), stdin: tc.stdin });
           if (res.stage === 'network' || res.stage === 'limits') {
             results.push(`⚠ Test ${i + 1}: មិនអាចដំណើរការបាន — ${res.message_km}`);
@@ -186,7 +215,7 @@ export async function renderPlayground(host: HTMLElement): Promise<void> {
         }
       }
     } finally {
-      runBtn.removeAttribute('aria-disabled');
+      setRunning(false);
     }
   }
 
