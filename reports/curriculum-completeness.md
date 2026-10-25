@@ -1,6 +1,6 @@
 # របាយការណ៍ភាពពេញលេញនៃមាតិកា (Curriculum Completeness Report)
 
-> បង្កើតស្វ្យ័យប្រវត្តិដោយ `npm run report` — 2026-10-25T16:40:50.084Z
+> បង្កើតស្វ្យ័យប្រវត្តិដោយ `npm run report` — 2026-10-25T16:52:43.310Z
 > សូមកុំកែដោយដៃ; កែតាមរយៈ curriculum data ហើយរត់ script នេះឡើងវិញ។
 
 ## សង្ខេប (Summary)
@@ -8,13 +8,13 @@
 | រង្វាស់ | ចំនួន |
 | --- | --- |
 | កម្រិតសរុប | 13 |
-| កម្រិតមានមាតិកា published | 4 |
-| មេរៀន Published | 19 |
+| កម្រិតមានមាតិកា published | 5 |
+| មេរៀន Published | 25 |
 | មេរៀន Draft | 0 |
-| មេរៀន Planned | 52 |
-| លំហាត់សរុប (published) | 68 |
-| ឧទាហរណ៍ C++ មាន expected output (ផ្ទៀងផ្ទាត់ដោយ g++ ក្នុង CI) | 20 |
-| លំហាត់សរសេរកូដ (code challenges ជាមួយ test cases) | 11 |
+| មេរៀន Planned | 46 |
+| លំហាត់សរុប (published) | 89 |
+| ឧទាហរណ៍ C++ មាន expected output (ផ្ទៀងផ្ទាត់ដោយ g++ ក្នុង CI) | 26 |
+| លំហាត់សរសេរកូដ (code challenges ជាមួយ test cases) | 17 |
 
 ## ស្ថានភាពតាមកម្រិត (Per-level status)
 
@@ -23,8 +23,8 @@
 | 0 | ការត្រៀមខ្លួន (Getting Ready) | published | 3 | 0 |
 | 1 | មូលដ្ឋាន C++ (C++ Basics) | published | 5 | 0 |
 | 2 | អថេរ និងទិន្នន័យ (Variables and Data) | published | 5 | 0 |
+| 4 | រង្វិលជុំ (Loops) (Loops) | published | 6 | 0 |
 | 3 | លក្ខខណ្ឌ និងតក្កវិជ្ជា (Conditionals and Logic) | published | 6 | 0 |
-| 4 | រង្វិលជុំ (Loops) (Loops) | planned | 0 | 6 |
 | 5 | មុខងារ (Functions) (Functions) | planned | 0 | 6 |
 | 6 | Collections និង Strings (Collections and Strings) | planned | 0 | 6 |
 | 7 | Pointers និង Memory (Pointers and Memory) | planned | 0 | 6 |
@@ -57,6 +57,12 @@
 | l3-logical-ops | Logical operators (&& || !) | 4 | 1 | 18 | 1.0.0 |
 | l3-nested-conditions | លក្ខខណ្ឌបង្កប់ (nested) | 3 | 1 | 15 | 1.0.0 |
 | l3-logic-mistakes | កំហុស logic ទូទៅ | 4 | 1 | 12 | 1.0.0 |
+| l4-for | រង្វិល for | 4 | 1 | 18 | 1.0.0 |
+| l4-while | រង្វិល while | 4 | 1 | 15 | 1.0.0 |
+| l4-do-while | do-while | 3 | 1 | 12 | 1.0.0 |
+| l4-break-continue | break និង continue | 4 | 1 | 15 | 1.0.0 |
+| l4-nested-loops | រង្វិលជុំបង្កប់ | 3 | 1 | 18 | 1.0.0 |
+| l4-loop-tracing | ការតាមដាន (trace) រង្វិលជុំ | 3 | 1 | 15 | 1.0.0 |
 
 ## និយមន័យស្ថានភាព (Status definitions)
 

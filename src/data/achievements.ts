@@ -10,6 +10,7 @@ export const achievements: Achievement[] = [
   { id: 'level-1-complete', title_km: 'អ្នកសរសេរកូដថ្មី', description_km: 'បញ្ចប់កម្រិត ១ ទាំងស្រុង', icon: 'code' },
   { id: 'level-2-complete', title_km: 'ម្ចាស់អថេរ', description_km: 'បញ្ចប់កម្រិត ២ ទាំងស្រុង', icon: 'box' },
   { id: 'level-3-complete', title_km: 'អ្នកសម្រេចចិត្ត', description_km: 'បញ្ចប់កម្រិត ៣ ទាំងស្រុង', icon: 'lightbulb' },
+  { id: 'level-4-complete', title_km: 'អ្នកវិលជុំ', description_km: 'បញ្ចប់កម្រិត ៤ ទាំងស្រុង', icon: 'refresh' },
   { id: 'streak-3', title_km: 'ភ្លើងតូច', description_km: 'រៀនជាប់គ្នា ៣ ថ្ងៃ', icon: 'flame' },
   { id: 'streak-7', title_km: 'ភ្លើងធំ', description_km: 'រៀនជាប់គ្នា ៧ ថ្ងៃ', icon: 'flame' },
   { id: 'xp-100', title_km: 'រង្វាន់ ១០០ XP', description_km: 'ប្រមូលបាន ១០០ XP', icon: 'bolt' },

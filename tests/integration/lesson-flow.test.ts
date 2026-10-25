@@ -200,7 +200,7 @@ describe('lesson route behavior', () => {
 
   it('shows an honest "planned" notice for unpublished lessons', () => {
     const host = mount();
-    renderLessonRoute('4', 'l4-for', host);
+    renderLessonRoute('5', 'l5-functions-intro', host);
     expect(host.textContent).toContain('កំពុងរៀបចំ');
     expect(host.querySelectorAll('.exercise').length).toBe(0);
   });

@@ -3,6 +3,7 @@ import { level00Lessons } from '../curriculum/levels/level-00/lessons';
 import { level01Lessons } from '../curriculum/levels/level-01/lessons';
 import { level02Lessons } from '../curriculum/levels/level-02/lessons';
 import { level03Lessons } from '../curriculum/levels/level-03/lessons';
+import { level04Lessons } from '../curriculum/levels/level-04/lessons';
 import { plannedLevels, plannedLessons } from '../curriculum/levels/planned-levels';
 
 // ============================================================
@@ -13,7 +14,7 @@ export const APP_NAME = 'Khmer C++ Academy';
 export const APP_VERSION = '1.0.0';
 export const CPP_STANDARD = 'C++17';
 
-export const allLessons: Lesson[] = [...level00Lessons, ...level01Lessons, ...level02Lessons, ...level03Lessons, ...plannedLessons];
+export const allLessons: Lesson[] = [...level00Lessons, ...level01Lessons, ...level02Lessons, ...level03Lessons, ...level04Lessons, ...plannedLessons];
 
 const lessonMap = new Map<string, Lesson>(allLessons.map((l) => [l.id, l]));
 
@@ -69,6 +70,20 @@ export const publishedLevels: Level[] = [
     units: [
       { id: '3-1', title_km: 'ខ្នាតទី ១ — លក្ខខណ្ឌមូលដ្ឋាន', lessonIds: ['l3-if-else', 'l3-else-if', 'l3-switch'] },
       { id: '3-2', title_km: 'ខ្នាតទី ២ — តក្កវិជ្ជាកម្រិតមធ្យម', lessonIds: ['l3-logical-ops', 'l3-nested-conditions', 'l3-logic-mistakes'] },
+    ],
+  },
+  {
+    id: 4,
+    title_km: 'រង្វិលជុំ (Loops)',
+    title_en: 'Loops',
+    status: 'published',
+    objective_km: 'ប្រើ for, while, do-while និងគ្រប់គ្រងរង្វិលជុំដោយ break/continue',
+    prerequisites_km: 'បញ្ចប់កម្រិត ៣',
+    outcomes_km: ['ប្រើ for / while / do-while', 'ប្រើ break និង continue', 'trace ការដំណើរការរង្វិលជុំ', 'សរសេរ nested loops'],
+    estimated_hours: 6,
+    units: [
+      { id: '4-1', title_km: 'ខ្នាតទី ១ — រង្វិលមូលដ្ឋាន', lessonIds: ['l4-for', 'l4-while', 'l4-do-while'] },
+      { id: '4-2', title_km: 'ខ្នាតទី ២ — គ្រប់គ្រងរង្វិល', lessonIds: ['l4-break-continue', 'l4-nested-loops', 'l4-loop-tracing'] },
     ],
   },
   ...plannedLevels,

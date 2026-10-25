@@ -27,23 +27,6 @@ interface PlannedLevelSpec {
 
 const plannedSpecs: PlannedLevelSpec[] = [
   {
-    id: 4,
-    title_km: 'រង្វិលជុំ (Loops)',
-    title_en: 'Loops',
-    objective_km: 'ប្រើ for, while, do-while និងគ្រប់គ្រងរង្វិលជុំដោយ break/continue',
-    prerequisites_km: 'បញ្ចប់កម្រិត ៣',
-    outcomes_km: ['ប្រើ for / while / do-while', 'ប្រើ break និង continue', 'trace ការដំណើរការរង្វិលជុំ', 'សរសេរ nested loops'],
-    estimated_hours: 6,
-    lessons: [
-      { id: 'l4-for', unit: 1, title_km: 'រង្វិល for', title_en: 'for loop', minutes: 18 },
-      { id: 'l4-while', unit: 1, title_km: 'រង្វិល while', title_en: 'while loop', minutes: 15 },
-      { id: 'l4-do-while', unit: 1, title_km: 'do-while', title_en: 'do-while loop', minutes: 12 },
-      { id: 'l4-break-continue', unit: 2, title_km: 'break និង continue', title_en: 'break and continue', minutes: 15 },
-      { id: 'l4-nested-loops', unit: 2, title_km: 'រង្វិលជុំបង្កប់', title_en: 'Nested loops', minutes: 18 },
-      { id: 'l4-loop-tracing', unit: 2, title_km: 'ការតាមដាន (trace) រង្វិលជុំ', title_en: 'Tracing loops', minutes: 15 },
-    ],
-  },
-  {
     id: 5,
     title_km: 'មុខងារ (Functions)',
     title_en: 'Functions',
