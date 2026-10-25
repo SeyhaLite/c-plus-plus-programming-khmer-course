@@ -114,6 +114,11 @@ describe('exercise engine: other types', () => {
     };
     const { element } = renderExercise(ex, ctx());
     document.body.append(element);
+    // blanks must be obvious: help text, numbered badges, placeholders
+    expect(element.textContent).toContain('វាយចម្លើយរបស់អ្នកចូលក្នុងប្រអប់ទទេ');
+    expect(element.querySelectorAll('.blank-num').length).toBe(1);
+    const input0 = element.querySelector('.blank-input') as HTMLInputElement;
+    expect(input0.placeholder).toContain('ចម្លើយ');
     const input = element.querySelector('.blank-input') as HTMLInputElement;
     input.value = '+';
     click(element.querySelector('.check-btn')!);

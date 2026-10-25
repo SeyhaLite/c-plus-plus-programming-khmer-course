@@ -51,7 +51,11 @@ Push ទៅ `main` → GitHub Actions build+test+deploy ស្វ្យ័យប
 
 **កុំ commit secrets** — គម្រោងនេះមិនត្រូវការ secret ណាទេ។
 
-## អាជ្ញាបណ្ណ និងការប្រើប្រាស់ទ្រព្យ
+## អាជ្ញាបណ្ណ (License)
+
+គម្រោងនេះចេញក្រោម **MIT License** — សូមមើលឯកសារ [LICENSE](LICENSE)។
+
+## ការប្រើប្រាស់ទ្រព្ខាងក្រៅ
 
 - កូដ និងមាតិកា៖ សរសេរដើមសម្រាប់គម្រោងនេះ
 - ពុម្ពអក្សរ៖ Noto Sans / Noto Sans Khmer / Fira Code (SIL Open Font License) តាម @fontsource — self-hosted

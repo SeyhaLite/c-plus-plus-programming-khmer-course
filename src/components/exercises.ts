@@ -155,6 +155,7 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
 
     case 'fill_blank': {
       const exf = ex as FillBlankExercise;
+      body.append(el('p', { class: 'help blank-help' }, 'វាយចម្លើយរបស់អ្នកចូលក្នុងប្រអប់ទទេ (មានលេខ និងគែមដាច់ៗពណ៌ខៀវ) នៅក្នុងកូដខាងក្រោម រួចចុច «ពិនិត្យចម្លើយ»។'));
       const parts = exf.template.split(/(\{\{\d+\}\})/);
       const inputs: HTMLInputElement[] = [];
       const frag = parts.map((p) => {
@@ -164,13 +165,14 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
         const inp = el('input', {
           class: 'blank-input',
           type: 'text',
-          'aria-label': `ចន្លោះទំនេរទី ${idx + 1}`,
+          'aria-label': `ចន្លោះទំនេរទី ${idx + 1} — វាយចម្លើយរបស់អ្នក`,
+          placeholder: `ចម្លើយ ${idx + 1}…`,
           autocomplete: 'off',
           spellcheck: 'false',
           oninput: () => inp.classList.remove('correct', 'incorrect'),
         }) as HTMLInputElement;
         inputs[idx] = inp;
-        return inp;
+        return el('span', { class: 'blank-slot' }, el('span', { class: 'blank-num', 'aria-hidden': 'true' }, String(idx + 1)), inp);
       });
       const template = el('div', { class: 'fill-template', dir: 'ltr' }, ...frag);
       body.append(template);

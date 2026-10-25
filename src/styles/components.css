@@ -446,3 +446,35 @@ table { max-width: 100%; }
   animation: spin 0.8s linear infinite;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ============ Fill-in-the-blank visibility ============ */
+.blank-help {
+  color: var(--c-text-muted);
+  background: var(--c-primary-soft);
+  border: 1px dashed var(--c-primary);
+  border-radius: var(--r-md);
+  padding: var(--sp-2) var(--sp-3);
+  margin-bottom: var(--sp-3);
+}
+.blank-slot { display: inline-flex; align-items: center; gap: 4px; }
+.blank-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 18px; height: 18px; flex: none;
+  border-radius: 50%;
+  background: var(--c-primary);
+  color: var(--c-text-on-primary);
+  font-size: 11px; font-weight: 700;
+  font-family: var(--font-en);
+}
+.blank-input {
+  font-family: var(--font-mono); font-size: 0.95em;
+  border: 2px dashed var(--c-primary);
+  background: var(--c-primary-soft); color: var(--c-text);
+  border-radius: var(--r-sm);
+  padding: 4px 10px; min-width: 130px;
+  text-align: center;
+}
+.blank-input::placeholder { color: var(--c-text-muted); opacity: 0.8; }
+.blank-input:focus { border-style: solid; box-shadow: var(--focus-ring); outline: none; }
+.blank-input.correct { border-color: var(--c-success); border-style: solid; background: var(--c-success-soft); }
+.blank-input.incorrect { border-color: var(--c-error); border-style: solid; background: var(--c-error-soft); }

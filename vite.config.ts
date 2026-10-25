@@ -1,4 +1,4 @@
-import { defineConfig } from 'vite';
+import { defineConfig } from 'vitest/config';
 import { fileURLToPath, URL } from 'node:url';
 
 // Repository subpath on GitHub Pages.
@@ -24,4 +24,4 @@ export default defineConfig({
     environment: 'node',
     include: ['tests/**/*.test.ts'],
   },
-} as Parameters<typeof defineConfig>[0]);
+});

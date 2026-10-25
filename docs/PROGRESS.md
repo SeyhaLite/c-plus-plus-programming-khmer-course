@@ -55,6 +55,12 @@
 - **ពាក្យលើកទឹកចិត្ត ៦១** (`data/encouragement.ts`)៖ ៤ ក្រុម (ត្រូវ/ខុស/បញ្ចប់/ណែនាំ) — តារា និយាយឃ្លាផ្សេងៗរាល់លើក ក្នុង feedback លំហាត់, បង្ហាញមេរៀន, និងផ្ទាំងបញ្ចប់។
 - Tests ថ្មី៖ highlighter (XSS, block comments, division vs comment), phrase bank (≥50, unique, Khmer)។ សរុប 118 ឆ្លង។
 
+## ២-០- — Security upgrade + MIT + fill-blank UX (តបតាមមតិ #4)
+
+- **Security/Dependabot**៖ upgrade ដោយផ្ទាល់ `vite 5→8.3.5` និង `vitest 2→5.0.5` (កំណែមាន patch សម្រាប់ vulnerabilities ដែល Dependabot ចង្អុល) + `@types/node` explicit។ Lockfile ថ្មី។ Dependabot PRs #3/#4/#5 ត្រូវបានបិទថា "superseded"។
+- **MIT License**៖ បន្ថែមឯកសារ LICENSE + field `license` ក្នុង package.json + ផ្នែកក្នុង README។
+- **Fill-in-the-blank UX** (អ្នកប្រើជាប់គាំង មិនដឹងវាយនៅឯណា)៖ បន្ថែមប្រអប់ណែនាំពណ៌ខៀវដាច់ៗពីលើ template, លេខរៀងគ្រប់ចន្លោះ, placeholder «ចម្លើយ N…», គែម dashed ខៀវច្បាស់ + focus ring។ Regression test បន្ថែម។
+
 ## ការងារបន្ទាប់ (អាទិភាព)
 
 1. សរសេរមាតិកាពិតកម្រិត ៣ (លក្ខខណ្ឌ) — ៦ មេរៀន តាមគោលការណ៍ [CONTENT_GUIDELINES.md](./CONTENT_GUIDELINES.md)
