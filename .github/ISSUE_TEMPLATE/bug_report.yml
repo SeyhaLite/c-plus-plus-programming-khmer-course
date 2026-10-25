@@ -1,0 +1,65 @@
+name: រាយការណ៍បញ្ហា (Bug report)
+description: ប្រើរបាយការណ៍ដែលបានចម្លងពីគេហទំព័រ (Copy diagnostic report) មកដាក់នៅទីនេះ
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        សូមអរគុណ! វិធីល្អបំផុត៖ នៅលើគេហទំព័រ សូមចុចប៊ូតុង **"រាយការណ៍បញ្ហា"** → **"ចម្លងរបាយការណ៍"** ហើយ paste ចូលប្រអប់ខាងក្រោម។
+        របាយការណ៍នោះមាន route, lesson ID, browser និង timestamp ស្រាប់។
+        ⚠️ សូមពិនិត្យមុន paste ថាគ្មានព័ត៌មានសម្ងាត់ (token, ពាក្យសម្ងាត់)។
+  - type: textarea
+    id: diagnostic-report
+    attributes:
+      label: របាយការណ៍រោគវិនិច្ឆ័យ (Diagnostic report)
+      description: Paste របាយការណ៍ដែលបានចម្លងពីគេហទំព័រ ឬសរសេរដោយដៃ
+      placeholder: |
+        Application: Khmer C++ Academy
+        App version: 1.0.0
+        Route: /levels/1/lessons/hello-world
+        ...
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: ជំហានធ្វើឡើងវិញ (Steps to reproduce)
+      placeholder: |
+        1. បើកមេរៀន…
+        2. ដំណើរការកូដ…
+        3. មើលលទ្ធផល…
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: អ្វីដែលរំពឹងទុក (Expected behavior)
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: អ្វីដែលកើតឡើងជាក់ស្តែង (Actual behavior)
+    validations:
+      required: true
+  - type: dropdown
+    id: category
+    attributes:
+      label: ប្រភេទបញ្ហា
+      options:
+        - កំហុស compile / execution
+        - បញ្ហា UI / ប្លង់
+        - បញ្ហាអក្សរខ្មែរ
+        - មាតិកាមេរៀនមិនត្រឹមត្រូវ
+        - វឌ្ឍនភាពបាត់
+        - ផ្សេងទៀត
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: ឧបករណ៍ និង browser
+      placeholder: ឧ. Android + Chrome 130, Windows 11 + Firefox
+    validations:
+      required: false

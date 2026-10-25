@@ -71,6 +71,18 @@ export function migrateState(raw: unknown): ProgressState {
 }
 
 /** Final guard: enforce invariants and size limits on any imported/loaded state. */
+function sanitizeSettings(s: Partial<Settings> | undefined): Settings {
+  const raw = (s && typeof s === 'object' ? s : {}) as Record<string, unknown>;
+  const boolOr = (v: unknown, dflt: boolean): boolean => (typeof v === 'boolean' ? v : dflt);
+  return {
+    theme: raw.theme === 'dark' ? 'dark' : 'light',
+    sound: boolOr(raw.sound, defaultSettings.sound),
+    reducedMotion: boolOr(raw.reducedMotion, defaultSettings.reducedMotion),
+    executionConsent:
+      typeof raw.executionConsent === 'boolean' ? raw.executionConsent : raw.executionConsent === null ? null : null,
+  };
+}
+
 export function sanitizeState(s: ProgressState): ProgressState {
   const MAX_SNIPPETS = 50;
   const MAX_ACTIVITY = 100;
@@ -80,13 +92,13 @@ export function sanitizeState(s: ProgressState): ProgressState {
     ...s,
     schemaVersion: SCHEMA_VERSION,
     xp: Math.max(0, Math.min(1_000_000, Math.floor(s.xp) || 0)),
-    settings: { ...defaultSettings, ...s.settings },
+    settings: sanitizeSettings(s.settings),
     completedLessons: Object.fromEntries(
       Object.entries(s.completedLessons || {}).filter(
         ([k, v]) => typeof k === 'string' && k.length < 200 && v && typeof v === 'object'
       )
     ) as ProgressState['completedLessons'],
-    snippets: (s.snippets || [])
+    snippets: (Array.isArray(s.snippets) ? s.snippets : [])
       .filter((sn) => sn && typeof sn.code === 'string' && sn.code.length <= MAX_CODE_LEN)
       .slice(0, MAX_SNIPPETS)
       .map((sn) => ({
@@ -95,9 +107,9 @@ export function sanitizeState(s: ProgressState): ProgressState {
         code: String(sn.code).slice(0, MAX_CODE_LEN),
         savedAt: String(sn.savedAt || new Date().toISOString()),
       })),
-    activity: (s.activity || []).filter((a) => a && typeof a.at === 'string').slice(0, MAX_ACTIVITY),
-    reviewQueue: (s.reviewQueue || []).filter((r) => r && typeof r.lessonId === 'string').slice(0, MAX_REVIEW),
-    achievements: (s.achievements || []).filter((a) => typeof a === 'string').slice(0, 200),
+    activity: (Array.isArray(s.activity) ? s.activity : []).filter((a) => a && typeof a.at === 'string' && typeof a.kind === 'string').slice(0, MAX_ACTIVITY),
+    reviewQueue: (Array.isArray(s.reviewQueue) ? s.reviewQueue : []).filter((r) => r && typeof r.lessonId === 'string').slice(0, MAX_REVIEW),
+    achievements: (Array.isArray(s.achievements) ? s.achievements : []).filter((a) => typeof a === 'string').slice(0, 200),
   };
   return result;
 }

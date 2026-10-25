@@ -154,7 +154,7 @@ export function renderLessonView(lesson: Lesson, host: HTMLElement): void {
       })));
       playSound('achievement');
     }
-    panel.scrollIntoView({ behavior: getState().settings.reducedMotion ? 'auto' : 'smooth', block: 'nearest' });
+    panel.scrollIntoView?.({ behavior: getState().settings.reducedMotion ? 'auto' : 'smooth', block: 'nearest' });
   }
 
   // Sidebar: status + quick links

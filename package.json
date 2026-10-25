@@ -12,9 +12,11 @@
     "test:watch": "vitest",
     "typecheck": "tsc --noEmit",
     "validate": "vitest run tests/curriculum",
-    "report": "node scripts/build-report.mjs"
+    "report": "tsx scripts/build-report.ts",
+    "check:cpp": "tsx scripts/check-cpp-examples.ts"
   },
   "devDependencies": {
+    "happy-dom": "^21.0.4",
     "tsx": "^4.23.15",
     "typescript": "^5.6.3",
     "vite": "^5.4.10",

@@ -27,11 +27,17 @@ export interface DiagnosticInput {
 }
 
 const SECRET_PATTERN = /\b(?:ghp|gho|ghu|ghs|ghr|github_pat)_[A-Za-z0-9]{10,}\b/gi;
-const BEARER_PATTERN = /\b(bearer|authorization|token|api[_-]?key|secret|password)(\s*[:=]\s*)\S+/gi;
+const BEARER_PATTERN = /\bbearer\s+[A-Za-z0-9_\-\.]{6,}/gi;
+const AUTH_HEADER_PATTERN = /\bauthorization(\s*[:=]\s*)\S+/gi;
+const KV_SECRET_PATTERN = /\b(token|api[_-]?key|secret|password)(\s*[:=]\s*)[A-Za-z0-9_\-\.]{6,}/gi;
 
 /** Remove anything that looks like a credential from user-provided text. */
 export function redactSecrets(text: string): string {
-  return text.replace(SECRET_PATTERN, '[REDACTED_TOKEN]').replace(BEARER_PATTERN, '$1$2[REDACTED]');
+  return text
+    .replace(SECRET_PATTERN, '[REDACTED_TOKEN]')
+    .replace(BEARER_PATTERN, 'Bearer [REDACTED]')
+    .replace(AUTH_HEADER_PATTERN, 'authorization$1[REDACTED]')
+    .replace(KV_SECRET_PATTERN, '$1$2[REDACTED]');
 }
 
 /**
