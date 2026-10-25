@@ -27,23 +27,6 @@ interface PlannedLevelSpec {
 
 const plannedSpecs: PlannedLevelSpec[] = [
   {
-    id: 5,
-    title_km: 'មុខងារ (Functions)',
-    title_en: 'Functions',
-    objective_km: 'សរសេរ និងប្រើមុខងារ រួមទាំង pass by reference និង recursion មូលដ្ឋាន',
-    prerequisites_km: 'បញ្ចប់កម្រិត ៤',
-    outcomes_km: ['បង្កើតមុខងារដែលមាន parameters និង return', 'យល់ពី scope', 'ខុសគ្នារវាង pass by value និង reference', 'ប្រើ overloading និង recursion មូលដ្ឋាន'],
-    estimated_hours: 7,
-    lessons: [
-      { id: 'l5-functions-intro', unit: 1, title_km: 'ការបង្កើតមុខងារ', title_en: 'Function basics', minutes: 18 },
-      { id: 'l5-params-return', unit: 1, title_km: 'Parameters និង return values', title_en: 'Parameters and returns', minutes: 18 },
-      { id: 'l5-scope', unit: 1, title_km: 'វិសាលភាព (scope)', title_en: 'Scope', minutes: 15 },
-      { id: 'l5-pass-by-ref', unit: 2, title_km: 'Pass by value និង reference', title_en: 'Passing by reference', minutes: 20 },
-      { id: 'l5-overloading', unit: 2, title_km: 'Function overloading', title_en: 'Overloading', minutes: 15 },
-      { id: 'l5-recursion', unit: 2, title_km: 'Recursion មូលដ្ឋាន', title_en: 'Basic recursion', minutes: 20 },
-    ],
-  },
-  {
     id: 6,
     title_km: 'Collections និង Strings',
     title_en: 'Collections and Strings',

@@ -1,6 +1,6 @@
 # របាយការណ៍ភាពពេញលេញនៃមាតិកា (Curriculum Completeness Report)
 
-> បង្កើតស្វ្យ័យប្រវត្តិដោយ `npm run report` — 2026-10-25T16:52:43.310Z
+> បង្កើតស្វ្យ័យប្រវត្តិដោយ `npm run report` — 2026-10-25T17:02:36.190Z
 > សូមកុំកែដោយដៃ; កែតាមរយៈ curriculum data ហើយរត់ script នេះឡើងវិញ។
 
 ## សង្ខេប (Summary)
@@ -8,13 +8,13 @@
 | រង្វាស់ | ចំនួន |
 | --- | --- |
 | កម្រិតសរុប | 13 |
-| កម្រិតមានមាតិកា published | 5 |
-| មេរៀន Published | 25 |
+| កម្រិតមានមាតិកា published | 6 |
+| មេរៀន Published | 31 |
 | មេរៀន Draft | 0 |
-| មេរៀន Planned | 46 |
-| លំហាត់សរុប (published) | 89 |
-| ឧទាហរណ៍ C++ មាន expected output (ផ្ទៀងផ្ទាត់ដោយ g++ ក្នុង CI) | 26 |
-| លំហាត់សរសេរកូដ (code challenges ជាមួយ test cases) | 17 |
+| មេរៀន Planned | 40 |
+| លំហាត់សរុប (published) | 110 |
+| ឧទាហរណ៍ C++ មាន expected output (ផ្ទៀងផ្ទាត់ដោយ g++ ក្នុង CI) | 32 |
+| លំហាត់សរសេរកូដ (code challenges ជាមួយ test cases) | 21 |
 
 ## ស្ថានភាពតាមកម្រិត (Per-level status)
 
@@ -23,9 +23,9 @@
 | 0 | ការត្រៀមខ្លួន (Getting Ready) | published | 3 | 0 |
 | 1 | មូលដ្ឋាន C++ (C++ Basics) | published | 5 | 0 |
 | 2 | អថេរ និងទិន្នន័យ (Variables and Data) | published | 5 | 0 |
-| 4 | រង្វិលជុំ (Loops) (Loops) | published | 6 | 0 |
 | 3 | លក្ខខណ្ឌ និងតក្កវិជ្ជា (Conditionals and Logic) | published | 6 | 0 |
-| 5 | មុខងារ (Functions) (Functions) | planned | 0 | 6 |
+| 4 | រង្វិលជុំ (Loops) (Loops) | published | 6 | 0 |
+| 5 | មុខងារ (Functions) (Functions) | published | 6 | 0 |
 | 6 | Collections និង Strings (Collections and Strings) | planned | 0 | 6 |
 | 7 | Pointers និង Memory (Pointers and Memory) | planned | 0 | 6 |
 | 8 | Object-Oriented Programming (Object-Oriented Programming) | planned | 0 | 6 |
@@ -63,6 +63,12 @@
 | l4-break-continue | break និង continue | 4 | 1 | 15 | 1.0.0 |
 | l4-nested-loops | រង្វិលជុំបង្កប់ | 3 | 1 | 18 | 1.0.0 |
 | l4-loop-tracing | ការតាមដាន (trace) រង្វិលជុំ | 3 | 1 | 15 | 1.0.0 |
+| l5-functions-intro | ការបង្កើតមុខងារ | 4 | 1 | 18 | 1.0.0 |
+| l5-params-return | Parameters និង return values | 4 | 1 | 18 | 1.0.0 |
+| l5-scope | វិសាលភាព (scope) | 3 | 1 | 15 | 1.0.0 |
+| l5-pass-by-ref | Pass by value និង reference | 4 | 1 | 20 | 1.0.0 |
+| l5-overloading | Function overloading | 3 | 1 | 15 | 1.0.0 |
+| l5-recursion | Recursion មូលដ្ឋាន | 3 | 1 | 20 | 1.0.0 |
 
 ## និយមន័យស្ថានភាព (Status definitions)
 

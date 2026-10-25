@@ -4,6 +4,7 @@ import { level01Lessons } from '../curriculum/levels/level-01/lessons';
 import { level02Lessons } from '../curriculum/levels/level-02/lessons';
 import { level03Lessons } from '../curriculum/levels/level-03/lessons';
 import { level04Lessons } from '../curriculum/levels/level-04/lessons';
+import { level05Lessons } from '../curriculum/levels/level-05/lessons';
 import { plannedLevels, plannedLessons } from '../curriculum/levels/planned-levels';
 
 // ============================================================
@@ -11,10 +12,18 @@ import { plannedLevels, plannedLessons } from '../curriculum/levels/planned-leve
 // ============================================================
 
 export const APP_NAME = 'Khmer C++ Academy';
-export const APP_VERSION = '1.0.0';
+export const APP_VERSION = '1.1.0';
 export const CPP_STANDARD = 'C++17';
 
-export const allLessons: Lesson[] = [...level00Lessons, ...level01Lessons, ...level02Lessons, ...level03Lessons, ...level04Lessons, ...plannedLessons];
+export const allLessons: Lesson[] = [
+  ...level00Lessons,
+  ...level01Lessons,
+  ...level02Lessons,
+  ...level03Lessons,
+  ...level04Lessons,
+  ...level05Lessons,
+  ...plannedLessons,
+];
 
 const lessonMap = new Map<string, Lesson>(allLessons.map((l) => [l.id, l]));
 
@@ -24,13 +33,11 @@ export const publishedLevels: Level[] = [
     title_km: 'ការត្រៀមខ្លួន',
     title_en: 'Getting Ready',
     status: 'published',
-    objective_km: 'យល់ពីមូលដ្ឋាននៃការសរសេរកម្មវិធី និងរបៀបប្រើគេហទំព័រនេះ',
+    objective_km: 'យល់ពីមូលដ្ឋាននៃការសរសេរក្មវិធី និងរបៀបប្រើគេហទំព័រនេះ',
     prerequisites_km: 'គ្មាន — សម្រាប់អ្នកចាប់ផ្តើមដំបូង',
     outcomes_km: ['ដឹងថា C++ ជាអ្វី និងគេប្រើនៅឯណា', 'យល់ពីតួនាទី compiler', 'ចេះប្រើគេហទំព័រដើម្បីរៀន'],
     estimated_hours: 1,
-    units: [
-      { id: '0-1', title_km: 'ខ្នាតទី ១ — ស្គាល់ C++', lessonIds: level00Lessons.map((l) => l.id) },
-    ],
+    units: [{ id: '0-1', title_km: 'ខ្នាតទី ១ — ស្គាល់ C++', lessonIds: level00Lessons.map((l) => l.id) }],
   },
   {
     id: 1,
@@ -41,9 +48,7 @@ export const publishedLevels: Level[] = [
     prerequisites_km: 'បញ្ចប់កម្រិត ០ ឬមានចំណេះដឹងមូលដ្ឋានអំពីកុំព្យូទ័រ',
     outcomes_km: ['សរសេរកម្មវិធីដំបូងបាន', 'យល់ពី main() និង statements', 'បញ្ចេញ និងទទួលទិន្នន័យដោយ cout/cin'],
     estimated_hours: 3,
-    units: [
-      { id: '1-1', title_km: 'ខ្នាតទី ១ — កម្មវិធីដំបូង', lessonIds: level01Lessons.map((l) => l.id) },
-    ],
+    units: [{ id: '1-1', title_km: 'ខ្នាតទី ១ — កម្មវិធីដំបូង', lessonIds: level01Lessons.map((l) => l.id) }],
   },
   {
     id: 2,
@@ -54,9 +59,7 @@ export const publishedLevels: Level[] = [
     prerequisites_km: 'បញ្ចប់កម្រិត ១',
     outcomes_km: ['បង្កើត និងប្រើអថេរ/ថេរ', 'ជ្រើសរើសប្រភេទទិន្នន័យត្រឹមត្រូវ', 'ប្រើ arithmetic, comparison និង assignment operators', 'បំលែងប្រភេទទិន្នន័យដោយ static_cast'],
     estimated_hours: 4,
-    units: [
-      { id: '2-1', title_km: 'ខ្នាតទី ១ — ទិន្នន័យ និងការគណនា', lessonIds: level02Lessons.map((l) => l.id) },
-    ],
+    units: [{ id: '2-1', title_km: 'ខ្នាតទី ១ — ទិន្នន័យ និងការគណនា', lessonIds: level02Lessons.map((l) => l.id) }],
   },
   {
     id: 3,
@@ -64,7 +67,7 @@ export const publishedLevels: Level[] = [
     title_en: 'Conditionals and Logic',
     status: 'published',
     objective_km: 'ប្រើ if/else, else if, switch និង logical operators ដើម្បីសម្រេចចិត្តក្នុងកម្មវិធី',
-    prerequisites_km: 'បញ្ចប់កម្រិត ២ (អថេរ និង operators)',
+    prerequisites_km: 'បញ្ចប់កម្រិត ២',
     outcomes_km: ['ប្រើ if / else if / else', 'ប្រើ switch', 'ប្រើ && || !', 'ជៀសវាងកំហុស logic ទូទៅ'],
     estimated_hours: 5,
     units: [
@@ -84,6 +87,20 @@ export const publishedLevels: Level[] = [
     units: [
       { id: '4-1', title_km: 'ខ្នាតទី ១ — រង្វិលមូលដ្ឋាន', lessonIds: ['l4-for', 'l4-while', 'l4-do-while'] },
       { id: '4-2', title_km: 'ខ្នាតទី ២ — គ្រប់គ្រងរង្វិល', lessonIds: ['l4-break-continue', 'l4-nested-loops', 'l4-loop-tracing'] },
+    ],
+  },
+  {
+    id: 5,
+    title_km: 'មុខងារ (Functions)',
+    title_en: 'Functions',
+    status: 'published',
+    objective_km: 'សរសេរ និងប្រើមុខងារ រួមទាំង pass by reference និង recursion មូលដ្ឋាន',
+    prerequisites_km: 'បញ្ចប់កម្រិត ៤',
+    outcomes_km: ['បង្កើតមុខងារដែលមាន parameters និង return', 'យល់ពី scope', 'ខុសគ្នារវាង pass by value និង reference', 'ប្រើ overloading និង recursion មូលដ្ឋាន'],
+    estimated_hours: 7,
+    units: [
+      { id: '5-1', title_km: 'ខ្នាតទី ១ — មុខងារមូលដ្ឋាន', lessonIds: ['l5-functions-intro', 'l5-params-return', 'l5-scope'] },
+      { id: '5-2', title_km: 'ខ្នាតទី ២ — កម្រិតមធ្យម', lessonIds: ['l5-pass-by-ref', 'l5-overloading', 'l5-recursion'] },
     ],
   },
   ...plannedLevels,
