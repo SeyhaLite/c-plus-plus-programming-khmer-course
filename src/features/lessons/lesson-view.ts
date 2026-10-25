@@ -3,6 +3,7 @@ import { el } from '../../utils/dom';
 import { icon } from '../../app/icons';
 import { renderMarkdown } from '../../utils/markdown';
 import { renderExercise, type ExerciseHandle } from '../../components/exercises';
+import { renderDiagram } from '../../components/diagrams';
 import { completeLesson, getState } from '../../services/progress';
 import { mascotBubble } from '../../app/character';
 import { breadcrumbs, showToast, updateStats } from '../../app/layout';
@@ -83,6 +84,13 @@ export function renderLessonView(lesson: Lesson, host: HTMLElement): void {
   });
 
   const main = el('div', {}, progressHead, header, explanationCard, lesson.examples.length ? examplesSection : null);
+
+  // Diagrams (រូបភាពសិក្សា SVG)
+  if (lesson.diagrams && lesson.diagrams.length > 0) {
+    const diagramSection = el('div', { class: 'lesson-diagrams' }, el('h2', {}, 'រូបភាពជំនួយការយល់ដឹង'));
+    lesson.diagrams.forEach((d) => diagramSection.append(renderDiagram(d)));
+    main.append(diagramSection);
+  }
 
   if (lesson.commonMistake) {
     const cm = lesson.commonMistake;

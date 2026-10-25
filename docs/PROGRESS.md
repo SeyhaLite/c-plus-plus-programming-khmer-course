@@ -41,6 +41,13 @@
 - **ការកែ**៖ បតូរ comments ទៅ `/* */`; បន្ថែម regression guards៖ `tests/unit/css-tokens.test.ts` (បដិសេធ `//` comments, braces/comments balanced, :root tokens) + `scripts/check-build-css.mjs` ភ្ជាប់ក្នុង `npm run build` (បរាជ័យបើ bundle បាត់ :root)។
 - **ផ្ទៀងផ្ទាត់**៖ Chromium ពិតលើ build ថ្មី — :root 51 declarations, body bg #f6f8fc, font Noto Sans Khmer, hero gradient, 0 console errors; screenshots ក្នុង reports/e2e-*.png។
 
+## ២០៦-០-៥ — Hotfix #2 + រូបភាពសិក្សា (តបតាមមតិអ្នកប្រើ)
+
+- **Bug (របាយការណ៍អ្កប្រើ)**៖ កនុង dark theme ប៊ូតុងជម្រើសក្នុងទំព័រពិនិត្យចំណេះដឹងមានអក្សរខ្មៅលើផ្ទៃងងឹត។ មូលហេតុ៖ base rule របស់ `button` មិនបានកំណត់ `color` → browser ប្រើពណ៌លំនាំដើម (ខ្មៅ) លើផ្ទៃ dark។ កែ៖ `button { color: inherit }` + regression test ក្នុង css-tokens.test.ts។ ផ្ទៀងផ្ទាត់ដោយ Chromium៖ option button dark = អក្សរ #e8edf7 លើផ្ទៃ #1a2743។
+- **Feature (តាមសំណើ)**៖ បន្ថែម **ដ្យាក្រាម SVG ដើម** ក្នុងមេរៀន published ទាំង ១៣ (៤ ប្រភេទ៖ pipeline, boxes, ioflow, table) — រូបភាពសិក្សាដែលបង្កើតដោយកូដ គ្មានអាជ្ញាបណ្ណខាងក្រៅ ដំណើរការទាំង light/dark និង mobile (scroll ផ្ដេក)។ Schema ថ្មី `diagrams` ក្នុង Lesson + validation tests។
+- បន្ថែមតំណ **វីដេអូ/ធនធានខាងក្រៅ** (freeCodeCamp full course, LearnCpp, cppreference, ការស្វែងរកវីដេអូខ្មែរ) ក្នុងទំព័រ បណ្ណាល័យ — សម្គាល់ច្បាស់ថាជាតំណខាងក្រៅ។
+- `scripts/visual-qa.mjs` — ស្ក្រីបថត screenshot light/dark សម្រាប់ QA។
+
 ## ការងារបន្ទាប់ (អាទិភាព)
 
 1. សរសេរមាតិកាពិតកម្រិត ៣ (លក្ខខណ្ឌ) — ៦ មេរៀន តាមគោលការណ៍ [CONTENT_GUIDELINES.md](./CONTENT_GUIDELINES.md)

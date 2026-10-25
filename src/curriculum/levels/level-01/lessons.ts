@@ -58,6 +58,18 @@ int main() {
       note_km:
         'កំហុសទូទៅបំផុតរបស់អ្នកចាប់ផ្តើម៖ ភ្លេចសញ្ញា ; នៅចុង statement។ Compiler នឹងបង្ហាញ "expected \';\' ..." — អានសារនេះឲ្យបានម៉ត់ចត់។',
     },
+    diagrams: [
+      {
+        type: 'pipeline',
+        title_km: 'លំហូរនៃកម្មវិធី Hello World',
+        steps: [
+          { label_km: 'ចាប់ផ្តើម', sub: 'int main()' },
+          { label_km: 'បញ្ចេញអក្សរ', sub: 'std::cout <<' },
+          { label_km: 'ចុះបន្ទាត់', sub: 'std::endl' },
+          { label_km: 'បញ្ចប់', sub: 'return 0' },
+        ],
+      },
+    ],
     exercises: [
       {
         id: 'l1-hello-world-ex1',
@@ -177,6 +189,18 @@ int main() {
         expectedOutput: 'ទី ១\nទី ២\nទី ៣\n',
       },
     ],
+    diagrams: [
+      {
+        type: 'pipeline',
+        title_km: 'Statements ដំណើរការពីលើចុះក្រោម',
+        steps: [
+          { label_km: 'បន្ទាត់ទី ១', sub: 'cout << "ទី ១";' },
+          { label_km: 'បន្ទាត់ទី ២', sub: 'cout << "ទី ២";' },
+          { label_km: 'បន្ទាត់ទី ៣', sub: 'cout << "ទី ៣";' },
+          { label_km: 'បញ្ចប់', sub: 'return 0;' },
+        ],
+      },
+    ],
     exercises: [
       {
         id: 'l1-main-function-ex1',
@@ -277,6 +301,18 @@ std::cout << "This will not compile" << std::endl;`,
 std::cout << "This will compile" << std::endl;`,
       note_km: 'បើភ្លេចសញ្ញា */ compiler នឹងស្មានថាកូដបន្ទាប់ស្ថិតក្នុង comment ទាំងអស់ ហើយអាចបង្កើតកំហុសចម្លែក។',
     },
+    diagrams: [
+      {
+        type: 'table',
+        title_km: 'អ្វីដែល compiler អាន និងរំលង',
+        columns: ['ប្រភេទបន្ទាត់', 'ឧទាហរណ៍', 'Compiler'],
+        rows: [
+          ['statement', 'std::cout << "A";', '✓ ដំណើរការ'],
+          ['comment មួយបន្ទាត់', '// កំណត់ចំណាំ', '✗ រំលង'],
+          ['comment ច្រើនបន្ទាត់', '/* ... */', '✗ រំលង'],
+        ],
+      },
+    ],
     exercises: [
       {
         id: 'l1-statements-comments-ex1',
@@ -369,6 +405,19 @@ int main() {
       note_km:
         'អ្វីដែលដាក់ក្នុងសញ្ញាសម្រង់ គឺជាអក្សរ (string) — មិនមែនការគណនាទេ។ ដកសញ្ញាសម្រង់ចេញ ទើប C++ គណនា 5 + 3។',
     },
+    diagrams: [
+      {
+        type: 'table',
+        title_km: 'អក្សរក្នុងសញ្ញាសម្រង់ vs ការគណនា',
+        columns: ['កូដ', 'លទ្ធផលបញ្ចេញ', 'ហេតុផល'],
+        rows: [
+          ['cout << "10"', '10', 'string — បញ្ចេញដូចការសរសេរ'],
+          ['cout << 10', '10', 'លេខ — បញ្ចេញតម្លៃ'],
+          ['cout << 2 + 2', '4', 'គណនាមុន សឹមបញ្ចេញ'],
+          ['cout << "2 + 2"', '2 + 2', 'string — មិនគណនាទេ'],
+        ],
+      },
+    ],
     exercises: [
       {
         id: 'l1-cout-output-ex1',
@@ -491,6 +540,16 @@ std::cin >> age;   // ទិន្នន័យហូរចូល age`,
       note_km:
         'កំហុសទូទៅ៖ ច្រឡំទិស operator។ ចងចាំ៖ cin ប្រើ >> (ហូរចូលអថេរ) cout ប្រើ << (ហូរចេញទៅអេក្រង់)។',
     },
+    diagrams: [
+      {
+        type: 'ioflow',
+        title_km: 'លំហូរទិន្នន័យ៖ stdin → អថេរ → stdout',
+        input: 'Dara',
+        variable: 'name',
+        output: 'Hello, Dara!',
+        note_km: 'std::cin >> name អាន token មួយ (ដល់ចន្លោះ) ទុកក្នុងអថេរ name។',
+      },
+    ],
     exercises: [
       {
         id: 'l1-cin-input-ex1',

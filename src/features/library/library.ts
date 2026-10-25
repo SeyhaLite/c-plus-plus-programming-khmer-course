@@ -80,6 +80,20 @@ export function renderLibrary(host: HTMLElement): void {
     ['input', 'ទិន្នន័យចូល'],
   ]));
 
+  host.append(el('div', { class: 'card', style: 'margin-bottom:1rem' },
+    el('h2', { style: 'font-size:1.05rem' }, icon('play', 18), ' វីដេអូ និងធនធានបន្ថែម (ខាងក្រៅ)'),
+    el('p', { class: 'help', style: 'color:var(--c-text-muted);font-size:.85rem' },
+      'តំណខាងក្រោមនាំទៅកាន់ធនធនឥតគិតថ្លៃនៅគេហទំព័រផសេង (ភាគច្រើនជាភាសាអង់គ្លេស)។ គេហទំព័រនេះមិនទទួលខុសត្រូវលើមាតិកាខាងក្រៅទេ ហើយតំណអាចប្តូរបាន។'),
+    el('ul', { style: 'font-size:.9rem' },
+      el('li', {}, el('a', { href: 'https://www.youtube.com/watch?v=vLnPwxZdW4Y', target: '_blank', rel: 'noopener' }, 'freeCodeCamp — C++ Tutorial for Beginners (Full Course, video)'), ' — វីដេអូពេញមេរៀន (អង់គ្លេស)'),
+      el('li', {}, el('a', { href: 'https://www.learncpp.com/', target: '_blank', rel: 'noopener' }, 'LearnCpp.com'), ' — មេរៀនអត្ថបទដ៏លម្អិត (អង់គ្លេស)'),
+      el('li', {}, el('a', { href: 'https://en.cppreference.com/', target: '_blank', rel: 'noopener' }, 'cppreference.com'), ' — ឯកសារយោងស្តង់ដារ'),
+      el('li', {}, el('a', { href: 'https://www.youtube.com/results?search_query=learn+c%2B%2B+in+khmer', target: '_blank', rel: 'noopener' }, 'ស្វែងរកវីដេអូ C++ ជាភាសាខ្មែរលើ YouTube'), ' — មាតិកាខ្មែរពីសហគមន៍'),
+    ),
+    el('p', { class: 'help', style: 'color:var(--c-text-muted);font-size:.85rem;margin-top:.5rem' },
+      'ចំណាំ៖ រាល់រូបភាពនៅក្នុងគេហទំព័រនេះ (ដ្យាក្រាម SVG) គឺជារូបភាពដើមដែលបង្កើតឡើងសម្រាប់គម្រោង — គ្មានបញ្ហាអាជ្ញាបណ្ណ និងមិនពឹងផ្អែកលើ server ខាងក្រៅទេ។')
+  ));
+
   host.append(el('div', { class: 'card' },
     el('h2', { style: 'font-size:1.05rem' }, icon('book', 18), ' ធនធានបន្ថែម'),
     el('ul', {},

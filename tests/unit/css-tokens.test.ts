@@ -41,6 +41,13 @@ describe('css source hygiene', () => {
     }
   });
 
+  it('base.css gives buttons an inherited color (dark-theme visibility regression)', () => {
+    const src = readFileSync(join(stylesDir, 'base.css'), 'utf8');
+    const btnRule = /button\s*\{([^}]*)\}/.exec(src);
+    expect(btnRule, 'button base rule missing').toBeTruthy();
+    expect(btnRule![1], 'button rule must set color (incident: black text on dark surfaces)').toContain('color:');
+  });
+
   it('tokens.css defines the dark theme overrides', () => {
     const src = readFileSync(join(stylesDir, 'tokens.css'), 'utf8');
     expect(src).toMatch(/\[data-theme=['"]dark['"]\]\s*\{/);

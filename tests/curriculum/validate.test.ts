@@ -241,6 +241,45 @@ describe('curriculum: exercise schema validity', () => {
   });
 });
 
+describe('curriculum: diagram schema validity', () => {
+  const withDiagrams = published.filter((l) => (l.diagrams?.length ?? 0) > 0);
+
+  it('published lessons include learning diagrams', () => {
+    expect(withDiagrams.length).toBeGreaterThanOrEqual(10);
+  });
+
+  it('every diagram has a valid type, title, and non-empty payload', () => {
+    for (const l of published) {
+      for (const d of l.diagrams ?? []) {
+        expect(d.title_km.trim().length, `${l.id} diagram title`).toBeGreaterThan(3);
+        switch (d.type) {
+          case 'pipeline':
+            expect(d.steps.length, `${l.id} pipeline steps`).toBeGreaterThanOrEqual(2);
+            d.steps.forEach((s) => expect(s.label_km.trim().length).toBeGreaterThan(0));
+            break;
+          case 'boxes':
+            expect(d.boxes.length, `${l.id} boxes`).toBeGreaterThanOrEqual(1);
+            d.boxes.forEach((b) => {
+              expect(b.name.trim().length).toBeGreaterThan(0);
+              expect(b.value.trim().length).toBeGreaterThan(0);
+            });
+            break;
+          case 'ioflow':
+            expect(d.output.trim().length, `${l.id} ioflow output`).toBeGreaterThan(0);
+            break;
+          case 'table':
+            expect(d.columns.length, `${l.id} table columns`).toBeGreaterThanOrEqual(2);
+            expect(d.rows.length, `${l.id} table rows`).toBeGreaterThanOrEqual(1);
+            d.rows.forEach((r) => expect(r.length, `${l.id} row width`).toBe(d.columns.length));
+            break;
+          default:
+            throw new Error(`unknown diagram type in ${l.id}`);
+        }
+      }
+    }
+  });
+});
+
 describe('curriculum: level metadata', () => {
   it('every level has objective, prerequisites text, outcomes and time estimate', () => {
     for (const lv of allLevels) {

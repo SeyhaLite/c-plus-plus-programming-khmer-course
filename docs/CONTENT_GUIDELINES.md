@@ -27,6 +27,21 @@
 - code_challenge: ត្រូវមាន test cases ≥ ១ (ណែនាំ ២+ រួមទាំង edge case ឧ. ចំនួនអវិជ្ជមាន) និង `solutionCode` ដែល CI ផ្ទៀងផ្ទាត់។
 - hints ត្រូវបង្ហាញជាបណ្តើរៗ៖ ជំនួយទី ១ = ទិសដៅ ជំនួយចុង = ជិតចម្លើយ ប៉ុន្តែ **មិនដែលបង្ហាញចម្លើយពេញ**។
 
+## ៣ប. ដ្យាក្ាម (រូបភាពសិក្សា)
+
+រាល់មេរៀន published គួរមានដ្យាក្រាមយ៉ាងតិច ១។ បន្ថែមក្នុង field `diagrams`៖
+
+```ts
+diagrams: [
+  { type: 'pipeline', title_km: '…', steps: [{ label_km: '…', sub: 'code' }, …] },
+  { type: 'boxes',    title_km: '…', boxes: [{ name: 'age', value: '20', kind: 'int', constant?: true }] },
+  { type: 'ioflow',   title_km: '…', input?: '5', variable?: 'n', output: '15' },
+  { type: 'table',    title_km: '…', columns: ['…','…'], rows: [['…','…'], …] },
+]
+```
+
+គោលការណ៍៖ ស្លាកខ្លីៗ (≤ ២០ អក្សរ/បន្ទាត់) · ផ្នែកកូដដាក់ក្នុង `sub`/cells (mono) · ពណ៌យកពី tokens ជានិច្ច (កុំ hardcode) · validation test ត្រួតពិនិត្យ schema ស្វ័យប្រវត្តិ។
+
 ## ៤. ការដាក់ស្ថានភាព (status)
 
 - `planned` — មានតែ metadata (title, minutes)។ មិនអាចមាន explanation/exercises ទេ (validation test ទាមទារឲ្យទទេ)។

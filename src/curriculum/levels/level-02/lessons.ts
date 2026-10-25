@@ -59,6 +59,17 @@ std::cout << score;`,
       note_km:
         'អថេរដែលមិនទាន់ initialize មានតម្លៃ "កំធុកស" (garbage) ពី memory ចាស់។ តែងតែផ្តល់តម្លៃដំបូងពេលបង្កើត។',
     },
+    diagrams: [
+      {
+        type: 'boxes',
+        title_km: 'អថេរ និងថេរក្នុង memory',
+        boxes: [
+          { name: 'age', value: '20 → 21', kind: 'int (ប្តូរបាន)' },
+          { name: 'PI', value: '3.14', kind: 'const double', constant: true },
+        ],
+        note_km: 'ប្រអប់ពណ៌លង = const — តម្លៃមិនអាចប្តូរបានទៀតទេ។',
+      },
+    ],
     exercises: [
       {
         id: 'l2-variables-ex1',
@@ -198,6 +209,19 @@ int main() {
       rightCode: `char c = 'A';   // សញ្ញាសម្រង់មួយ — ត្រឹមត្រូវ`,
       note_km: 'char ប្រើសញ្ញាសម្រង់មួយ \' \' ឯ string ប្រើសញ្ញាសម្រង់ពីរ " "។',
     },
+    diagrams: [
+      {
+        type: 'boxes',
+        title_km: 'ប្រភេទទិន្នន័យមូលដ្ឋានទាំង ៥',
+        boxes: [
+          { name: 'count', value: '42', kind: 'int' },
+          { name: 'price', value: '3.5', kind: 'double' },
+          { name: 'grade', value: "'A'", kind: 'char' },
+          { name: 'passed', value: 'true', kind: 'bool' },
+          { name: 'name', value: '"Dara"', kind: 'string' },
+        ],
+      },
+    ],
     exercises: [
       {
         id: 'l2-data-types-ex1',
@@ -332,6 +356,19 @@ int main() {
       rightCode: `std::cout << 2 + 3 * 4 << std::endl;   // ត្រឹមត្រូវ = 14 (គុណមុន)`,
       note_km: 'គុណ/ចែក មានអាទិភាពមុន បូក/ដក។ បើចង់បូកមុន ត្រូវដាក់វង់ក្រចក (2 + 3) * 4 = 20។',
     },
+    diagrams: [
+      {
+        type: 'table',
+        title_km: 'លទ្ធផលនៃ operators សំខាន់ៗ',
+        columns: ['កន្សោម', 'លទ្ធផល', 'ចំណាំ'],
+        rows: [
+          ['7 / 2', '3', 'int / int កាត់ទសភាគ'],
+          ['7 % 2', '1', 'សំណល់ (modulo)'],
+          ['7.0 / 2', '3.5', 'មាន double ម្ខាង'],
+          ['2 + 3 * 4', '14', 'គុណមុន បូកក្រោយ'],
+        ],
+      },
+    ],
     exercises: [
       {
         id: 'l2-operators-ex1',
@@ -452,6 +489,19 @@ int main() {
       rightCode: `if (x == 5) { ... }  // ប្រៀបធៀប x ជាមួយ 5`,
       note_km: '= ដាក់តម្លៃ == ប្រៀបធៀប។ ចងចាំ៖ "សញ្ញាស្មើពីរ សម្រាប់សួរសំណួរ"។',
     },
+    diagrams: [
+      {
+        type: 'table',
+        title_km: '= និង == ខុសគ្នាដាច់ស្រឡះ',
+        columns: ['កូដ', 'ន័យ', 'ប្រភេទលទ្ធផល'],
+        rows: [
+          ['x = 5', 'ដាក់តម្លៃ 5 ចូល x', 'int'],
+          ['x == 5', 'សួរ៖ x ស្មើ 5 ទេ?', 'bool'],
+          ['x += 3', 'x = x + 3', 'int'],
+        ],
+        note_km: 'កំហុសល្បីល្បាញ៖ ប្រើ = ក្នុង if (...) ជំនួស ==។',
+      },
+    ],
     exercises: [
       {
         id: 'l2-assignment-comparison-ex1',
@@ -560,6 +610,18 @@ double r = a / b;   // r = 3.0 មិនមែន 3.5 — ចែកជា int �
 double r = static_cast<double>(a) / b;   // r = 3.5`,
       note_km: 'ការចែកកើតឡើងមុនការដាក់តម្លៃចូល double។ a/b ជា int/int = 3 រួចទើបបំលែងជា 3.0។ ត្រូវ cast មុនចែក។',
     },
+    diagrams: [
+      {
+        type: 'pipeline',
+        title_km: 'double → int កាត់ទសភាគចោល (មិនបង្គត់ទេ)',
+        steps: [
+          { label_km: 'តម្លៃដើម', sub: 'double 3.9' },
+          { label_km: 'បំលែង', sub: 'static_cast<int>' },
+          { label_km: 'លទ្ធផល', sub: 'int 3' },
+        ],
+        note_km: 'ចំណាំ៖ 3.9 ក្លាយជា 3 — កាត់ចោល មិនមែនបង្គត់ជា 4 ទេ។',
+      },
+    ],
     exercises: [
       {
         id: 'l2-type-conversion-ex1',

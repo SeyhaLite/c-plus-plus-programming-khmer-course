@@ -404,3 +404,24 @@ dialog::backdrop { background: rgba(10, 15, 30, 0.55); }
 .lesson-examples, .lesson-exercises { margin-bottom: var(--sp-5); }
 details summary { padding: var(--sp-1) 0; }
 table { max-width: 100%; }
+
+/* ============ Diagrams ============ */
+.diagram {
+  margin: var(--sp-4) 0;
+  padding: var(--sp-3);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--r-md);
+  overflow-x: auto;
+}
+.diagram figcaption {
+  font-size: var(--fs-xs);
+  font-weight: 700;
+  color: var(--c-text-muted);
+  margin-top: var(--sp-2);
+}
+.diagram-note {
+  font-size: var(--fs-xs);
+  color: var(--c-text-muted);
+  margin-top: var(--sp-1);
+}

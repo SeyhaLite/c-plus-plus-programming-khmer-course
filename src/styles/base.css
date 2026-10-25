@@ -68,6 +68,7 @@ button {
   font-family: inherit;
   font-size: inherit;
   line-height: 1.5;
+  color: inherit; /* critical: without this, buttons keep the UA default black text and vanish on dark surfaces */
 }
 
 img, svg { max-width: 100%; }

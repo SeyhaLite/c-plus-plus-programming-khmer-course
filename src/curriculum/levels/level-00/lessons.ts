@@ -52,6 +52,19 @@ int main() {
       note_km:
         'កំហុសទូទៅ៖ ស្មានថាឯកសារ .cpp ដំណើរការបានដោយផ្ទាល់។ តាមពិត កុំព្យូទ័រមិនអាចដំណើរការ source code បានទេ លុះត្រាតែ compiler បកប្រែវាជា executable ជាមុនសិន។',
     },
+    diagrams: [
+      {
+        type: 'pipeline',
+        title_km: 'ដំណើរការពីកូដទៅលទ្ធផល',
+        steps: [
+          { label_km: 'កូដប្រភព', sub: 'hello.cpp' },
+          { label_km: 'Compiler', sub: 'g++' },
+          { label_km: 'Executable', sub: 'hello' },
+          { label_km: 'ដំណើរការ', sub: './hello' },
+        ],
+        note_km: 'Compiler បកប្រែកូដទាំងមូលជាមុនសិន ទើបយើងដំណើរការបាន។',
+      },
+    ],
     exercises: [
       {
         id: 'l0-what-is-cpp-ex1',
@@ -155,6 +168,20 @@ int main() {
         expectedOutput: 'Hello, C++!\n',
       },
     ],
+    diagrams: [
+      {
+        type: 'pipeline',
+        title_km: 'ដំណាក់កាលរបស់ compiler',
+        steps: [
+          { label_km: 'សរសេរកូដ', sub: '.cpp' },
+          { label_km: 'Preprocess', sub: '#include' },
+          { label_km: 'Compile', sub: 'ពិនិត្យ syntax' },
+          { label_km: 'Link', sub: 'library' },
+          { label_km: 'Executable', sub: 'ដំណើរការបាន' },
+        ],
+        note_km: 'បើមានកំហុស syntax ដំណាក់កាល Compile នឹងបញ្ឈរ ហើយបង្ហាញសារកំហុស។',
+      },
+    ],
     exercises: [
       {
         id: 'l0-compiler-ex1',
@@ -237,6 +264,20 @@ int main() {
 
 បើអ្នកជួបបញ្ហា សូមប្រើប៊ូតុង **រាយការណ៍បញ្ហា** នៅគ្រប់ទំព័រ — វាបង្កើតរបាយការណ៍ស្វ័យប្រវត្តិដែលអ្នកអាច copy ទៅដាក់ក្នុង GitHub Issue។`,
     examples: [],
+    diagrams: [
+      {
+        type: 'pipeline',
+        title_km: 'រង្វង់នៃការរៀន (Learn → Practice → Feedback)',
+        steps: [
+          { label_km: 'រៀន', sub: 'អានការពន្យល់' },
+          { label_km: 'ហាត់', sub: 'ធ្វើលំហាត់' },
+          { label_km: 'មតិ', sub: 'ត្រូវ/ខុសភ្លាមៗ' },
+          { label_km: 'ពិនិត្យ', sub: 'កែកំហុស' },
+          { label_km: 'ជាប់', sub: 'បញ្ចប់មេរៀន' },
+          { label_km: 'បន្ត', sub: 'មេរៀនបន្ទាប់' },
+        ],
+      },
+    ],
     exercises: [
       {
         id: 'l0-how-to-use-ex1',

@@ -103,6 +103,43 @@ export interface CommonMistake {
   note_km: string;
 }
 
+// ============================================================
+// ដ្យាក្រាម (Diagrams) — original inline-SVG learning visuals
+// ============================================================
+
+export interface PipelineDiagram {
+  type: 'pipeline';
+  title_km: string;
+  steps: { label_km: string; sub?: string }[];
+  note_km?: string;
+}
+
+export interface BoxesDiagram {
+  type: 'boxes';
+  title_km: string;
+  boxes: { name: string; value: string; kind?: string; constant?: boolean }[];
+  note_km?: string;
+}
+
+export interface IoFlowDiagram {
+  type: 'ioflow';
+  title_km: string;
+  input?: string;
+  variable?: string;
+  output: string;
+  note_km?: string;
+}
+
+export interface TableDiagram {
+  type: 'table';
+  title_km: string;
+  columns: string[];
+  rows: string[][];
+  note_km?: string;
+}
+
+export type DiagramSpec = PipelineDiagram | BoxesDiagram | IoFlowDiagram | TableDiagram;
+
 export interface Lesson {
   id: string;
   level_id: number;
@@ -118,6 +155,8 @@ export interface Lesson {
   explanation_km: string;
   examples: CodeExample[];
   commonMistake?: CommonMistake;
+  /** ដ្យាក្រាម SVG (រូបភាពសិក្សា) បង្ហាញក្រោយការពន្យល់ */
+  diagrams?: DiagramSpec[];
   exercises: Exercise[];
   summary_km: string;
   next?: string; // lesson id
