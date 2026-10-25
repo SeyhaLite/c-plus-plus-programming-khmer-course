@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="km" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Khmer C++ Academy — រៀន C++ ជាភាសាខ្មែរ</title>
+    <meta name="description" content="វេទិកាសិក្សា C++ ឥតគិតថ្លៃជាភាសាខ្មែរ មានមេរៀនតាមកម្រិត លំហាត់អន្តរកម្ម និងកន្លែងសរសេរកូដពិតប្រាកដ។" />
+    <link rel="icon" type="image/svg+xml" href="/c-plus-plus-programming-khmer-course/favicon.svg" />
+    <script>
+      // Restore deep path after GitHub Pages 404.html redirect (SPA routing).
+      (function (l) {
+        if (l.search[1] === '/') {
+          var decoded = l.search
+            .slice(1)
+            .split('&')
+            .map(function (s) { return s.replace(/~and~/g, '&'); })
+            .join('?');
+          history.replaceState(null, '', l.pathname.slice(0, -1) + decoded + l.hash);
+        }
+      })(window.location);
+      // Apply saved theme early to avoid flash.
+      try {
+        var s = JSON.parse(localStorage.getItem('kca.progress.v1') || '{}');
+        var t = s.settings && s.settings.theme;
+        if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+        if (s.settings && s.settings.reducedMotion) document.documentElement.setAttribute('data-motion', 'reduced');
+      } catch (e) { /* ignore */ }
+    </script>
+  </head>
+  <body>
+    <div id="app" aria-busy="true"></div>
+    <noscript>
+      <p style="font-family:sans-serif;padding:2rem">
+        កម្មវិធីនេះត្រូវការ JavaScript។ / This app requires JavaScript.
+      </p>
+    </noscript>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
