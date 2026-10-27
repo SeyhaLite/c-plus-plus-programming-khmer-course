@@ -193,3 +193,30 @@ describe('predict_output: blank lines are significant (regression)', () => {
     }
   });
 });
+
+describe('content quality: hints must guide, not reveal (CONTENT_GUIDELINES §3)', () => {
+  it('no fill_blank hint states the literal answer', () => {
+    for (const { ex } of fillBlanks) {
+      const f = ex as FillBlankExercise;
+      for (const variants of f.acceptedAnswers) {
+        for (const v of variants) {
+          // រំលងពាក្យខ្លីពេក (int, void, else, while) — ពាក្យទាំងនេះលេចឡើង
+          // ក្នុងការពន្យល់ធម្មជាតិ។ ផ្តោតលើចម្លើយវែងដែល hint មិនគួរប្រាប់ផ្ទាល់។
+          if (v.length < 8) continue;
+          for (const h of f.hints_km) {
+            expect(h.includes(v), `${f.id}: hint reveals the literal answer "${v}" → ${JSON.stringify(h)}`).toBe(false);
+          }
+        }
+      }
+    }
+  });
+});
+
+describe('multiple_choice: every exercise has at least 3 options', () => {
+  it('guessing at random cannot exceed ~33%', () => {
+    for (const { ex } of allExercises.filter((x) => x.ex.type === 'multiple_choice')) {
+      const m = ex as Extract<Exercise, { type: 'multiple_choice' }>;
+      expect(m.options_km.length, `${m.id}: too few options`).toBeGreaterThanOrEqual(3);
+    }
+  });
+});

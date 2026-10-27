@@ -8,6 +8,7 @@ import { getAchievement } from '../../data/achievements';
 import { playSound } from '../../services/audio';
 import { mascotBubble } from '../../app/character';
 import { pickPhrase, cheerComplete } from '../../data/encouragement';
+import { shuffleChoices } from '../../utils/shuffle';
 
 // ============================================================
 // ពិនិត្យចំណេះដឹង (Placement test)
@@ -27,6 +28,10 @@ export function renderQuiz(host: HTMLElement): void {
   const card = el('div', { class: 'card', style: 'margin-top:1rem;max-width:760px' });
   let idx = 0;
   const correctLevels: number[] = [];
+  // seed ថ្មីរាល់ការចាប់ផ្តើមតេស្ត → លំដាប់ជម្រើសខុសគ្នារវាងការធ្វើម្តងទៀត។
+  // សំខាន់ណាស់៖ កំហុសចាស់គឺ **សំណួរទាំង ៨ មានចម្លើយត្រឹមត្រូវនៅទីតាំងទី ១**
+  // ដូច្នេះការចុចជម្រើសដំបូងជានិច្ចផ្តល់ ៨/៨ → អ្នកសិក្សាត្រូវបានដាក់កម្រិតខ្ពស់ខុស។
+  let attemptSeed = `${Date.now()}`;
 
   function renderQuestion(): void {
     card.innerHTML = '';
@@ -38,13 +43,14 @@ export function renderQuiz(host: HTMLElement): void {
       ),
       el('h2', { style: 'font-size:1.1rem' }, q.prompt_km)
     );
-    let selected = -1;
+    let selectedPos = -1;
+    const { order, answerPos } = shuffleChoices(q.options_km.length, q.answerIndex, `${attemptSeed}|q${idx}`);
     const options = el('div', { class: 'mc-options', role: 'group', 'aria-label': 'ជម្រើស' },
-      ...q.options_km.map((text, i) =>
+      ...order.map((origIdx, pos) =>
         el('button', { class: 'mc-option', type: 'button', 'aria-pressed': 'false', onclick: () => {
-            selected = i;
-            options.querySelectorAll('.mc-option').forEach((b, j) => b.setAttribute('aria-pressed', String(j === i)));
-          } }, el('span', { class: 'key-hint' }, String(i + 1)), el('span', {}, text))
+            selectedPos = pos;
+            options.querySelectorAll('.mc-option').forEach((b, j) => b.setAttribute('aria-pressed', String(j === pos)));
+          } }, el('span', { class: 'key-hint' }, String(pos + 1)), el('span', {}, q.options_km[origIdx]))
       )
     );
     const fb = el('div', { role: 'status' });
@@ -57,13 +63,19 @@ export function renderQuiz(host: HTMLElement): void {
     });
     const checkBtn = el('button', { class: 'btn btn-primary', onclick: () => {
         if (answered) return;
-        if (selected < 0) { fb.replaceChildren(el('div', { class: 'feedback hint' }, 'សូមជ្រើសរើសចម្លើយមួយ។')); return; }
+        if (selectedPos < 0) { fb.replaceChildren(el('div', { class: 'feedback hint' }, 'សូមជ្រើសរើសចម្លើយមួយ។')); return; }
         answered = true;
-        const isRight = selected === q.answerIndex;
+        const isRight = selectedPos === answerPos;
         if (isRight) correctLevels.push(q.upToLevel);
         fb.replaceChildren(el('div', { class: isRight ? 'feedback correct' : 'feedback incorrect' },
           icon(isRight ? 'check' : 'x', 20), el('div', {}, q.explanation_km)));
-        options.querySelectorAll('.mc-option').forEach((b) => ((b as HTMLButtonElement).disabled = true));
+        // បង្ហាញចម្លើយត្រូវ/ខុសលើជម្រើស (ដូចលំហាត់ក្នុងមេរៀន) ដើម្បីឲ្យអ្នកសិក្សាយល់
+        options.querySelectorAll('.mc-option').forEach((b, j) => {
+          b.classList.remove('correct-answer', 'wrong-answer');
+          if (j === answerPos) b.classList.add('correct-answer');
+          else if (j === selectedPos) b.classList.add('wrong-answer');
+          (b as HTMLButtonElement).disabled = true;
+        });
         checkBtn.disabled = true;
         nextBtn.style.display = 'inline-flex';
       } }, icon('check', 18), 'ឆ្លើយ');
@@ -83,7 +95,7 @@ export function renderQuiz(host: HTMLElement): void {
       el('div', { style: 'display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem' },
         el('a', { class: 'btn btn-primary', href: `${basePath()}/levels/${level}` }, icon('play', 18), `ទៅកម្រិត ${level}`),
         el('a', { class: 'btn btn-secondary', href: `${basePath()}/levels` }, 'មើលកម្រិតទាំងអស់'),
-        el('button', { class: 'btn btn-ghost', onclick: () => { idx = 0; correctLevels.length = 0; renderQuestion(); } }, icon('refresh', 18), 'ធ្វើតេស្តឡើងវិញ'),
+        el('button', { class: 'btn btn-ghost', onclick: () => { idx = 0; correctLevels.length = 0; attemptSeed = `${Date.now()}`; renderQuestion(); } }, icon('refresh', 18), 'ធ្វើតេស្តឡើងវិញ'),
       )
     );
     if (unlocked.length) {

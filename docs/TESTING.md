@@ -13,8 +13,8 @@
 ## លទ្ធផលជាក់ស្តែង (រត់ក្នុង sandbox ឆ្នាំ ២០២៦-១០-២៧)
 
 ```
-Test Files  11 passed (11)
-     Tests  165 passed | 54 skipped (219)
+Test Files  13 passed (13)
+     Tests  189 passed | 54 skipped (243)
 ```
 
 - 54 skipped = តេស្ត compile C++ (គ្មាន g++ ក្នុង sandbox នោះ) — **រត់ពេញក្នុង CI** (ubuntu-latest មាន g++ 13)។
@@ -29,6 +29,8 @@ Test Files  11 passed (11)
 
 ### Curriculum (`tests/curriculum/`)
 - **validate.test.ts** (27 tests) — unique IDs, unit↔lesson consistency, status values, semver, prerequisite integrity (existing, published-only, no cycles), next chain, content quality (titles/explanation/objectives/summary lengths), exercise schema validity គ្រប់ប្រភេទ (answerIndex range, placeholder counts, permutations, errorLine range…), planned lessons មិនមានមាតិកាក្លែង
+- **shuffle.test.ts** — ភាពលំអៀងទីតាំងនៃជម្រើសចម្លើយ៖ ចែកចាយស្មើៗគ្នាក្រោយ shuffle · deterministic ក្នុងមួយ seed · មិនបាត់/មិនស្ទួនជម្រើស · មិនត្រឡប់ទៅលំដាប់ដើម · ករណី degenerate (0/1/2 ជម្រើស)
+- **placement-integrity.test.ts** — ភាពត្រឹមត្រូវនៃតេស្តចំណេះដឹង៖ កំណត់ត្រាភាពលំអៀងដើម (៨/៨ នៅទីតាំងទី ១) · shuffle ធ្វើឲ្យ «ចុចជម្រើសដំបូងជានិច្ច» ធ្លាក់មកកម្រិតចៃដន្យ · seed ខុសគ្នារវាងការធ្វើម្តងទៀត · `scoreToLevel` monotonic
 - **grading-guards.test.ts** — ការពារកំហុស grading មិនឲ្យត្រឡប់៖ រាល់ `acceptedAnswers` ដែលប្រកាសត្រូវតែ **ជាប់ពិត** តាម grader (បើអត់ លំហាត់មិនអាចឆ្លើយបាន) · ចម្លើយត្រឹមត្រូវដែលមានអក្សរលាក់/homoglyph ត្រូវតែជាប់ **ហើយ** មានការពន្យល់ · near-miss feedback សម្រាប់ចម្លើយខ្លី · template C++ គ្មានអក្សរខ្មែរក្រៅ comment (លើកលែង `prose: true`) · expectedOutput គ្មានបន្ទាត់ទទេខាងក្នុង/ចន្លោះចុងបន្ទាត់
 - **cpp-examples.test.ts** — ឧទាហរណ៍ published ទាំងអស់ដែលមាន expectedOutput ត្រូវ compile+run ដោយ g++ `-std=c++17 -Wall -Wextra -Werror` ហើយ stdout ត្រូវនឹង fixture ពិតប្រាកដ; code_challenge solutions ត្រូវឆ្លង test cases របស់វា
 

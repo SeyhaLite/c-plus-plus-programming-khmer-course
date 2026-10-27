@@ -9,6 +9,7 @@ import { openConsentDialog } from '../features/playground/consent';
 import { highlightedCode } from '../utils/highlight';
 import { pickPhrase, cheerCorrect, cheerRetry } from '../data/encouragement';
 import { startStatusTimer } from '../utils/status-timer';
+import { shuffleChoices, todaySeedPart } from '../utils/shuffle';
 
 // ============================================================
 // Exercise engine — លំហាត់អន្តរកម្ម + ការផ្តល់មតិភ្លាមៗ
@@ -150,8 +151,13 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
   switch (ex.type) {
     case 'multiple_choice': {
       const exmc = ex as MultipleChoiceExercise;
-      let selected = -1;
-      const optionBtns = exmc.options_km.map((text, i) => {
+      // ច្របល់លំដាប់ជម្រើស — មូលហេតុ៖ ៩២% នៃលំហាត់ទាំងអស់មានចម្លើយត្រឹមត្រូវ
+      // នៅទីតាំងទី ១ ដូច្នេះការចុចជម្រើសដំបូងជានិច្ចផ្តល់ពិន្ទុខ្ពស់ដោយមិនចេះ C++។
+      // seed = id លំហាត់ + ថ្ងៃ → លំដាប់ថេរក្នុងមួយថ្ងៃ (ងាយស្រួលពេលព្យាយាមម្តងទៀត)
+      // ប៉ុន្តែខុសគ្នារវាងលំហាត់ និងរវាងថ្ងៃ (ការចាំទីតាំងមិនអាចប្រើបាន)។
+      const { order, answerPos } = shuffleChoices(exmc.options_km.length, exmc.answerIndex, `${exmc.id}|${todaySeedPart()}`);
+      let selectedPos = -1;
+      const optionBtns = order.map((origIdx, pos) => {
         const b = el(
           'button',
           {
@@ -159,28 +165,39 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
             type: 'button',
             'aria-pressed': 'false',
             onclick: () => {
-              selected = i;
+              selectedPos = pos;
               optionBtns.forEach((ob, j) => {
-                ob.setAttribute('aria-pressed', String(j === i));
+                ob.setAttribute('aria-pressed', String(j === pos));
                 ob.classList.remove('correct-answer', 'wrong-answer');
               });
               playSound('click');
             },
           },
-          el('span', { class: 'key-hint' }, String(i + 1)),
-          el('span', {}, text)
+          el('span', { class: 'key-hint' }, String(pos + 1)),
+          el('span', {}, exmc.options_km[origIdx])
         );
         return b;
       });
-      body.append(el('div', { class: 'mc-options', role: 'group', 'aria-label': 'ជម្រើសចម្លើយ' }, ...optionBtns));
+      const mcBox = el('div', { class: 'mc-options', role: 'group', 'aria-label': 'ជម្រើសចម្លើយ' }, ...optionBtns);
+      // លេខ ១–៩ ដែលបង្ហាញក្នុង .key-hint ត្រូវតែដំណើរការពិត — មុនកែវាគ្រាន់តែជា decoration
+      mcBox.addEventListener('keydown', (ev) => {
+        const k = (ev as KeyboardEvent).key;
+        if (!/^[1-9]$/.test(k)) return;
+        const pos = Number(k) - 1;
+        if (pos >= optionBtns.length) return;
+        ev.preventDefault();
+        optionBtns[pos].click();
+        optionBtns[pos].focus();
+      });
+      body.append(mcBox);
       checkFn = () => {
-        if (selected < 0) { showFeedback('hint', 'សូមជ្រើសរើសចម្លើយមួយជាមុនសិន។'); return; }
+        if (selectedPos < 0) { showFeedback('hint', 'សូមជ្រើសរើសចម្លើយមួយជាមុនសិន។'); return; }
         optionBtns.forEach((b, j) => {
           b.classList.remove('correct-answer', 'wrong-answer');
-          if (j === exmc.answerIndex) b.classList.add('correct-answer');
-          else if (j === selected) b.classList.add('wrong-answer');
+          if (j === answerPos) b.classList.add('correct-answer');
+          else if (j === selectedPos) b.classList.add('wrong-answer');
         });
-        grade(selected === exmc.answerIndex);
+        grade(selectedPos === answerPos);
       };
       break;
     }

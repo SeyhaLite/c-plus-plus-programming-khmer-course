@@ -39,6 +39,19 @@ function ctx(results: boolean[] = []) {
 
 beforeEach(freshState);
 
+/**
+ * រកប៊ូតុងជម្រើស MC តាម **អត្ថបទ** មិនមែនតាមទីតាំង DOM ទេ —
+ * ចាំបាច់តាំងពីជម្រើសត្រូវបានច្របល់ (shuffleChoices) ដើម្បីកំចាត់ភាពលំអៀងទីតាំង។
+ */
+function optionByText(root: Element | Document, text: string): Element {
+  // អត្ថបទជម្រើសស្ថិតក្នុង <span> ទី ២ (span ទី ១ ជាលេខ key-hint)
+  const found = [...root.querySelectorAll('.mc-option')].find(
+    (b) => (b.querySelector('span:not(.key-hint)')?.textContent ?? '').trim() === text.trim()
+  );
+  if (!found) throw new Error(`MC option not found: ${JSON.stringify(text)}`);
+  return found;
+}
+
 describe('exercise engine: multiple_choice', () => {
   it('grades a correct answer, records XP, shows explanation', () => {
     const ex: Exercise = {
@@ -48,11 +61,12 @@ describe('exercise engine: multiple_choice', () => {
     const results: boolean[] = [];
     const { element } = renderExercise(ex, ctx(results));
     document.body.append(element);
-    const options = element.querySelectorAll('.mc-option');
-    click(options[0]);
+    // ចម្លើយត្រឹមត្រូវគឺ 'A' — រកតាមអត្ថបទ ព្រោះទីតាំងត្រូវបានច្របល់
+    click(optionByText(element, 'A'));
     click(element.querySelector('.check-btn')!);
     expect(element.classList.contains('correct')).toBe(true);
     expect(element.textContent).toContain('because A');
+    expect(optionByText(element, 'A').classList.contains('correct-answer')).toBe(true);
     expect(results).toEqual([true]);
     // XP recorded: first-try correct = 5
     const persisted = JSON.parse(localStorage.getItem(STORAGE_KEY) ?? '{}');
@@ -66,15 +80,66 @@ describe('exercise engine: multiple_choice', () => {
     };
     const { element } = renderExercise(ex, ctx());
     document.body.append(element);
-    click(element.querySelectorAll('.mc-option')[0]);
+    click(optionByText(element, 'A')); // ខុស (ចម្លើយត្រឹមត្រូវគឺ 'B')
     click(element.querySelector('.check-btn')!);
     expect(element.classList.contains('incorrect')).toBe(true);
+    expect(optionByText(element, 'A').classList.contains('wrong-answer')).toBe(true);
     expect(getState().reviewQueue.some((r) => r.exerciseId === 'mc2')).toBe(true);
     // retry correct → removed from review queue
-    click(element.querySelectorAll('.mc-option')[1]);
+    click(optionByText(element, 'B'));
     click(element.querySelector('.check-btn')!);
     expect(element.classList.contains('correct')).toBe(true);
     expect(getState().reviewQueue.some((r) => r.exerciseId === 'mc2')).toBe(false);
+  });
+
+  it('options are shuffled but grading follows the TEXT, not the position', () => {
+    // កំហុសចាស់៖ ៩២% នៃលំហាត់មានចម្លើយនៅទីតាំងទី ១ → ចុចជម្រើសដំបូងជានិច្ច = ៩២%។
+    const ex: Exercise = {
+      id: 'mc-shuffled', type: 'multiple_choice', prompt_km: 'Pick', options_km: ['W', 'X', 'Y', 'Z'],
+      answerIndex: 0, hints_km: [], explanation_km: 'W is right',
+    };
+    const positions = new Set<number>();
+    for (const seedDay of ['2026-10-27', '2026-10-28', '2026-11-1', '2027-3-9']) {
+      // render ជាមួយ seed ថ្ងៃផ្សេងគ្នា (mock ថ្ងៃ)
+      const RealDate = Date;
+      const [y, m, d] = seedDay.split('-').map(Number);
+      globalThis.Date = class extends RealDate {
+        constructor() { super(y, m - 1, d, 12, 0, 0); }
+      } as unknown as DateConstructor;
+      try {
+        const { element } = renderExercise(ex, ctx());
+        document.body.append(element);
+        const btns = [...element.querySelectorAll('.mc-option')];
+        positions.add(btns.findIndex((b) => (b.textContent ?? '').endsWith('W')));
+        // ចុចជម្រើសដែលបង្ហាញនៅទីតាំងទី ១ — grading ត្រូវតែតាម **អត្ថបទ** មិនមែនទីតាំង
+        click(btns[0]);
+        click(element.querySelector('.check-btn')!);
+        const wBtn = btns.find((b) => (b.textContent ?? '').endsWith('W'))!;
+        expect(wBtn.classList.contains('correct-answer')).toBe(true);
+        element.remove();
+      } finally {
+        globalThis.Date = RealDate;
+      }
+    }
+    // ចម្លើយត្រឹមត្រូវមិននៅទីតាំងដដែលរាល់ថ្ងៃទេ → ការចាំទីតាំងមិនអាចប្រើបាន
+    // (តេស្ត distribution ពេញលេញស្ថិតក្នុង tests/unit/shuffle.test.ts)
+    expect(positions.size).toBeGreaterThan(1);
+  });
+
+  it('number keys 1-4 select the matching option (the key-hint is now real)', () => {
+    const ex: Exercise = {
+      id: 'mc-keys', type: 'multiple_choice', prompt_km: 'Pick', options_km: ['W', 'X', 'Y', 'Z'],
+      answerIndex: 2, hints_km: [], explanation_km: 'Y is right',
+    };
+    const { element } = renderExercise(ex, ctx());
+    document.body.append(element);
+    const box = element.querySelector('.mc-options')!;
+    box.dispatchEvent(Object.assign(new Event('keydown', { bubbles: true }), { key: '3' }));
+    const btns = [...element.querySelectorAll('.mc-option')];
+    expect(btns[2].getAttribute('aria-pressed')).toBe('true');
+    click(element.querySelector('.check-btn')!);
+    // លេខ ៣ = ទីតាំងទី ៣ ដែលបង្ហាញ (មិនមែន index ២ នៃ options_km) → អាចត្រូវ ឬខុស
+    expect(element.classList.contains('correct') || element.classList.contains('incorrect')).toBe(true);
   });
 
   it('progressive hints reveal one at a time', () => {
@@ -247,7 +312,8 @@ describe('lesson completion flow', () => {
 
     function solveMc(root: Element, lessonData: Exercise): void {
       const mc = lessonData as Extract<Exercise, { type: 'multiple_choice' }>;
-      click(root.querySelectorAll('.mc-option')[mc.answerIndex]);
+      // ជម្រើសត្រូវបានច្របល់ → ជ្រើសតាមអត្ថបទនៃចម្លើយត្រឹមត្រូវ មិនមែនតាមសន្ទស្សន៍ទេ
+      click(optionByText(root, mc.options_km[mc.answerIndex]));
       click(root.querySelector('.check-btn')!);
     }
     function solveMatch(root: Element, lessonData: Exercise): void {
