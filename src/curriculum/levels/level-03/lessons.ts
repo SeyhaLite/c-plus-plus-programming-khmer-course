@@ -613,8 +613,12 @@ int main() {
         template: `if (age >= 12 {{0}} hasTicket) {
     std::cout << "ចូលបាន";
 }`,
-        acceptedAnswers: [['&&']],
-        hints_km: ['operator "និង" មានសញ្ញាពីរជាប់គ្នា។'],
+        // `and` ជា alternative token ផ្លូវការរបស់ C++ (ISO 646) — សមមូល ១០០% ជាមួយ &&
+        acceptedAnswers: [['&&', 'and']],
+        hints_km: [
+          'operator "និង" មានសញ្ញាពីរជាប់គ្នា។',
+          'ជម្រើសមួយទៀត៖ ពាក្យអង់គ្លេស ៣ អក្សរដែលមានន័យថា "និង"។',
+        ],
         explanation_km: '&& ទាមទារឲយលក្ខខណ្ឌទាំងសងខាងពិតទើប if ដំណើរការ។',
       },
       {

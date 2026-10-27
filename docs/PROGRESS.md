@@ -1,6 +1,6 @@
 # កំណត់ហេតុវឌ្ឍនភាព (PROGRESS / Development Log)
 
-ស្ថានភាពបច្ចុប្បន្ន៖ **v1.0.0 — បាន push ទៅ GitHub; CI ឆ្លងជោគជ័យ; រង់ចាំបើក GitHub Pages (មើលខាងក្រោម)** · តេស្ត ៩០ ឆ្លងក្នុង sandbox + CI រត់តេស្ត g++ ពេញលេញជោគជ័យ
+ស្ថានភាពបច្ចុប្បន្ន៖ **v1.0.0 — បាន push ទៅ GitHub; CI ឆ្លងជោគជ័យ; រង់ចាំបើក GitHub Pages (មើលខាងក្រោម)** · តេស្ត **១៦៥ ឆ្លង** ក្នុង sandbox (+៥៤ skip ព្រោះគ្មាន g++ ក្នុង sandbox — CI រត់ពេញ) · typecheck clean · build clean
 
 ## ស្ថានភាពដាក់ពង្រាយ (ផ្ទៀងផ្ទាត់ ២០២៦-១០-២៥)
 
@@ -33,7 +33,7 @@
 - `f33ba77` test: suites + C++ compiler validation + CI/CD workflows
 - (បន្ទាប់) docs: ឯកសារទាំង ១០ + README
 
-## ២០៦-១០-២៥ — Hotfix: CSS tokens បាត់ក្នុង production (post-deploy incident)
+## ២០២៦-១០-២៥ — Hotfix: CSS tokens បាត់ក្នុង production (post-deploy incident)
 
 - **រោគសញ្ញា** (របាយការណ៍អ្នកប្រើ + screenshot)៖ UI គ្មាន style — អក្សរ serif, hero អក្សរសសលើផ្ទៃស។
 - **មូលហេតុ**៖ `src/styles/tokens.css` ចាប់ផ្តើមដោយ `//` comments (មិនត្រឹមត្រូវក្នុង CSS)។ CSS parser ធ្វើ error recovery ហើយលេបយក rule `:root{...}` ទាំងមូល → រាល់ `var(--token)` មិនមានតម្លៃក្នុង browser។
@@ -41,27 +41,27 @@
 - **ការកែ**៖ បតូរ comments ទៅ `/* */`; បន្ថែម regression guards៖ `tests/unit/css-tokens.test.ts` (បដិសេធ `//` comments, braces/comments balanced, :root tokens) + `scripts/check-build-css.mjs` ភ្ជាប់ក្នុង `npm run build` (បរាជ័យបើ bundle បាត់ :root)។
 - **ផ្ទៀងផ្ទាត់**៖ Chromium ពិតលើ build ថ្មី — :root 51 declarations, body bg #f6f8fc, font Noto Sans Khmer, hero gradient, 0 console errors; screenshots ក្នុង reports/e2e-*.png។
 
-## ២០៦-០-៥ — Hotfix #2 + រូបភាពសិក្សា (តបតាមមតិអ្នកប្រើ)
+## ២០២៦-១០-២៥ — Hotfix #2 + រូបភាពសិក្សា (តបតាមមតិអ្នកប្រើ)
 
 - **Bug (របាយការណ៍អ្កប្រើ)**៖ កនុង dark theme ប៊ូតុងជម្រើសក្នុងទំព័រពិនិត្យចំណេះដឹងមានអក្សរខ្មៅលើផ្ទៃងងឹត។ មូលហេតុ៖ base rule របស់ `button` មិនបានកំណត់ `color` → browser ប្រើពណ៌លំនាំដើម (ខ្មៅ) លើផ្ទៃ dark។ កែ៖ `button { color: inherit }` + regression test ក្នុង css-tokens.test.ts។ ផ្ទៀងផ្ទាត់ដោយ Chromium៖ option button dark = អក្សរ #e8edf7 លើផ្ទៃ #1a2743។
-- **Feature (តាមសំណើ)**៖ បន្ថែម **ដ្យាក្រាម SVG ដើម** ក្នុងមេរៀន published ទាំង ១៣ (៤ ប្រភេទ៖ pipeline, boxes, ioflow, table) — រូបភាពសិក្សាដែលបង្កើតដោយកូដ គ្មានអាជ្ញាបណ្ណខាងក្រៅ ដំណើរការទាំង light/dark និង mobile (scroll ផ្ដេក)។ Schema ថ្មី `diagrams` ក្នុង Lesson + validation tests។
+- **Feature (តាមសំណើ)**៖ បន្ថែម **ដ្យាក្រាម SVG ដើម** ក្នុងមេរៀន published ទាំង ៣១ (៤ ប្រភេទ៖ pipeline, boxes, ioflow, table) — រូបភាពសិក្សាដែលបង្កើតដោយកូដ គ្មានអាជ្ញាបណ្ណខាងក្រៅ ដំណើរការទាំង light/dark និង mobile (scroll ផ្ដេក)។ Schema ថ្មី `diagrams` ក្នុង Lesson + validation tests។
 - បន្ថែមតំណ **វីដេអូ/ធនធានខាងក្រៅ** (freeCodeCamp full course, LearnCpp, cppreference, ការស្វែងរកវីដេអូខ្មែរ) ក្នុងទំព័រ បណ្ណាល័យ — សម្គាល់ច្បាស់ថាជាតំណខាងក្រៅ។
 - `scripts/visual-qa.mjs` — ស្ក្រីបថត screenshot light/dark សម្រាប់ QA។
 
-## ២០-០- — UX polish តបតាមមតិអ្នកប្រើ #3
+## ២០២៦-១០-២៦ — UX polish តបតាមមតិអ្នកប្រើ #3
 
 - **Run button feedback**៖ ពេលដំណើរការកូដ ឥឡូវមាន spinner ក្នុងប៊ូតុង + ក្នុងផ្ទាំងលទ្ធផល + តួលេខពេលវេលារស់ (0.1s ម្តង) ក្នុង status line; ប៊ូតុងទាំងអស់ freeze រហូតដល់លទ្ធផលមកដល់; លទ្ធផលបង្ហាញពេលវេលាពិត (ឧ. 5.6s)។ ប្រើ `utils/status-timer.ts`។
 - **Syntax highlighting ក្នុងមេរៀន**៖ tokenizer C++ ដើម (`utils/highlight.ts`, គ្មាន dependency) — ពណ៌ keyword/type/string/number/comment/preprocessor តាម light/dark tokens; អនុវត្តលើឧទាហរណ៍មេរៀន, ប្រអប់កំហុស, លំហាត់ predict/arrange/find-error/match។
 - **ពាក្យលើកទឹកចិត្ត ៦១** (`data/encouragement.ts`)៖ ៤ ក្រុម (ត្រូវ/ខុស/បញ្ចប់/ណែនាំ) — តារា និយាយឃ្លាផ្សេងៗរាល់លើក ក្នុង feedback លំហាត់, បង្ហាញមេរៀន, និងផ្ទាំងបញ្ចប់។
 - Tests ថ្មី៖ highlighter (XSS, block comments, division vs comment), phrase bank (≥50, unique, Khmer)។ សរុប 118 ឆ្លង។
 
-## ២-០- — Security upgrade + MIT + fill-blank UX (តបតាមមតិ #4)
+## ២០២៦-១០-២៦ — Security upgrade + MIT + fill-blank UX (តបតាមមតិ #4)
 
 - **Security/Dependabot**៖ upgrade ដោយផ្ទាល់ `vite 5→8.3.5` និង `vitest 2→5.0.5` (កំណែមាន patch សម្រាប់ vulnerabilities ដែល Dependabot ចង្អុល) + `@types/node` explicit។ Lockfile ថ្មី។ Dependabot PRs #3/#4/#5 ត្រូវបានបិទថា "superseded"។
 - **MIT License**៖ បន្ថែមឯកសារ LICENSE + field `license` ក្នុង package.json + ផ្នែកក្នុង README។
 - **Fill-in-the-blank UX** (អ្នកប្រើជាប់គាំង មិនដឹងវាយនៅឯណា)៖ បន្ថែមប្រអប់ណែនាំពណ៌ខៀវដាច់ៗពីលើ template, លេខរៀងគ្រប់ចន្លោះ, placeholder «ចម្លើយ N…», គែម dashed ខៀវច្បាស់ + focus ring។ Regression test បន្ថែម។
 
-## ២-០- — Fill-blank verifier upgrade (តបតាមមតិ #5)
+## ២០២៦-១០-២៦ — Fill-blank verifier upgrade (តបតាមមតិ #5)
 
 - មុន៖ ឆ្លើយខុស → សារទូទៅមួយ (អ្នកប្រើមិនដឹងថាខុសត្រង់ណា/ហេតុអ្វី)។
 - ឥឡូវ៖ (១) វិនិច្ឆ័យតាមចន្លោះ «ចន្លោះទី N: …» (២) រកឃើញកំហុសអក្សរតែមួយ (fuzzy close, Levenshtein ≤1) → ស្ថានភាពពណ៌ទឹកក្រូច «ស្ទើរតែត្រូវហើយ!» (៣) បរាជ័យលើកទី ២ → បង្ហាញគន្លឹះស្វ័យប្រវត្តិ (៤) បរាជ័យលើកទី ៣ → បង្ហាញចម្លើយត្រឹមត្រូវ ដើម្បីកុំឲយអ្នករៀនជាប់គាំង (នៅតែត្រូវវាដើម្បីជាប់)។
@@ -69,7 +69,52 @@
 
 ## ការងារបន្ទាប់ (អាទិភាព)
 
-1. សរសេរមាតិកាពិតកម្រិត ៣ (លក្ខខណ្ឌ) — ៦ មេរៀន តាមគោលការណ៍ [CONTENT_GUIDELINES.md](./CONTENT_GUIDELINES.md)
-2. Playwright e2e + cross-browser/mobile manual pass
-3. ពិនិត្យ Dependabot alerts ក្នុង GitHub settings
-4. សាកល្បងផលិតកម្មលើ URL GitHub Pages ជាក់ស្តែង (deep links, fonts, execution)
+1. សរសេរមាតិកាពិតកម្រិត ៦ (Collections និង Strings) — ៦ មេរៀន តាមគោលការណ៍ [CONTENT_GUIDELINES.md](./CONTENT_GUIDELINES.md)។ កម្រិត ០–៥ ចប់ហើយ (៣១ មេរៀន)។
+2. **បន្ថែម acceptedAnswers សម្រាប់លំហាត់ fill_blank នៅសល់** — គោលការណ៍៖ រាល់ចម្លើយដែលដំណើរការពិតក្នុង C++ ត្រូវតែជាប់។ មើល `tests/curriculum/grading-guards.test.ts`។
+3. Playwright e2e + cross-browser/mobile manual pass (ជាពិសេស keyboard ខ្មែរលើទូរស័ព្ទ — ប្រអប់ចន្លោះឥឡូវមាន `autocapitalize/autocorrect=off` ហើយ)
+4. ពិនិត្យ Dependabot alerts ក្នុង GitHub settings
+5. សាកល្បងផលិតកម្មលើ URL GitHub Pages ជាក់ស្តែង (deep links, fonts, execution)
+
+## ២០២៦-១០-២៧ — ការកែទាំងស្រុងនៃការវិនិច្ឆ័យ fill-in-the-blank (តបតាមមតិអ្នកប្រើ #6 — «វាយត្រូវហើយនៅតែមិនជាប់»)
+
+**រោគសញ្ញាដែលអ្នកសិក្សារាយការណ៍**៖ លំហាត់ «បំពេញកូដឲ្យបញ្ចេញ Hello, World!» បង្ហាញសារ «ស្ទើរតែត្រូវហើយ! ពិនិត្យអក្សរ/សញ្ញាម្តងទៀត (ប្រហែលខុសតែ ១ អក្សរ)» ប៉ុន្តែអ្នកសិក្សាមើលមិនឃើញអក្សរខុស ហើយទោះវាយ `std::cout` ត្រឹមត្រូវក៏នៅតែមិនជាប់។ លើកទី ៣ ប្រព័ន្ធបង្ហាញចម្លើយ ប៉ុន្តែនៅតែទាមទារឲ្យវាយចូល — ជាប់គាំង។
+
+**មូលហេតុពិត (ផ្ទៀងផ្ទាត់ដោយការសាកល្បង ២៥ ករណីលើ grader ពិត)**៖
+
+| # | កំហុស | ផលប៉ះពាល់ |
+| --- | --- | --- |
+| ១ | អក្សរលាក់ (ZWSP/BOM/bidi) និងអក្សរដូច ASCII (Cyrillic `о` `ѕ`, Greek, fullwidth `：`) បង្កើត Levenshtein = ១ | សារ «ខុសតែ ១ អក្សរ» ប៉ុន្តែអក្សរនោះ **មើលមិនឃើញ** → ជាប់គាំងជាអចិន្ត្រៃយ៍ |
+| ២ | `acceptedAnswers` មានតែមួយទម្រង់ | ចម្លើយត្រឹមត្រូវសមមូលត្រូវបានបដិសេធ៖ `cout`, `std:: cout`, `i+=1`, `i = i + 1`, `"\n"` (មានសញ្ញាសម្រង់), `and` (alternative token ផ្លូវការរបស់ C++) |
+| ៣ | `codeMatches` ប្រៀបធៀបដោយ **មិនខ្វល់ case** | `STD::COUT` ត្រូវបានចាត់ទុកថាត្រូវ — ប៉ុន្តែវា **មិន compile** ក្នុង C++។ បង្រៀនខុស។ (test ចាស់ថែមទាំង assert ថាត្រូវ!) |
+| ៤ | `fuzzyClose` មាន gate `length < 4` | ចម្លើយខ្លី (`%` `&&` `//` `&` `\n`) មិនទទួលបានមតិ «ជិតត្រូវ» ឬការណែនាំអ្វីសោះ |
+| ៥ | ប្រអប់ចន្លោះគ្មាន `autocapitalize`/`autocorrect`/`enterkeyhint`/`inputmode` ហើយ Enter មិន submit | keyboard ទូរស័ព្ទធ្វើឲ្យកូដខូចដោយស្វ័យប្រវត្តិ (`Std::cout`) — ហេតុផលចម្បងមួយដែលអ្នកសិក្សាខ្មែរជាប់គាំង |
+| ៦ | `normalizeForCompare` លុបបន្ទាត់ទទេចោលទាំងអស់ | `predict_output`៖ អ្នកសិក្សាដែលភ្លេចបន្ទាត់ទទេត្រូវបានចាត់ទុកថា **ត្រូវ** (false positive) |
+| ៧ | `lockInputs()` មានការច្រោះពីរជាន់ដែលបិទប៊ូតុង «ជំនួយ» ផង | ឆ្លើយត្រូវមួយលំហាត់ → បាត់សិទ្ធិមើលគន្លឹះសម្រាប់លំហាត់ក្រោយ |
+| ៨ | សារខូច «សូម**វាវ**ម្តងទៀត» | កំហុសអក្សរក្នុង UI |
+
+**ការកែ**៖
+
+- **`src/utils/grading.ts` (ថ្មី)** — ម៉ាស៊ីនវិនិច្ឆ័យដាច់ដោយឡែកពី DOM helpers។ យកគំរូតាមវេទិកាដែលបានសាកល្បងហើយ៖
+  - *Runestone `fillintheblank`*៖ ចម្លើយច្រើនទម្រង់ក្នុងមួយចន្លោះ + មតិជាក់លាក់សម្រាប់ចម្លើយខុសនីមួយៗ + ជម្រើស case-insensitive ដាច់ដោយឡែក (លំនាំដើម **case-sensitive** ព្រោះកូដពិត case-sensitive)។
+  - *Runestone «Compare me»*៖ `describeMismatch()` បង្ហាញភាពខុសគ្នា **តួអក្សរម្តងមួយៗ** ក្រោមប្រអប់ចន្លោះ — រួមទាំងឈ្មោះអក្សរលាក់ និង code point របស់អក្សរដូច ASCII។
+  - *freeCodeCamp curriculum-helpers*៖ normalize ច្រើនជាន់មុនប្រៀបធៀប (NFKC · អក្សរលាក់ · NBSP · homoglyph · សញ្ញាសម្រង់រុំ · ចន្លោះជុំវិញ operator)។
+  - *VS Code `unicode.highlight`*៖ តារាង confusables (Cyrillic/Greek/fullwidth/smart punctuation) ត្រូវបាន **រកឃើញ និងរាយការណ៍ដោយឈ្មោះ** មិនមែនគ្រាន់តែនិយាយ «ស្ទើរតែត្រូវ» ទេ។
+- ច្បាប់សំខាន់បំផុតដែលបានអនុវត្ត៖ **បើប្រព័ន្ធប្រាប់ថា «ខុសតែ ១ អក្សរ» ប្រព័ន្ធត្រូវតែអាចប្រាប់បានថាអក្សរណា។** បើមិនដូច្នោះទេ អ្នកសិក្សាជាប់គាំង។
+- near-miss threshold ឥឡូវ **មាត្រដ្ឋានតាមប្រវែងចម្លើយ** (≤3 → 1, ≤8 → 2, វែងជាង → ceil(n/4)) ជំនួស gate `length < 4`។
+- ប្រអប់ចន្លោះ៖ `autocapitalize="off"`, `autocorrect="off"`, `enterkeyhint="done"`, `inputmode="text"`, `dir="ltr"`, `lang="en"`, `maxlength`, Enter = submit, និងទទឹងស្វ័យប្រវត្តិតាមចំនួនអក្សរ (ចាស់៖ 130px ថេរ → អក្សរលើសក្រៅប្រអប់)។
+- មាតិកា៖ បន្ថែមទម្រង់សមមូលក្នុង `acceptedAnswers` (`cout`, `std:: cout`, `std::endl`, `i+=1`, `i = i + 1`, `and`, `រាយការណ៍`) + hints ថ្មី + field `prose` ក្នុង schema សម្រាប់ចន្លោះជាអត្ថបទខ្មែរ។
+- `outputsMatch` ឥឡូវ **រក្សាបន្ទាត់ទទេ** (កំហុស #៦)។
+- កែ `lockInputs()` (កំហុស #៧) និងសារ «សូម**វាយ**ម្តងទៀត» (កំហុស #៨)។
+
+**ការការពារកុំឲ្យកើតឡើងវិញ**៖ `tests/curriculum/grading-guards.test.ts` (ថ្មី) — រត់ក្នុង CI។ វាផ្ទៀងផ្ទាត់ថា៖
+- រាល់ `acceptedAnswers` ដែលបានប្រកាស **ត្រូវតែជាប់** តាម grader ពិត (បើមិនដូច្នោះទេ លំហាត់មិនអាចឆ្លើយបាន)។
+- អក្សរលាក់/homoglyph/fullwidth លើចម្លើយត្រឹមត្រូវ → ត្រូវតែជាប់ **ហើយ** ត្រូវតែមានការពន្យល់។
+- near-miss feedback មានសម្រាប់ចម្លើយ ១–៣ អក្សរ។
+- template កូដ C++ មិនមានអក្សរខ្មែរក្រៅ comment (លើកលែងតែសម្គាល់ `prose: true`)។
+- `expectedOutput` គ្មានបន្ទាត់ទទេខាងក្នុង ឬចន្លោះនៅចុងបន្ទាត់។
+
+**សំណល់ repo**៖ លុប folder `"\$ARENA_WORKSPACE"/shots/*.png` ដែលបាន commit ដោយចៃដន្យ (ឈ្មោះ folder ជា shell variable ដែលមិនបាន expand) + ពង្រីក `.gitignore`។
+
+**លទ្ធផល**៖ តេស្ត ១៦៥ ឆ្លង (ពី ១១៨) · typecheck clean · build clean · ការសាកល្បង ២៥ ករណីលើ grader ពិតឆ្លងទាំងអស់ (ពី ១៨/២៥)។
+
+**កំណត់ចំណាំដោយស្មោះត្រង់**៖ ការផ្ទៀងផ្ទាត់ឧទាហរណ៍ C++ ដោយ g++ (៥៤ tests) **មិនបានរត់ក្នុង sandbox នេះទេ** (គ្មាន g++) — វារត់តែក្នុង CI (ubuntu-latest) ប៉ុណ្ណោះ។

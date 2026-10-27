@@ -21,7 +21,7 @@ src/
     level-00/lessons.ts   # មេរៀនពិត (published)
     level-01/lessons.ts
     level-02/lessons.ts
-    planned-levels.ts     # កម្រិត ៣–១២ (metadata គ្រោង គ្មានមាតិកា)
+    planned-levels.ts     # កម្រិត ៦–១២ (metadata គ្រោង គ្មានមាតិកា)
   data/         # curriculum.ts (index + unlock logic), achievements.ts, placement-quiz.ts
   features/     # ទំព័រនីមួយៗ៖ dashboard, plan, curriculum(levels), lessons, quiz,
                 # playground, library, history, achievements, settings, help, bug-reports

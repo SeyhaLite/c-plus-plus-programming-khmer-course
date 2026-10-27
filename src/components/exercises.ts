@@ -1,7 +1,7 @@
 import type { Exercise, MultipleChoiceExercise, FillBlankExercise, PredictOutputExercise, ArrangeExercise, MatchExercise, CodeChallengeExercise } from '../types';
 import { el } from '../utils/dom';
 import { icon } from '../app/icons';
-import { outputsMatch, codeMatches, fuzzyClose } from '../utils/dom';
+import { gradeBlank, outputsMatch, describeMismatch, type BlankVerdict } from '../utils/grading';
 import { recordExerciseResult, getState } from '../services/progress';
 import { playSound } from '../services/audio';
 import { runTestCases, normalizeOutput } from '../services/code-execution';
@@ -36,6 +36,35 @@ export interface ExerciseHandle {
   isSolved: () => boolean;
 }
 
+/** កែទំហំប្រអប់ចន្លោះតាមអក្សរដែលបានវាយ (កុំឲ្យអក្សរលើស/កាត់)។ */
+function autosize(inp: HTMLInputElement): void {
+  const n = Math.max(6, Math.min(40, (inp.value.length || Number(inp.getAttribute('size')) || 14) + 2));
+  inp.style.width = `${n}ch`;
+}
+
+/**
+ * សារមតិជាក់លាក់សម្រាប់ចន្លោះមួយ — ប្រាប់អ្នកសិក្សាពី **មូលហេតុពិត**
+ * (អក្សរលាក់ · អក្សរដូច ASCII · case · សញ្ញាថែម) មិនមែនសារទូទៅទេ។
+ */
+function blankFeedback(i: number, v: BlankVerdict, accepted: string[]): string {
+  const label = `ចន្លោះទី ${i + 1}`;
+  if (v.normalized === '') return `${label}: មិនទាន់បានវាយទេ — ចុចប្រអប់ រួចវាយចម្លើយ (ឬចុច Enter)`;
+  const msgs: string[] = [];
+  for (const p of v.problems) {
+    if (p.kind === 'invisible') msgs.push(`មានអក្សរលាក់មើលមិនឃើញ ${p.chars.join(', ')} — លុបចោលទាំងអស់ រួចវាយឡើងវិញដោយផ្ទាល់`);
+    else if (p.kind === 'homoglyph') msgs.push(`អក្សរខ្លះមើលទៅដូចអង់គ្លេស ប៉ុន្តែមិនមែន៖ ${p.chars.join(', ')} — ប្តូរទៅ keyboard អង់គ្លេស រួចវាយឡើងវិញ`);
+    else if (p.kind === 'case') msgs.push(`C++ ខ្វល់ពីអក្សរតូច/ធំ — សរសេរ «${p.expected}» មិនមែន «${p.got}»`);
+  }
+  if (msgs.length === 0) {
+    msgs.push(
+      v.close
+        ? `«${v.normalized}» ខុសបន្តិច — មើលការប្រៀបធៀបតួអក្សរក្រោមប្រអប់`
+        : `«${v.normalized}» មិនត្រឹមត្រូវទេ (ចម្លើយត្រឹមត្រូវមាន ${accepted.length} ទម្រង់)`
+    );
+  }
+  return `${label}: ${msgs.join(' · ')}`;
+}
+
 export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHandle {
   let solved = false;
   let attempts = 0;
@@ -66,7 +95,7 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
       solved = true;
       root.classList.add('correct');
       root.classList.remove('incorrect');
-      showFeedback('correct', `${pickPhrase(cheerCorrect)} ${ex.explanation_km}`);
+      showFeedback('correct', `${pickPhrase(cheerCorrect)} ${ex.explanation_km}${detailKm ? `\n${detailKm}` : ''}`);
       playSound('correct');
       recordExerciseResult(ctx.lessonId, ex.id, true, attempts === 1);
       ctx.onResult(true);
@@ -81,8 +110,11 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
   }
 
   function lockInputs(): void {
-    root.querySelectorAll('button:not(.hint-btn)').forEach((b) => {
-      if (!b.classList.contains('check-btn') && !b.classList.contains('hint-btn')) (b as HTMLButtonElement).disabled = true;
+    // កំហុសចាស់៖ ការច្រោះពីរជាន់ខាងលើបានបិទប៊ូតុង «ជំនួយ» ផងដែរ
+    // (អ្នកសិក្សាឆ្លើយត្រូវមួយលំហាត់ រួចបាត់សិទ្ធិមើលគន្លឹះលំហាត់ក្រោយ)។
+    root.querySelectorAll('button').forEach((b) => {
+      if (b.classList.contains('hint-btn')) return;
+      (b as HTMLButtonElement).disabled = true;
     });
     root.querySelectorAll('input, textarea').forEach((i) => ((i as HTMLInputElement).disabled = true));
     root.querySelectorAll('.check-btn').forEach((b) => ((b as HTMLButtonElement).disabled = true));
@@ -155,63 +187,112 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
 
     case 'fill_blank': {
       const exf = ex as FillBlankExercise;
-      body.append(el('p', { class: 'help blank-help' }, 'វាយចម្លើយរបស់អ្នកចូលក្នុងប្រអប់ទទេ (មានលេខ និងគែមដាច់ៗពណ៌ខៀវ) នៅក្នុងកូដខាងក្រោម រួចចុច «ពិនិត្យចម្លើយ»។'));
+      body.append(
+        el(
+          'p',
+          { class: 'help blank-help' },
+          'វាយចម្លើយរបស់អ្នកចូលក្នុងប្រអប់ទទេ (មានលេខ និងគែមដាច់ៗពណ៌ខៀវ) នៅក្នុងកូដខាងក្រោម រួចចុច «ពិនិត្យចម្លើយ» ឬចុច Enter។ ' +
+            'កូដ C++ សរសេរដោយអក្សរតូច/ធំត្រឹមត្រូវ (STD::COUT មិនដំណើរការទេ)។ ' +
+            'បើអ្នកវាយត្រូវហើយនៅតែមិនជាប់ សូមមើលបន្ទាត់ «ប្រៀបធៀបតួអក្សរ» ក្រោមប្រអប់ — វាបង្ហាញភាពខុសគ្នាម្តងមួយៗ រួមទាំងអក្សរលាក់ដែលមើលមិនឃើញ។'
+        )
+      );
       const parts = exf.template.split(/(\{\{\d+\}\})/);
       const inputs: HTMLInputElement[] = [];
+      const comparePanels: HTMLElement[] = [];
       const frag = parts.map((p) => {
         const m = /^\{\{(\d+)\}\}$/.exec(p);
         if (!m) return document.createTextNode(p);
         const idx = Number(m[1]);
+        const panel = el('div', { class: 'blank-compare', role: 'status' });
+        panel.hidden = true;
         const inp = el('input', {
           class: 'blank-input',
           type: 'text',
           'aria-label': `ចន្លោះទំនេរទី ${idx + 1} — វាយចម្លើយរបស់អ្នក`,
           placeholder: `ចម្លើយ ${idx + 1}…`,
           autocomplete: 'off',
+          // ការពារ keyboard ទូរស័ព្ទ/IME ពីការបំផ្លាញកូដ៖
+          autocapitalize: 'off',
+          autocorrect: 'off',
+          enterkeyhint: 'done',
+          inputmode: 'text',
+          maxlength: '160',
+          size: '14',
+          dir: 'ltr',
+          lang: 'en',
           spellcheck: 'false',
-          oninput: () => inp.classList.remove('correct', 'incorrect'),
+          oninput: () => {
+            inp.classList.remove('correct', 'incorrect', 'close');
+            panel.hidden = true;
+            autosize(inp);
+          },
+          onkeydown: (ev: Event) => {
+            // Enter ដើម្បីពិនិត្យ (មិនចាំបាច់ចុចប៊ូតុង)
+            if ((ev as KeyboardEvent).key === 'Enter') {
+              ev.preventDefault();
+              void doCheck();
+            }
+          },
         }) as HTMLInputElement;
+        autosize(inp);
         inputs[idx] = inp;
-        return el('span', { class: 'blank-slot' }, el('span', { class: 'blank-num', 'aria-hidden': 'true' }, String(idx + 1)), inp);
+        comparePanels[idx] = panel;
+        return el('span', { class: 'blank-slot' }, el('span', { class: 'blank-num', 'aria-hidden': 'true' }, String(idx + 1)), inp, panel);
       });
       const template = el('div', { class: 'fill-template', dir: 'ltr' }, ...frag);
       body.append(template);
       let blankFails = 0;
+
       checkFn = () => {
         let allOk = true;
-        const wrong: { i: number; empty: boolean; close: boolean }[] = [];
+        let anyAutoFixed = false;
+        const wrong: { i: number; verdict: BlankVerdict }[] = [];
         inputs.forEach((inp, i) => {
-          const val = inp.value;
+          if (!inp) return; // សុវត្ថិភាព៖ បើ template ខុស (រន្ធដែលមិនមាន) កុំ crash
           const accepted = exf.acceptedAnswers[i] ?? [];
-          const ok = codeMatches(val, accepted);
-          const close = !ok && fuzzyClose(val, accepted);
-          inp.classList.toggle('correct', ok);
-          inp.classList.toggle('incorrect', !ok && val.length > 0 && !close);
-          inp.classList.toggle('close', close);
-          if (!ok) {
+          const verdict = gradeBlank(inp.value, accepted, { text: exf.prose });
+          if (verdict.autoFixed) anyAutoFixed = true;
+          inp.classList.toggle('correct', verdict.ok);
+          inp.classList.toggle('incorrect', !verdict.ok && !verdict.close && inp.value.trim().length > 0);
+          inp.classList.toggle('close', !verdict.ok && verdict.close);
+          const panel = comparePanels[i];
+          if (panel) {
+            const expected = accepted[0] ?? '';
+            const mismatch = verdict.ok ? '' : describeMismatch(verdict.normalized, expected);
+            panel.textContent = mismatch
+              ? `អ្នកវាយ «${verdict.normalized || '(ទទេ)'}» · ចម្លើយត្រឹមត្រូវ «${expected}» · ${mismatch}`
+              : '';
+            // បង្ហាញការប្រៀបធៀបភ្លាមៗ បើអ្នកសិក្សាខុសបន្តិចបន្តួច ឬមានអក្សរលាក់/ដូចគ្នា
+            panel.hidden = verdict.ok || !(verdict.close || verdict.problems.length > 0);
+          }
+          if (!verdict.ok) {
             allOk = false;
-            wrong.push({ i, empty: val.trim() === '', close });
+            wrong.push({ i, verdict });
           }
         });
         if (allOk) {
-          grade(true);
+          // បើចម្លើយមានអក្សរលាក់/អក្សរដូច ASCII ប្រាប់អ្នកសិក្សាឲ្យដឹង —
+          // កុំឲ្យគាត់យល់ច្រឡំថាការវាយបែបនេះត្រឹមត្រូវ។
+          grade(
+            true,
+            anyAutoFixed
+              ? 'ចំណាំ៖ ចម្លើយរបស់អ្នកមានអក្សរលាក់ ឬអក្សរដែលមើលទៅដូច ASCII ប៉ុន្តែមិនមែន — ប្រព័ន្ធបានអត់ឱន។ សូមប្រើ keyboard អង់គ្លេសពេលសរសេរកូដ។'
+              : undefined
+          );
           return;
         }
         blankFails += 1;
-        const parts = wrong.map((w) =>
-          w.empty
-            ? `ចន្លោះទី ${w.i + 1}: មិនទាន់បានវាយទេ — ចុចប្រអប់ ហើយវាយចម្លើយ`
-            : w.close
-              ? `ចន្លោះទី ${w.i + 1}: ស្ទើរតែត្រូវហើយ! ពិនិត្យអក្សរ/សញ្ញាម្តងទៀត (ប្រហែលខុសតែ ១ អក្សរ)`
-              : `ចន្លោះទី ${w.i + 1}: មិនទាន់ត្រឹមត្រូវទេ`
-        );
+        const detail = wrong.map(({ i, verdict }) => blankFeedback(i, verdict, exf.acceptedAnswers[i] ?? [])).join(' · ');
         let extra = '';
         if (blankFails >= 3) {
-          extra = ` ចម្លើយត្រឹមត្រូវ ${wrong.map((w) => `ចន្លោះទី ${w.i + 1} = ${exf.acceptedAnswers[w.i]?.[0] ?? '?'}`).join(', ')} — សូមវាវម្តងទៀតដើម្បីបញ្ចប់។`;
+          extra =
+            ' ចម្លើយត្រឹមត្រូវ៖ ' +
+            wrong.map(({ i }) => `ចន្លោះទី ${i + 1} = ${exf.acceptedAnswers[i]?.[0] ?? '?'}`).join(', ') +
+            ' — សូមចម្លងដាក់ ហើយចុច «ពិនិត្យចម្លើយ» ម្តងទៀតដើម្បីបញ្ចប់។';
         } else if (blankFails === 2 && ex.hints_km.length > 0) {
           extra = ` គន្លឹះ៖ ${ex.hints_km[0]}`;
         }
-        grade(false, parts.join(' · ') + extra);
+        grade(false, detail + extra);
       };
       break;
     }

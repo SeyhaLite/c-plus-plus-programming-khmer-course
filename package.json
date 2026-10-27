@@ -14,7 +14,8 @@
     "validate": "vitest run tests/curriculum",
     "report": "tsx scripts/build-report.ts",
     "check:cpp": "tsx scripts/check-cpp-examples.ts",
-    "test:visual": "node scripts/visual-qa.mjs"
+    "test:visual": "node scripts/visual-qa.mjs",
+    "test:e2e": "node scripts/e2e-smoke.mjs"
   },
   "devDependencies": {
     "@types/node": "^26.6.5",

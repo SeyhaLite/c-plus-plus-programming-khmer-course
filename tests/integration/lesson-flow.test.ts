@@ -119,7 +119,7 @@ describe('exercise engine: other types', () => {
     input.value = 'nope';
     click(element.querySelector('.check-btn')!);
     expect(element.classList.contains('incorrect')).toBe(true);
-    expect(element.textContent).toContain('ចន្លោះទី 1: មិនទាន់ត្រឹមត្រូវទេ');
+    expect(element.textContent).toContain('ចន្លោះទី 1: «nope» មិនត្រឹមត្រូវទេ');
     // 2nd wrong: auto-hint included
     input.value = 'xyz';
     click(element.querySelector('.check-btn')!);
@@ -128,11 +128,16 @@ describe('exercise engine: other types', () => {
     input.value = 'std::cont';
     click(element.querySelector('.check-btn')!);
     expect(input.classList.contains('close')).toBe(true);
-    expect(element.textContent).toContain('ស្ទើរតែត្រូវហើយ');
+    expect(element.textContent).toContain('ខុសបន្តិច');
+    // ការប្រៀបធៀបតួអក្សរ (Compare me) ត្រូវតែបង្ហាញ — អ្នកសិក្សាមិនត្រូវជាប់គាំង
+    expect(element.textContent).toContain('std::cout');
+    const compare = element.querySelector('.blank-compare') as HTMLElement;
+    expect(compare.hidden).toBe(false);
+    expect(compare.textContent).toContain('ទីតាំង 8');
     // 4th wrong: reveal accepted answer so learner is never stuck
     input.value = 'still-wrong';
     click(element.querySelector('.check-btn')!);
-    expect(element.textContent).toContain('ចម្លើយត្រឹមត្រូវ');
+    expect(element.textContent).toContain('ចម្លើយត្រឹមត្រូវ៖');
     expect(element.textContent).toContain('ចន្លោះទី 1 = std::cout');
     // typing the correct answer still required to pass
     input.value = 'std::cout';

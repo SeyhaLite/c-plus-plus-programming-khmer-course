@@ -1,6 +1,6 @@
 # របាយការណ៍ភាពពេញលេញនៃមាតិកា (Curriculum Completeness Report)
 
-> បង្កើតស្វ្យ័យប្រវត្តិដោយ `npm run report` — 2026-10-25T17:02:36.190Z
+> បង្កើតស្វ្យ័យប្រវត្តិដោយ `npm run report` — 2026-10-27T04:43:28.202Z
 > សូមកុំកែដោយដៃ; កែតាមរយៈ curriculum data ហើយរត់ script នេះឡើងវិញ។
 
 ## សង្ខេប (Summary)

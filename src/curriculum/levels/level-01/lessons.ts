@@ -99,10 +99,15 @@ int main() {
     {{0}} << "Hello, World!" << std::endl;
     return 0;
 }`,
-        acceptedAnswers: [['std::cout']],
-        hints_km: ['ឈ្មោះពេញរបស់ "cout" គឺ standard output ហើយវាស្ថិតក្នុង namespace ឈ្មោះ std។'],
+        // គ្រប់ទម្រង់ដែលដំណើរការពិតក្នុង C++ ត្រូវបានទទួលយក — ចម្លើយត្រឹមត្រូវ
+        // ដែលត្រូវបានបដិសេធគឺជាកំហុសធ្ងន់ធ្ងរបំផុតនៃលំហាត់បំពេញចន្លោះ។
+        acceptedAnswers: [['std::cout', 'cout', 'std:: cout', 'std::endl']],
+        hints_km: [
+          'ឈ្មោះពេញរបស់ "cout" គឺ standard output ហើយវាស្ថិតក្នុង namespace ឈ្មោះ std។',
+          'វាចាប់ផ្តើមដោយ std:: ហើយបញ្ចប់ដោយពាក្យ ៤ អក្សរដែលមានន័យថា "បញ្ចេញ"។',
+        ],
         explanation_km:
-          'std::cout ជាឧបករណ៍ស្តង់ដារសម្រាប់បញ្ចេញទិន្នន័យទៅអេក្រង់។ std:: ប្រាប់ថា cout ស្ថិតក្នុង namespace std។',
+          'std::cout ជាឧបករណ៍ស្តង់ដារសម្រាប់បញ្ចេញទិន្នន័យទៅអេក្រង់។ std:: ប្រាប់ថា cout ស្ថិតក្នុង namespace std។ អក្សរតូច/ធំសំខាន់ណាស់ — STD::COUT ឬ Std::cout នឹងបង្កើត compiler error។',
       },
       {
         id: 'l1-hello-world-ex3',
@@ -353,7 +358,10 @@ int main() {
     return 0;
 }`,
         acceptedAnswers: [['//']],
-        hints_km: ['សញ្ញា slash ពីរ។'],
+        hints_km: [
+          'សញ្ញា slash ពីរជាប់គ្នា (ទៅមុខ មិនមែនទៅក្រោយ)។',
+          'វាមិនមែន /* ទេ — នោះជា comment ច្រើនបន្ទាត់។',
+        ],
         explanation_km: '// បើក comment មួយបន្ទាត់។ អ្វីៗពីក្រោយវារហូតដល់ចុងបន្ទាត់ត្រូវបានរំលង។',
       },
     ],
@@ -456,7 +464,10 @@ int main() {
         prompt_km: 'បំពេញកូដឲ្យបញ្ចេញបន្ទាត់ពីរដោយប្រើ \\n តែមួយ statement៖',
         template: `std::cout << "Row 1{{0}}Row 2";`,
         acceptedAnswers: [['\\n']],
-        hints_km: ['អក្សរសម្រាប់ newline គឺ backslash តាមពីក្រោយដោយអក្សរ n។'],
+        hints_km: [
+          'អក្សរសម្រាប់ newline គឺ backslash តាមពីក្រោយដោយអក្សរ n។',
+          'Backslash គឺ \\ (ទៅក្រោយ) មិនមែន / (ទៅមុខ) ទេ។ កុំដាក់សញ្ញាសម្រង់ — template មានវាស្រាប់ហើយ។',
+        ],
         explanation_km: '\\n គឺជា escape sequence សម្រាប់ newline ដែលអាចដាក់ក្នុង string បាន។',
       },
       {

@@ -471,7 +471,9 @@ table { max-width: 100%; }
   border: 2px dashed var(--c-primary);
   background: var(--c-primary-soft); color: var(--c-text);
   border-radius: var(--r-sm);
-  padding: 4px 10px; min-width: 130px;
+  padding: 4px 10px; min-width: 9ch; max-width: 100%;
+  /* width កំណត់ដោយ JS (autosize) តាមចំនួនអក្សរ — កុំឲ្យអក្សរលើសក្រៅប្រអប់ */
+  width: 14ch;
   text-align: center;
 }
 .blank-input::placeholder { color: var(--c-text-muted); opacity: 0.8; }
@@ -485,3 +487,22 @@ table { max-width: 100%; }
   border-style: solid;
   background: var(--c-warning-soft);
 }
+
+/* "Compare me" — ការប្រៀបធៀបតួអក្សរម្តងមួយៗ (Runestone-style) */
+.blank-slot { flex-wrap: wrap; }
+.blank-compare {
+  flex: 1 1 100%;
+  margin-top: 4px;
+  padding: var(--sp-1) var(--sp-2);
+  border-inline-start: 3px solid var(--c-warning);
+  background: var(--c-warning-soft);
+  color: var(--c-text);
+  border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  text-align: start;
+  direction: ltr;
+  overflow-wrap: anywhere;
+}
+.blank-compare[hidden] { display: none; }

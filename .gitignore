@@ -4,3 +4,13 @@ coverage/
 *.local
 .DS_Store
 npm-debug.log*
+
+# សំណល់ពីឧបករណ៍/agent ក្នុងតំបន់ — កុំ commit
+.audit/
+audit/
+tmp/
+.tmp/
+*.png.tmp
+shots/
+"$ARENA_WORKSPACE"/
+.arena/

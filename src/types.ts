@@ -37,8 +37,18 @@ export interface FillBlankExercise extends ExerciseBase {
   type: 'fill_blank';
   /** កូដ ឬអត្ថបទដែលមាន {{0}} {{1}} សម្គាល់កន្លែងទំនេរ */
   template: string;
-  /** ចម្លើយដែលទទួលយក សម្រាប់ចន្លោះនីមួយៗ */
+  /**
+   * ចម្លើយដែលទទួលយក សម្រាប់ចន្លោះនីមួយៗ។
+   * សូមដាក់ **គ្រប់ទម្រង់ដែលត្រឹមត្រូវដូចគ្នា** (ឧ. `i+=1`, `i = i + 1`, `++i`) —
+   * ចម្លើយត្រឹមត្រូវដែលត្រូវបានបដិសេធគឺជាកំហុសធ្ងន់ធ្ងរបំផុតនៃលំហាត់បំពេញចន្លោះ។
+   */
   acceptedAnswers: string[][];
+  /**
+   * true = ចន្លោះនេះជា **អត្ថបទ/ពាក្យខ្មែរ** (មិនមែនកូដ)។
+   * ការវិនិច្ឆ័យនឹងអត់ឱនចំពោះ case និងទទួលយកពាក្យខ្លីដែលសំដៅចម្លើយដូចគ្នា។
+   * លំនាំដើម៖ ស្វ័យប្រវត្តិ (true បើចម្លើយមានអក្សរមិនមែន ASCII)។
+   */
+  prose?: boolean;
 }
 
 export interface PredictOutputExercise extends ExerciseBase {
@@ -74,7 +84,7 @@ export interface CodeChallengeExercise extends ExerciseBase {
   type: 'code_challenge';
   starterCode: string;
   solutionCode: string;
-  /** ករណីសាកល្បង — ដំណើរការតាម execution provider (Piston) បើមានការយល់ព្រម */
+  /** ករណីសាកល្បង — ដំណើរការតាម execution provider (Wandbox) បើមានការយល់ព្រម */
   testCases: { stdin: string; expectedOutput: string }[];
 }
 
@@ -216,7 +226,7 @@ export interface Settings {
   theme: 'light' | 'dark';
   sound: boolean;
   reducedMotion: boolean;
-  /** ការយល់ព្រមផ្ញើកូដទៅ Piston API សម្រាប់ដំណើរការកូដ */
+  /** ការយល់ព្រមផ្ញើកូដទៅ Wandbox API សម្រាប់ដំណើរការកូដ */
   executionConsent: boolean | null; // null = មិនទាន់សួរ
 }
 

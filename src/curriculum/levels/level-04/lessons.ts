@@ -99,7 +99,7 @@ int main() {
         template: `for (int i = 0; i < 10; {{0}}) {
     std::cout << i << " ";
 }`,
-        acceptedAnswers: [['++i', 'i++', 'i += 1', 'i=i+1']],
+        acceptedAnswers: [['++i', 'i++', 'i += 1', 'i+=1', 'i = i + 1', 'i=i+1']],
         hints_km: ['ផ្នែកទី ៣ បន្ថែម 1 ទៅ i បន្ទាប់ពីរាល់ដង។'],
         explanation_km: '++i (ឬ i++) បន្ថែម 1 ក្នុងមួយដង — បើភ្លេចវា រង្វិលនឹងមិនឈប់ទេ។',
       },
