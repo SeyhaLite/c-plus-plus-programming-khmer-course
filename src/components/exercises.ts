@@ -593,8 +593,8 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
             return;
           }
           const detail = results.map((r) =>
-            `Test ${r.index + 1}: ${r.passed ? '✓ ជាប់' : '✗ ធ្លាក់'}${r.passed ? '' : ` — រំពឹង «${normalizeOutput(r.expectedOutput)}» ទទួលបាន «${normalizeOutput(r.actualOutput)}»${r.stderr ? `\\nstderr: ${r.stderr.slice(0, 300)}` : ''}`}`
-          ).join('\\n');
+            `Test ${r.index + 1}: ${r.passed ? '✓ ជាប់' : '✗ ធ្លាក់'}${r.passed ? '' : ` — រំពឹង «${normalizeOutput(r.expectedOutput)}» ទទួលបាន «${normalizeOutput(r.actualOutput)}»${r.stderr ? `\nstderr: ${r.stderr.slice(0, 300)}` : ''}`}`
+          ).join('\n');
           statusLine.textContent = detail;
           const allPassed = results.length === exc.testCases.length && results.every((r) => r.passed);
           grade(allPassed);
