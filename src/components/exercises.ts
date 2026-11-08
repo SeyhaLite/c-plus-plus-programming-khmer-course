@@ -151,6 +151,7 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
   let attempts = 0;
   let hintsShown = 0;
   let feedbackEl: HTMLElement | null = null;
+  let challengeEditor: ChallengeEditorAdapter | null = null;
 
   const root = el('section', { class: 'exercise', 'aria-labelledby': `${ex.id}-prompt` });
 
@@ -191,6 +192,8 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
   }
 
   function lockInputs(): void {
+    // CodeMirror មិនមែន input/textarea ដើមទេ — ត្រូវបិទវាដាច់ដោយឡែកក្រោយឆ្លើយត្រូវ។
+    challengeEditor?.setEditable(false);
     // កំហុសចាស់៖ ការច្រោះពីរជាន់ខាងលើបានបិទប៊ូតុង «ជំនួយ» ផងដែរ
     // (អ្នកសិក្សាឆ្លើយត្រូវមួយលំហាត់ រួចបាត់សិទ្ធិមើលគន្លឹះលំហាត់ក្រោយ)។
     root.querySelectorAll('button').forEach((b) => {
@@ -549,6 +552,7 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
       editorHost.append(codeArea);
       const editorReady = mountChallengeEditor(editorHost, codeArea);
       void editorReady.then((editor) => {
+        challengeEditor = editor;
         if (solved) editor.setEditable(false);
       });
 
@@ -582,6 +586,7 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
         }
 
         const editor = await editorReady;
+        challengeEditor = editor;
         checkBtn.disabled = true;
         editor.setEditable(false);
         const timer = startStatusTimer(statusLine, 'កំពុង compile និងដំណើរការ test cases…');
