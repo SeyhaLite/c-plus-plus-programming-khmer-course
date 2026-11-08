@@ -65,7 +65,7 @@ async function mountChallengeEditor(
   };
 
   try {
-    const [{ basicSetup }, { cpp }, { EditorView, lineWrapping }, { EditorState }] = await Promise.all([
+    const [{ basicSetup }, { cpp }, { EditorView }, { EditorState }] = await Promise.all([
       import('codemirror'),
       import('@codemirror/lang-cpp'),
       import('@codemirror/view'),
@@ -77,7 +77,7 @@ async function mountChallengeEditor(
       extensions: [
         basicSetup,
         cpp(),
-        lineWrapping,
+        EditorView.lineWrapping,
         EditorView.contentAttributes.of({
           'aria-label': 'កូដ C++ របស់អ្នក',
           spellcheck: 'false',
