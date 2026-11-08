@@ -215,9 +215,9 @@ describe('exercise engine: other types', () => {
       id: 'cc-editor',
       type: 'code_challenge',
       prompt_km: 'Read an integer and print it.',
-      starterCode: '#include <iostream>\\nint main() {\\n    return 0;\\n}',
-      solutionCode: '#include <iostream>\\nint main() {\\n    int n;\\n    std::cin >> n;\\n    std::cout << n + 10 << std::endl;\\n    return 0;\\n}',
-      testCases: [{ stdin: '5\\n', expectedOutput: '15\\n' }],
+      starterCode: '#include <iostream>\nint main() {\n    return 0;\n}',
+      solutionCode: '#include <iostream>\nint main() {\n    int n;\n    std::cin >> n;\n    std::cout << n + 10 << std::endl;\n    return 0;\n}',
+      testCases: [{ stdin: '5\n', expectedOutput: '15\n' }],
       hints_km: ['Read the input first.'],
       explanation_km: 'Read, calculate, and print.',
     };
@@ -294,8 +294,8 @@ describe('std::cin lesson learning content', () => {
     const challenge = lesson.exercises.find(
       (exercise): exercise is Extract<Exercise, { type: 'code_challenge' }> => exercise.type === 'code_challenge'
     )!;
-    expect(challenge.testCases.map((testCase) => testCase.stdin)).toEqual(['5\\n', '-3\\n', '0\\n', '42\\n']);
-    expect(challenge.testCases.map((testCase) => testCase.expectedOutput)).toEqual(['15\\n', '7\\n', '10\\n', '52\\n']);
+    expect(challenge.testCases.map((testCase) => testCase.stdin)).toEqual(['5\n', '-3\n', '0\n', '42\n']);
+    expect(challenge.testCases.map((testCase) => testCase.expectedOutput)).toEqual(['15\n', '7\n', '10\n', '52\n']);
   });
 });
 
