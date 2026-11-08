@@ -168,6 +168,19 @@ int main() {
         expectedOutput: 'Hello, C++!\n',
       },
     ],
+    commonMistake: {
+      wrongCode: `int main() {
+    std::cout << "Hello";
+    return 0;
+}`,
+      rightCode: `#include <iostream>
+
+int main() {
+    std::cout << "Hello";
+    return 0;
+}`,
+      note_km: 'កំហុសទូទៅ៖ ភ្លេចបញ្ចូល header file ដែលប្រកាស std::cout។ Compiler អាចរាយការណ៍ថា cout មិនស្គាល់ ឬមិនបានប្រកាស។ ត្រូវពិនិត្យ header និងសារកំហុស មិនមែនសន្មតថា compiler កែបញ្ហាឲ្យយើងទេ។',
+    },
     diagrams: [
       {
         type: 'pipeline',

@@ -170,10 +170,10 @@ describe('curriculum: published lesson content quality', () => {
 describe('curriculum: exercise schema validity', () => {
   const allExercises: { lesson: Lesson; ex: Exercise }[] = published.flatMap((l) => l.exercises.map((ex) => ({ lesson: l, ex })));
 
-  it('multiple_choice: answerIndex in range, >= 2 distinct options', () => {
+  it('multiple_choice: answerIndex in range, >= 3 distinct options', () => {
     for (const { ex } of allExercises.filter((x) => x.ex.type === 'multiple_choice')) {
       const e = ex as Extract<Exercise, { type: 'multiple_choice' }>;
-      expect(e.options_km.length).toBeGreaterThanOrEqual(2);
+      expect(e.options_km.length).toBeGreaterThanOrEqual(3);
       expect(e.answerIndex).toBeGreaterThanOrEqual(0);
       expect(e.answerIndex).toBeLessThan(e.options_km.length);
       expect(new Set(e.options_km).size).toBe(e.options_km.length);
@@ -241,11 +241,24 @@ describe('curriculum: exercise schema validity', () => {
   });
 });
 
-describe('curriculum: diagram schema validity', () => {
-  const withDiagrams = published.filter((l) => (l.diagrams?.length ?? 0) > 0);
+describe('curriculum: common-mistake coverage', () => {
+  // The platform-orientation lesson is not a C++ concept lesson.
+  const ORIENTATION_LESSONS = ['l0-how-to-use'];
 
-  it('published lessons include learning diagrams', () => {
-    expect(withDiagrams.length).toBeGreaterThanOrEqual(10);
+  it('every published C++ lesson explains at least one common mistake', () => {
+    for (const l of published) {
+      if (ORIENTATION_LESSONS.includes(l.id)) continue;
+      expect(l.commonMistake, `${l.id} must explain a common mistake`).toBeTruthy();
+      expect(l.commonMistake?.note_km.trim().length ?? 0, `${l.id} common mistake explanation`).toBeGreaterThan(20);
+    }
+  });
+});
+
+describe('curriculum: diagram schema validity', () => {
+  it('every published lesson includes at least one learning diagram', () => {
+    for (const l of published) {
+      expect(l.diagrams?.length ?? 0, `${l.id} must include a learning diagram`).toBeGreaterThanOrEqual(1);
+    }
   });
 
   it('every diagram has a valid type, title, and non-empty payload', () => {
