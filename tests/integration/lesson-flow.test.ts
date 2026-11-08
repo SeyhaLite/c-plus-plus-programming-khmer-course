@@ -210,6 +210,33 @@ describe('exercise engine: other types', () => {
     expect(element.classList.contains('correct')).toBe(true);
   });
 
+  it('renders a guided syntax-highlighted code challenge editor without a false waiting state', async () => {
+    const ex: Exercise = {
+      id: 'cc-editor',
+      type: 'code_challenge',
+      prompt_km: 'Read an integer and print it.',
+      starterCode: '#include <iostream>\nint main() {\n    return 0;\n}',
+      solutionCode: '#include <iostream>\nint main() {\n    int n;\n    std::cin >> n;\n    std::cout << n + 10 << std::endl;\n    return 0;\n}',
+      testCases: [{ stdin: '5\n', expectedOutput: '15\n' }],
+      hints_km: ['Read the input first.'],
+      explanation_km: 'Read, calculate, and print.',
+    };
+    const { element } = renderExercise(ex, ctx());
+    document.body.append(element);
+    const editorHost = element.querySelector('.challenge-editor-host');
+    expect(editorHost).toBeTruthy();
+    expect(editorHost?.querySelector('textarea.editor-fallback')).toBeTruthy();
+    expect(element.textContent).toContain('របៀបធ្វើលំហាត់');
+    expect(element.textContent).toContain('stdin');
+    expect(element.textContent).toContain('ត្រៀមរួច');
+    expect(element.textContent).not.toContain('រង់ចាំការដំណើរការកូដ…');
+
+    // CodeMirror is loaded lazily. In environments that support it, it replaces
+    // the fallback textarea; otherwise the textarea remains fully usable.
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(editorHost?.querySelector('.cm-editor, textarea.editor-fallback')).toBeTruthy();
+  });
+
   it('find_error identifies the right line', () => {
     const ex: Exercise = {
       id: 'fe1', type: 'find_error', prompt_km: 'Find', code: 'a;\nb;\nc;',
@@ -252,6 +279,23 @@ describe('exercise engine: other types', () => {
     click(findBtn('ទីពីរ'));
     click(findBtn('second'));
     expect(element.classList.contains('correct')).toBe(true);
+  });
+});
+
+describe('std::cin lesson learning content', () => {
+  it('explains input in clear steps and includes positive, negative, and zero test cases', () => {
+    const lesson = getLesson('l1-cin-input')!;
+    expect(lesson.explanation_km).toContain('## ១. បង្កើតអថេរ');
+    expect(lesson.explanation_km).toContain('## ២. អានទិន្នន័យចូលអថេរ');
+    expect(lesson.explanation_km).toContain('## ៣. ប្រើតម្លៃ ហើយបញ្ចេញលទ្ធផល');
+    expect(lesson.explanation_km).toContain('5 + 10 = 15');
+    expect(lesson.explanation_km).toContain('Sok Dara');
+
+    const challenge = lesson.exercises.find(
+      (exercise): exercise is Extract<Exercise, { type: 'code_challenge' }> => exercise.type === 'code_challenge'
+    )!;
+    expect(challenge.testCases.map((testCase) => testCase.stdin)).toEqual(['5\n', '-3\n', '0\n', '42\n']);
+    expect(challenge.testCases.map((testCase) => testCase.expectedOutput)).toEqual(['15\n', '7\n', '10\n', '52\n']);
   });
 });
 

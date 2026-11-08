@@ -510,145 +510,123 @@ int main() {
     next: 'l1-cin-input',
   },
   {
-    id: 'l1-cin-input',
-    level_id: 1,
-    unit_id: 1,
-    title_km: 'ការទទួលទិន្នន័យដោយ std::cin',
-    title_en: 'Input with std::cin',
-    status: 'published',
-    version: '1.0.0',
-    estimated_minutes: 15,
-    prerequisites: ['l1-cout-output'],
-    objectives_km: [
-      'ប្រើ std::cin >> ដើម្បីអានទិន្នន័យពីអ្នកប្រើ',
-      'យល់ពីទិសដៅនៃ operator >> ធៀបនឹង <<',
-      'សរសេរកម្មវិធីដែលសួរ ហើយឆ្លើយតបទៅនឹងទិន្នន័យ',
+    "id": "l1-cin-input",
+    "level_id": 1,
+    "unit_id": 1,
+    "title_km": "ការទទួលទិន្នន័យដោយ std::cin",
+    "title_en": "Input with std::cin",
+    "status": "published",
+    "version": "1.0.0",
+    "estimated_minutes": 15,
+    "prerequisites": [
+      "l1-cout-output"
     ],
-    explanation_km: `\`std::cin\` (standard input) អានទិន្នន័យដែលអ្នកប្រើបញ្ចូល (ក្នុងគេហទំព័រនេះ អ្នកវាយក្នុងប្រអប់ Input ឬ test case)។
-
-Operator \`>>\` មានទិសដៅផ្ទុយពី \`<<\`៖
-- \`std::cout << x;\` — បញ្ចេញ x ទៅអេក្រង់
-- \`std::cin >> x;\` — អានទិន្នន័យ ហើយដាក់ចូលក្នុង x
-
-ដើម្បីអាន យើងត្រូវមាន **អថេរ (variable)** ដើម្បីទុកទិន្នន័យ។ ក្នុងមេរៀននេះ ចូរប្រើបែបសាមញ្ញបំផុត៖
-
-លក្ខណៈសំខាន់៖ \`>>\` អានតែ token មួយ ហើយឈប់នៅពេលជួបចន្លោះ។ ដូច្នេះ \`std::cin >> name;\` អានបានតែពាក្យដំបូង បើអ្នកវាយឈ្មោះពេញដូចជា \`Sok Dara\`។ បើចង់អានមួយបន្ទាត់ទាំងមូល ប្រើ \`std::getline(std::cin, name)\` (នឹងរៀនបន្ថែមពេលក្រោយ)។ វាក៏រំលងចន្លោះនៅខាងមុខផងដែរ។`,
-    examples: [
+    "objectives_km": [
+      "ប្រកាសអថេរប្រភេទ int ហើយអានចំនួនគត់ចូលអថេរដោយ std::cin >> បាន",
+      "ពន្យល់ទិសដៅរបស់ >> និងភាពខុសគ្នារវាង std::cin និង std::cout បាន",
+      "តាមដានតម្លៃ input → variable → calculation → output បាន",
+      "យល់ថា >> អាន token មួយ ហើយប្រើវាដើម្បីដោះស្រាយលំហាត់បាន"
+    ],
+    "explanation_km": "`std::cin` (standard input) គឺជាឧបករណ៍សម្រាប់ **ទទួលទិន្នន័យ** ពីអ្នកប្រើ។ យើងអាចស្រមៃថា ទិន្នន័យហូរពី keyboard ឬប្រអប់ Input ចូលក្នុងអថេរ។\n\n## ១. បង្កើតអថេរដើម្បីទុកទិន្នន័យ\n\nមុនអានលេខ យើងត្រូវប្រកាសអថេរជាមុន៖\n\n`int number;`\n\n`int` ប្រាប់ថា `number` ជាអថេរប្រភេទចំនួនគត់។ `number` គ្រាន់តែជាឈ្មោះដែលយើងដាក់ឲ្យកន្លែងផ្ទុកតម្លៃនេះ។\n\n## ២. អានទិន្នន័យចូលអថេរ\n\n`std::cin >> number;`\n\n- `std::cin` ទទួលទិន្នន័យពី input។\n- `>>` បញ្ជូនទិន្នន័យទៅខាងស្តាំ។\n- `number` ជាអថេរដែលទទួលតម្លៃ។\n\nបើអ្នកបញ្ចូល `5` នោះ `number` នឹងមានតម្លៃ `5`។ បន្ទាត់នេះ **មិនបញ្ចេញអ្វីទៅអេក្រង់ទេ** — វាគ្រាន់តែអាន និងរក្សាទុកតម្លៃប៉ុណ្ណោះ។\n\n## ៣. ប្រើតម្លៃ ហើយបញ្ចេញលទ្ធផល\n\nក្រោយអានរួច យើងអាចគណនា និងបញ្ចេញតម្លៃដោយ `std::cout`៖\n\n`std::cout << number + 10 << std::endl;`\n\nបើ `number` ស្មើ `5` នោះ `number + 10` គឺ `15`។ `std::cout` បញ្ចេញ `15` ទៅអេក្រង់ ហើយ `std::endl` ចុះបន្ទាត់ថ្មី។\n\n## តាមដានការដំណើរការម្តងមួយជំហាន\n\nបើ input គឺ `5`៖\n\n1. `int number;` — បង្កើតកន្លែងផ្ទុកចំនួនគត់។\n2. `std::cin >> number;` — អាន `5` ហើយដាក់ក្នុង `number`។\n3. `number + 10` — គណនា `5 + 10 = 15`។\n4. `std::cout` — បញ្ចេញ `15`។\n\nដូច្នេះ output គឺ `15`។\n\n## `>>` អានទិន្នន័យយ៉ាងដូចម្តេច?\n\n`>>` រំលងចន្លោះ (space, tab, newline) នៅខាងមុខ រួចអាន token បន្ទាប់។ ឧទាហរណ៍៖\n\n- បញ្ចូល `25` — អានបានចំនួនគត់ `25`។\n- បញ្ចូល `5 8` ហើយសរសេរ `std::cin >> a >> b;` — `a` ទទួល `5` និង `b` ទទួល `8`។\n- សម្រាប់ `std::string name; std::cin >> name;` បើបញ្ចូល `Sok Dara` វាអានតែ `Sok` ព្រោះឈប់នៅចន្លោះ។ ការអានមួយបន្ទាត់ពេញប្រើ `std::getline` ដែលយើងនឹងរៀនពេលក្រោយ។\n\nចំណាំ៖ ពេលអានទៅក្នុង `int` ត្រូវបញ្ចូលទម្រង់ចំនួនគត់ ដូចជា `-3`, `0`, `42`។ អក្សរដូចជា `abc` មិនមែនជាចំនួនគត់ទេ។\n\n## ចំណាំសម្រាប់លំហាត់សរសេរកូដ\n\nប្រព័ន្ធសាកល្បងផ្ញើ input តាម `stdin` ឲ្យកម្មវិធី ហើយប្រៀបធៀបអ្វីដែលកម្មវិធីបញ្ចេញតាម `stdout`។ ដូច្នេះ បើសំណួរទាមទារឲ្យបញ្ចេញតែលេខ `15` សូមកុំបន្ថែមសារ `Enter a number:` ទៅក្នុង output ព្រោះវាធ្វើឲ្យលទ្ធផលមិនត្រូវគ្នា។",
+    "examples": [
       {
-        title_km: 'អានឈ្មោះ ហើយស្វាគមន៍',
-        code: `#include <iostream>
-#include <string>
-
-int main() {
-    std::string name;
-    std::cout << "Enter your name: ";
-    std::cin >> name;
-    std::cout << "Hello, " << name << "!" << std::endl;
-    return 0;
-}`,
-        stdin: 'Dara\n',
-        expectedOutput: 'Enter your name: Hello, Dara!\n',
-        note_km:
-          'សំណួរ Enter your name: និងចម្លើយ Hello, Dara! បញ្ចេញតាមលំដាប់។ std::string ទុកអក្សរ (មិនមានចន្លោះ)។',
-      },
+        "title_km": "អានចំនួនគត់ ហើយបញ្ចេញតម្លៃនោះ",
+        "code": "#include <iostream>\n\nint main() {\n    int number;\n    std::cin >> number;\n    std::cout << number << std::endl;\n    return 0;\n}",
+        "stdin": "8\n",
+        "expectedOutput": "8\n",
+        "note_km": "Input គឺ 8។ std::cin ដាក់តម្លៃ 8 ក្នុង number រួច std::cout បញ្ចេញ 8។"
+      }
     ],
-    commonMistake: {
-      wrongCode: `int age;
-age << std::cin;   // ទិសខុស!`,
-      rightCode: `int age;
-std::cin >> age;   // ទិន្នន័យហូរចូល age`,
-      note_km:
-        'កំហុសទូទៅ៖ ច្រឡំទិស operator។ ចងចាំ៖ cin ប្រើ >> (ហូរចូលអថេរ) cout ប្រើ << (ហូរចេញទៅអេក្រង់)។',
+    "commonMistake": {
+      "wrongCode": "int age;\nage << std::cin;   // ទិសខុស!",
+      "rightCode": "int age;\nstd::cin >> age;   // អានទិន្នន័យចូល age",
+      "note_km": "កំហុសទូទៅគឺដាក់អថេរនៅខាងឆ្វេង។ សូមចងចាំ៖ std::cin >> age មានន័យថា ទទួលទិន្នន័យពី cin ហើយដាក់ក្នុង age។ ចំណែក std::cout << age គឺបញ្ចេញតម្លៃ age ចេញទៅអេក្រង់។"
     },
-    diagrams: [
+    "diagrams": [
       {
-        type: 'ioflow',
-        title_km: 'លំហូរទិន្នន័យ៖ stdin → អថេរ → stdout',
-        input: 'Dara',
-        variable: 'name',
-        output: 'Hello, Dara!',
-        note_km: 'std::cin >> name អាន token មួយ (ដល់ចន្លោះ) ទុកក្នុងអថេរ name។',
-      },
+        "type": "ioflow",
+        "title_km": "ពី input ទៅលទ្ធផល",
+        "input": "5",
+        "variable": "number = 5",
+        "output": "15",
+        "note_km": "អាន 5 ទុកក្នុង number រួចគណនា number + 10។"
+      }
     ],
-    exercises: [
+    "exercises": [
       {
-        id: 'l1-cin-input-ex1',
-        type: 'multiple_choice',
-        prompt_km: 'តើបន្ទាត់ណាអានលេខពីអ្នកប្រើ ហើយទុកក្នុងអថេរ score បានត្រឹមត្រូវ?',
-        options_km: ['std::cin >> score;', 'std::cout >> score;', 'std::cin << score;', 'score >> std::cin;'],
-        answerIndex: 0,
-        hints_km: ['cin គូជាមួយ >>។ ទិន្នន័យហូរពីអ្នកប្រើ ចូលទៅអថេរ។'],
-        explanation_km:
-          'std::cin >> score; អាន token មួយពី input ហើយទុកក្នុង score។ cout ប្រើ << ផ្ទុយទិសគ្នា។',
-      },
-      {
-        id: 'l1-cin-input-ex2',
-        type: 'predict_output',
-        prompt_km:
-          'បើអ្នកប្រើបញ្ចូលលេខ 7 តើលទ្ធផលជាអ្វី? (សន្មតថា input គឺ 7)',
-        code: `#include <iostream>
-
-int main() {
-    int n;
-    std::cin >> n;
-    std::cout << n * 2 << std::endl;
-    return 0;
-}`,
-        expectedOutput: '14\n',
-        hints_km: ['n ទទួលតម្លៃ 7 រួច cout បញ្ចេញ n * 2។'],
-        explanation_km: 'cin អាន 7 ទុកក្នុង n ហើយ cout បញ្ចេញ 7 * 2 = 14។',
-      },
-      {
-        id: 'l1-cin-input-ex3',
-        type: 'find_error',
-        prompt_km: 'កូដខាងក្រោមមានកំហុសទិស operator។ ចុចបន្ទាត់ដែលខុស៖',
-        code: `#include <iostream>
-#include <string>
-
-int main() {
-    std::string word;
-    word << std::cin;
-    std::cout << word << std::endl;
-    return 0;
-}`,
-        errorLine: 6,
-        fixedLine: '    std::cin >> word;',
-        hints_km: ['cin ត្រូវគូជាមួយ >> ហើយអថេរនៅខាងស្តាំ។'],
-        explanation_km:
-          'បន្ទាត់ 6 ប្រើទិសខុស (word << std::cin)។ ត្រឹមត្រូវគឺ std::cin >> word;។',
-      },
-      {
-        id: 'l1-cin-input-ex4',
-        type: 'code_challenge',
-        prompt_km:
-          'សរសេរកម្មវិធីដែលអានចំនួនគត់មួយពីអ្នកប្រើ ហើយបញ្ចេញផលបូករបស់វាជាមួយលេខ 10។ ឧ. បើបញ្ចូល 5 ត្រូវបញ្ចេញ 15។',
-        starterCode: `#include <iostream>
-
-int main() {
-    int n;
-    // អាន n រួចបញ្ចេញ n + 10
-
-    return 0;
-}`,
-        solutionCode: `#include <iostream>
-
-int main() {
-    int n;
-    std::cin >> n;
-    std::cout << n + 10 << std::endl;
-    return 0;
-}`,
-        testCases: [
-          { stdin: '5\n', expectedOutput: '15\n' },
-          { stdin: '-3\n', expectedOutput: '7\n' },
+        "id": "l1-cin-input-ex1",
+        "type": "multiple_choice",
+        "prompt_km": "តើបន្ទាត់ណាអានលេខពីអ្នកប្រើ ហើយទុកក្នុងអថេរ score បានត្រឹមត្រូវ?",
+        "options_km": [
+          "std::cin >> score;",
+          "std::cout >> score;",
+          "std::cin << score;",
+          "score >> std::cin;"
         ],
-        hints_km: ['ប្រើ std::cin >> n; ដើម្បីអាន។', 'បញ្ចេញដោយ std::cout << n + 10 << std::endl;'],
-        explanation_km:
-          'std::cin >> n; អានលេខ រួច std::cout << n + 10 << std::endl; បញ្ចេញផលបូក។ Test ទី ២ (-3 + 10 = 7) ពិនិត្យចំនួនអវិជ្ជមាន។',
+        "answerIndex": 0,
+        "hints_km": [
+          "cin ទទួលទិន្នន័យ ដូច្នេះអថេរដែលទទួលតម្លៃត្រូវនៅខាងស្តាំរបស់ operator។"
+        ],
+        "explanation_km": "std::cin >> score; អាន token មួយពី input ហើយរក្សាទុកក្នុង score។ std::cout ប្រើ << ដើម្បីបញ្ចេញទិន្នន័យទៅអេក្រង់។"
       },
+      {
+        "id": "l1-cin-input-ex2",
+        "type": "predict_output",
+        "prompt_km": "បើ input មានលេខពីរគឺ 7 និង 2 តើកម្មវិធីបញ្ចេញអ្វី?",
+        "code": "#include <iostream>\n\nint main() {\n    int a, b;\n    std::cin >> a >> b;\n    std::cout << a + b << std::endl;\n    return 0;\n}",
+        "expectedOutput": "9\n",
+        "hints_km": [
+          "std::cin អាចអានតម្លៃពីរបន្តគ្នា ដោយដាក់តម្លៃទីមួយក្នុង a និងទីពីរក្នុង b។",
+          "ក្រោយអានរួច សូមគណនា 7 + 2។"
+        ],
+        "explanation_km": "Input 7 2 ផ្តល់ a = 7 និង b = 2។ ដូច្នេះ a + b = 7 + 2 = 9។"
+      },
+      {
+        "id": "l1-cin-input-ex3",
+        "type": "find_error",
+        "prompt_km": "កូដខាងក្រោមមានកំហុសទិស operator។ ចុចបន្ទាត់ដែលខុស៖",
+        "code": "#include <iostream>\n\nint main() {\n    int number;\n    std::cin << number;\n    std::cout << number << std::endl;\n    return 0;\n}",
+        "errorLine": 5,
+        "fixedLine": "    std::cin >> number;",
+        "hints_km": [
+          "សម្រាប់ទទួល input ទៅក្នុងអថេរ ត្រូវប្រើ operator ដែលមានទិសទៅខាងស្តាំ។"
+        ],
+        "explanation_km": "std::cin << number; ប្រើ operator ខុស។ ការអានត្រូវសរសេរ std::cin >> number; ដើម្បីដាក់តម្លៃក្នុងអថេរ number។"
+      },
+      {
+        "id": "l1-cin-input-ex4",
+        "type": "code_challenge",
+        "prompt_km": "សរសេរកម្មវិធីដែលអានចំនួនគត់មួយពីអ្នកប្រើ ហើយបញ្ចេញផលបូករបស់វាជាមួយលេខ 10។\n\nInput: ចំនួនគត់មួយ n។\nOutput: n + 10 តែមួយបន្ទាត់។\nឧទាហរណ៍៖ បើ input គឺ 5 ត្រូវបញ្ចេញ 15។ ត្រូវគាំទ្រចំនួនអវិជ្ជមានផងដែរ។ កុំបញ្ចេញសារ ឬអត្ថបទបន្ថែមក្រៅពីចម្លើយ។",
+        "starterCode": "#include <iostream>\n\nint main() {\n    int n;\n    // ជំហាន ១៖ អានចំនួនគត់ចូល n\n    // ជំហាន ២៖ គណនា និងបញ្ចេញ n + 10\n\n    return 0;\n}",
+        "solutionCode": "#include <iostream>\n\nint main() {\n    int n;\n    std::cin >> n;\n    std::cout << n + 10 << std::endl;\n    return 0;\n}",
+        "testCases": [
+          {
+            "stdin": "5\n",
+            "expectedOutput": "15\n"
+          },
+          {
+            "stdin": "-3\n",
+            "expectedOutput": "7\n"
+          },
+          {
+            "stdin": "0\n",
+            "expectedOutput": "10\n"
+          },
+          {
+            "stdin": "42\n",
+            "expectedOutput": "52\n"
+          }
+        ],
+        "hints_km": [
+          "អថេរ n បានប្រកាសរួចហើយ។ ជំហានដំបូងគឺទទួល input ហើយរក្សាទុកក្នុង n។",
+          "បន្ទាប់ពីអានតម្លៃរួច គណនាផលបូករវាងតម្លៃ n និងចំនួន 10។",
+          "ប្រើ std::cout ដើម្បីបញ្ចេញតម្លៃដែលគណនាបានតែមួយបន្ទាត់ ហើយកុំបន្ថែមសារផ្សេងទៀត។"
+        ],
+        "explanation_km": "បំបែកជាបីផ្នែក៖ (១) std::cin អានចំនួនគត់ ហើយដាក់ក្នុង n។ (២) n + 10 គណនាផលបូក។ (៣) std::cout បញ្ចេញលទ្ធផល។ ឧទាហរណ៍ បើ n = 5 នោះ n + 10 = 15។ Test cases ក៏ពិនិត្យ -3 និង 0 ដើម្បីធានាថាកូដមិនដំណើរការតែចំពោះលេខវិជ្ជមានប៉ុណ្ណោះ។",
+        "required": true
+      }
     ],
-    summary_km:
-      'std::cin >> x អានទិន្នន័យចូលអថេរ x។ ចងចាំទិស៖ cin ប្រើ >> (ចូល) cout ប្រើ << (ចេញ)។ >> អានម្តងមួយ token។',
-    next: 'l2-variables',
+    "summary_km": "std::cin >> x អានទិន្នន័យចូលអថេរ x។ std::cin ប្រើ >> សម្រាប់ទទួល input ខណៈ std::cout ប្រើ << សម្រាប់បញ្ចេញ output។ >> រំលងចន្លោះខាងមុខ ហើយអាន token មួយៗ។",
+    "next": "l2-variables"
   },
 ];

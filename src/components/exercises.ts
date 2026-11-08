@@ -43,6 +43,86 @@ function autosize(inp: HTMLInputElement): void {
   inp.style.width = `${n}ch`;
 }
 
+interface ChallengeEditorAdapter {
+  getCode(): string;
+  setEditable(editable: boolean): void;
+}
+
+/**
+ * CodeMirror editor for lesson challenges. The textarea remains a safe fallback
+ * when a browser cannot load the editor chunks.
+ */
+async function mountChallengeEditor(
+  host: HTMLElement,
+  fallbackArea: HTMLTextAreaElement
+): Promise<ChallengeEditorAdapter> {
+  const fallback: ChallengeEditorAdapter = {
+    getCode: () => fallbackArea.value,
+    setEditable: (editable) => {
+      fallbackArea.disabled = !editable;
+      fallbackArea.setAttribute('aria-disabled', String(!editable));
+    },
+  };
+
+  try {
+    const [{ basicSetup }, { cpp }, { EditorView }, { EditorState }] = await Promise.all([
+      import('codemirror'),
+      import('@codemirror/lang-cpp'),
+      import('@codemirror/view'),
+      import('@codemirror/state'),
+    ]);
+    const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const state = EditorState.create({
+      doc: fallbackArea.value,
+      extensions: [
+        basicSetup,
+        cpp(),
+        EditorView.lineWrapping,
+        EditorView.contentAttributes.of({
+          'aria-label': 'កូដ C++ របស់អ្នក',
+          spellcheck: 'false',
+          autocapitalize: 'off',
+          autocorrect: 'off',
+          dir: 'ltr',
+        }),
+        EditorView.theme({
+          '&': {
+            backgroundColor: 'var(--c-surface)',
+            color: 'var(--c-text)',
+            minHeight: '240px',
+            fontSize: 'var(--fs-sm)',
+          },
+          '.cm-content': {
+            fontFamily: 'var(--font-mono)',
+            minHeight: '240px',
+            padding: 'var(--sp-3)',
+          },
+          '.cm-gutters': {
+            backgroundColor: 'var(--c-surface-2)',
+            color: 'var(--c-text-muted)',
+            border: 'none',
+            borderInlineEnd: '1px solid var(--c-border)',
+          },
+          '.cm-activeLine': { backgroundColor: 'var(--c-primary-soft)' },
+          '.cm-activeLineGutter': { backgroundColor: 'var(--c-primary-soft)' },
+          '&.cm-focused': { outline: 'none' },
+        }, { dark }),
+      ],
+    });
+    const view = new EditorView({ state, parent: host });
+    fallbackArea.remove();
+    return {
+      getCode: () => view.state.doc.toString(),
+      setEditable: (editable) => {
+        view.contentDOM.contentEditable = editable ? 'true' : 'false';
+        view.dom.setAttribute('aria-disabled', String(!editable));
+      },
+    };
+  } catch {
+    return fallback;
+  }
+}
+
 /**
  * សារមតិជាក់លាក់សម្រាប់ចន្លោះមួយ — ប្រាប់អ្នកសិក្សាពី **មូលហេតុពិត**
  * (អក្សរលាក់ · អក្សរដូច ASCII · case · សញ្ញាថែម) មិនមែនសារទូទៅទេ។
@@ -71,6 +151,7 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
   let attempts = 0;
   let hintsShown = 0;
   let feedbackEl: HTMLElement | null = null;
+  let challengeEditor: ChallengeEditorAdapter | null = null;
 
   const root = el('section', { class: 'exercise', 'aria-labelledby': `${ex.id}-prompt` });
 
@@ -111,6 +192,8 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
   }
 
   function lockInputs(): void {
+    // CodeMirror មិនមែន input/textarea ដើមទេ — ត្រូវបិទវាដាច់ដោយឡែកក្រោយឆ្លើយត្រូវ។
+    challengeEditor?.setEditable(false);
     // កំហុសចាស់៖ ការច្រោះពីរជាន់ខាងលើបានបិទប៊ូតុង «ជំនួយ» ផងដែរ
     // (អ្នកសិក្សាឆ្លើយត្រូវមួយលំហាត់ រួចបាត់សិទ្ធិមើលគន្លឹះលំហាត់ក្រោយ)។
     root.querySelectorAll('button').forEach((b) => {
@@ -454,19 +537,40 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
 
     case 'code_challenge': {
       const exc = ex as CodeChallengeExercise;
+      const editorHost = el('div', { class: 'challenge-editor-host' });
       const codeArea = el('textarea', {
         class: 'editor-fallback',
         spellcheck: 'false',
-        'aria-label': 'កូដរបស់អ្នក',
+        autocapitalize: 'off',
+        autocorrect: 'off',
+        autocomplete: 'off',
+        'aria-label': 'កូដ C++ របស់អ្នក',
         rows: '10',
         dir: 'ltr',
-        style: 'min-height:220px',
       }) as HTMLTextAreaElement;
       codeArea.value = exc.starterCode;
-      const statusLine = el('div', { class: 'status-line', role: 'status' }, 'រង់ចាំការដំណើរការកូដ…');
+      editorHost.append(codeArea);
+      const editorReady = mountChallengeEditor(editorHost, codeArea);
+      void editorReady.then((editor) => {
+        challengeEditor = editor;
+        if (solved) editor.setEditable(false);
+      });
+
+      const statusLine = el(
+        'div',
+        { class: 'status-line challenge-status', role: 'status' },
+        'ត្រៀមរួច — កូដមិនទាន់ត្រូវបានផ្ញើទេ។ ចុច «ពិនិត្យចម្លើយ» ដើម្បី compile និងសាកល្បង test cases។'
+      );
       body.append(
-        el('p', { class: 'help' }, `លំហាត់នេះដំណើរការកូដរបស់អ្នកតាមសេវាខាងក្រៅ (Wandbox, ${'g++ 13.2'}) ដើម្បីពិនិត្យ test cases។ ត្រូវមានការយល់ព្រមរបស់អ្នកជាមុន។`),
-        codeArea,
+        el(
+          'div',
+          { class: 'challenge-editor-guide' },
+          el('strong', {}, 'របៀបធ្វើលំហាត់'),
+          el('p', {}, 'សរសេរកម្មវិធីក្នុងប្រអប់កូដខាងក្រោម រួចចុច «ពិនិត្យចម្លើយ»។ ប្រព័ន្ធនឹង compile កូដ និងដំណើរការគ្រប់ test cases។'),
+          el('p', {}, 'Input ត្រូវបានផ្ញើតាម stdin។ សូមបញ្ចេញតែទម្រង់លទ្ធផលដែលសំណួរទាមទារ — កុំបន្ថែមសារ ឬអត្ថបទផ្សេងទៀត។'),
+          el('p', { class: 'help' }, 'សេវាដំណើរការកូដ៖ Wandbox · g++ 13.2 · C++17។ កូដនឹងត្រូវផ្ញើទៅសេវាខាងក្រៅ លុះត្រាតែអ្នកយល់ព្រមជាមុន។')
+        ),
+        editorHost,
         statusLine
       );
 
@@ -475,24 +579,38 @@ export function renderExercise(ex: Exercise, ctx: ExerciseContext): ExerciseHand
         if (!consent) {
           const granted = await openConsentDialog();
           if (!granted) {
-            showFeedback('hint', 'ដោយគ្មានការយល់ព្រម កូដមិនអាចផ្ញើទៅដំណើរការបានទេ។ អ្នកអាចបើកការយល់ព្រមក្នុងការកំណត់ ឬហាត់សរសេរកូដក្នុងទំព័រ "ហាត់សរសេរកូដ" ហើយត្រឡប់មកវិញ។ លំហាត់នេះត្រូវការការដំណើរការពិត ដូច្នេះមិនអាចឆ្លើយដោយការទាយបានទេ។');
+            showFeedback('hint', 'ដោយគ្មានការយល់ព្រម កូដមិនត្រូវបានផ្ញើទៅសេវាខាងក្រៅទេ។ អ្នកអាចបើកការយល់ព្រមក្នុងការកំណត់ រួចត្រឡប់មកសាកល្បងវិញ។');
+            statusLine.textContent = 'មិនទាន់ដំណើរការ — ការយល់ព្រមមិនទាន់បានផ្តល់។';
             return;
           }
         }
+
+        const editor = await editorReady;
+        challengeEditor = editor;
         checkBtn.disabled = true;
-        const timer = startStatusTimer(statusLine, 'កំពុង compile និងដំណើរការកូដ…');
-        const { results, error } = await runTestCases(codeArea.value, exc.testCases);
-        timer.stop();
-        checkBtn.disabled = false;
-        if (error) {
-          statusLine.textContent = error;
-          showFeedback('hint', error + ' សូមព្យាយាមម្តងទៀតពេលក្រោយ។ លទ្ធផលមិនត្រូវបានក្លែងឡើយទេ។');
-          return;
+        editor.setEditable(false);
+        const timer = startStatusTimer(statusLine, 'កំពុង compile និងដំណើរការ test cases…');
+        try {
+          const { results, error } = await runTestCases(editor.getCode(), exc.testCases);
+          if (error) {
+            statusLine.textContent = error;
+            showFeedback('hint', error + ' សូមពិនិត្យការភ្ជាប់ ឬសាកល្បងម្តងទៀត។ កូដមិនត្រូវបានវាយតម្លៃថាជាប់ទេ។');
+            return;
+          }
+          const detail = results.map((r) =>
+            `Test ${r.index + 1}: ${r.passed ? '✓ ជាប់' : '✗ ធ្លាក់'}${r.passed ? '' : ` — រំពឹង «${normalizeOutput(r.expectedOutput)}» ទទួលបាន «${normalizeOutput(r.actualOutput)}»${r.stderr ? `\nstderr: ${r.stderr.slice(0, 300)}` : ''}`}`
+          ).join('\n');
+          statusLine.textContent = detail;
+          const allPassed = results.length === exc.testCases.length && results.every((r) => r.passed);
+          grade(allPassed);
+        } catch {
+          statusLine.textContent = 'មិនអាចដំណើរការកូដបានទេ។ សូមពិនិត្យការភ្ជាប់អ៊ីនធឺណិត រួចព្យាយាមម្តងទៀត។';
+          showFeedback('hint', 'មានបញ្ហាក្នុងការផ្ញើ ឬទទួលលទ្ធផលពីសេវាដំណើរការកូដ។ កូដរបស់អ្នកមិនត្រូវបានចាត់ទុកថាជាប់ឡើយ។');
+        } finally {
+          timer.stop();
+          checkBtn.disabled = false;
+          if (!solved) editor.setEditable(true);
         }
-        const detail = results.map((r) => `Test ${r.index + 1}: ${r.passed ? '✓ ជាប់' : '✗ ធ្លាក់'}${r.passed ? '' : ` — រំពឹង «${normalizeOutput(r.expectedOutput)}» ទទួលបាន «${normalizeOutput(r.actualOutput)}»${r.stderr ? `\nstderr: ${r.stderr.slice(0, 300)}` : ''}`}`).join('\n');
-        statusLine.textContent = detail;
-        const allPassed = results.length === exc.testCases.length && results.every((r) => r.passed);
-        grade(allPassed);
       };
       break;
     }
