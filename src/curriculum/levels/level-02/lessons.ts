@@ -57,7 +57,7 @@ std::cout << score;   // ប្រើមុនផ្តល់តម្លៃ —
       rightCode: `int score = 0;      // ផ្តល់តម្លៃដំបូងជានិច្ច
 std::cout << score;`,
       note_km:
-        'អថេរដែលមិនទាន់ initialize មានតម្លៃ "កំធុកស" (garbage) ពី memory ចាស់។ តែងតែផ្តល់តម្លៃដំបូងពេលបង្កើត។',
+        'អថេរ local ដែលមិនទាន់ initialize មានតម្លៃមិនកំណត់ (indeterminate)។ ការអានតម្លៃនេះអាចបង្កើតឥរិយាបថមិនកំណត់ (undefined behavior) — មិនមែនជាលេខចៃដន្យដែលអាចទុកចិត្តបានទេ។ តែងតែផ្តល់តម្លៃដំបូង ឬកំណត់តម្លៃមុនប្រើ។',
     },
     diagrams: [
       {
@@ -114,7 +114,7 @@ int main() {
         id: 'l2-variables-ex4',
         type: 'code_challenge',
         prompt_km:
-          'សរសេរកម្មវិធី៖ បង្កើតអថេរ int ឈ្មោះ price មានតម្លៃ 500 និង const int TAX = 50 រួចបញ្ចេញផលបូក price + TAX។ បើបញ្ចូលគ្មាន លទ្ធផលត្រូវជា 550។',
+          'សរសេរកម្មវិធី៖ បង្កើតអថេរ int ឈ្មោះ price មានតម្លៃ 500 និង const int TAX = 50 រួចបញ្ចេញផលបូក price + TAX។ មិនចាំបាច់អានទិន្នន័យពីអ្នកប្រើទេ; លទ្ធផលត្រូវជា 550។',
         starterCode: `#include <iostream>
 
 int main() {
@@ -146,8 +146,8 @@ int main() {
     id: 'l2-data-types',
     level_id: 2,
     unit_id: 1,
-    title_km: 'ប្រភេទទិន្នន័យមូលដ្ឋាន (int, double, char, bool, string)',
-    title_en: 'Basic Data Types',
+    title_km: 'ប្រភេទទិន្នន័យទូទៅ និង std::string',
+    title_en: 'Common Data Types and std::string',
     status: 'published',
     version: '1.0.0',
     estimated_minutes: 20,
@@ -157,7 +157,7 @@ int main() {
       'ដឹងពីភាពខុសគ្នារវាង int និង double',
       'ប្រើ char, bool និង std::string',
     ],
-    explanation_km: `C++ មានប្រភេទទិន្នន័យមូលដ្ឋានសំខាន់ៗ៖
+    explanation_km: `C++ មានប្រភេទទិន្នន័យមូលដ្ឋាន (built-in types) និងប្រភេទពី library ដូចជា \`std::string\`៖
 
 - **int** — ចំនួនគត់ (គ្មានទសភាគ) ឧ. 42, -7, 0
 - **double** — ចំនួនទសភាគ (floating-point) ឧ. 3.14, -0.5

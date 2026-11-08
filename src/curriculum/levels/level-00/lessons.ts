@@ -20,7 +20,7 @@ export const level00Lessons: Lesson[] = [
       'ដឹងពីកន្លែងដែលគេប្រើ C++ ក្នុងពិភពពិត',
       'យល់ពីគោលគំនិត "កម្មវិធី (program)" និង "កូដប្រភព (source code)"',
     ],
-    explanation_km: `**C++** គឺជាភាសាកម្មវិធី (programming language) មួយដែលត្រូវបានបង្កើតឡើងដោយលោក Bjarne Stroustrup នៅឆ្នាំ 1979។ វាជាភាសាប្រភេទ *compiled language* មានន័យថា កូដដែលយើងសរសេរ ត្រូវបានកម្មវិធីមួយឈ្មោះ **compiler** បកប្រែទៅជាភាសាម៉ាស៊ីន (machine code) ដែលកុំព្យូទ័រអាចដំណើរការបាន។
+    explanation_km: `**C++** គឺជាភាសាកម្មវិធី (programming language) ដែលការអភិវឌ្ឍបានចាប់ផ្តើមដោយលោក Bjarne Stroustrup នៅឆ្នាំ 1979 ក្រោមឈ្មោះ **C with Classes**។ ឈ្មោះ **C++** ត្រូវបានប្រើនៅឆ្នាំ 1983។ វាជាភាសាប្រភេទ *compiled language* មានន័យថា កូដដែលយើងសរសេរ ត្រូវបានកម្មវិធីមួយឈ្មោះ **compiler** បកប្រែទៅជាភាសាម៉ាស៊ីន (machine code) ដែលកុំព្យូទ័រអាចដំណើរការបាន។
 
 C++ ត្រូវបានគេប្រើយ៉ាងទូលំទូលាយក្នុង៖
 - ហ្គេម (game engines ដូចជា Unreal Engine)
