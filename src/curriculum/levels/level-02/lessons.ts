@@ -390,10 +390,10 @@ int main() {
         id: 'l2-operators-ex2',
         type: 'multiple_choice',
         prompt_km: 'តើរបៀបណាពិនិត្យថាចំនួន n ជាលេខសេស?',
-        options_km: ['n % 2 == 1', 'n / 2 == 1', 'n % 2 == 0', 'n * 2 == 1'],
+        options_km: ['n % 2 != 0', 'n / 2 == 1', 'n % 2 == 0', 'n * 2 == 1'],
         answerIndex: 0,
         hints_km: ['លេខសេសចែក 2 ហើយមានសំណល់។'],
-        explanation_km: 'លេខសេសចែកនឹង 2 សល់ 1 ដូច្នេះ n % 2 == 1។ ចំណែក n % 2 == 0 ជាលក្ខខណ្ឌលេខគូ។',
+        explanation_km: 'ចំនួនគត់សេសទាំងវិជ្ជមាន និងអវិជ្ជមាន មានសំណល់មិនស្មើ 0 ពេលចែកនឹង 2។ ដូច្នេះ n % 2 != 0 គឺត្រឹមត្រូវទាំង 7 និង -7។ កុំប្រើ n % 2 == 1 ព្រោះ -7 % 2 មានតម្លៃ -1 ក្នុង C++។ ចំណែក n % 2 == 0 ប្រើសម្រាប់លេខគូ។',
       },
       {
         id: 'l2-operators-ex3',
@@ -429,6 +429,7 @@ int main() {
         testCases: [
           { stdin: '4\n', expectedOutput: '1\n' },
           { stdin: '7\n', expectedOutput: '0\n' },
+          { stdin: '-7\n', expectedOutput: '0\n' },
           { stdin: '0\n', expectedOutput: '1\n' },
         ],
         hints_km: ['n % 2 == 0 ជា bool — cout បញ្ចេញ bool ជា 1/0 ស្រាប់!'],
