@@ -1,13 +1,13 @@
 # កំណត់ហេតុវឌ្ឍនភាព (PROGRESS / Development Log)
 
-ស្ថានភាពបច្ចុប្បន្ន៖ **v1.0.0 — បាន push ទៅ GitHub; CI ឆ្លងជោគជ័យ; រង់ចាំបើក GitHub Pages (មើលខាងក្រោម)** · តេស្ត **១៦៥ ឆ្លង** ក្នុង sandbox (+៥៤ skip ព្រោះគ្មាន g++ ក្នុង sandbox — CI រត់ពេញ) · typecheck clean · build clean
+ស្ថានភាពបច្ចុប្បន្ន៖ **v1.0.0 — GitHub Pages បាន Deploy ជោគជ័យ (ផ្ទៀងផ្ទាត់ ២០២៦-១១-០៨)** · CI, typecheck, tests, C++ verification និង production build ឆ្លង · URL ផលិតកម្មដំណើរការ
 
-## ស្ថានភាពដាក់ពង្រាយ (ផ្ទៀងផ្ទាត់ ២០២៦-១០-២៥)
+## ស្ថានភាពដាក់ពង្រាយ (ផ្ទៀងផ្ទាត់ ២០២៦-១១-០៨)
 
-- Repository បានប្តូរទៅ **public** (តាមសំណើម្ចាស់គម្រោង) ក្រោយការស្កេនសម្ងាត់ពេញ git history — ស្អាត ០ លទ្ធផល។
-- CI run (attempt 2): **success** — typecheck, 110 tests (g++ compile tests រត់ពេញ), build។
-- Deploy run (attempt 2): ជំហាន ១–៨ success; **"Setup Pages" បរាជ័យព្រោះ GitHub Pages មិនទាន់បានបើក** (token គ្មាន Pages scope)។
-- ⚠️ ជំហានដែលម្ចាស់ repo ត្រូវធ្វើម្តង៖ **Settings → Pages → Source: GitHub Actions** រួច re-run workflow "Deploy to GitHub Pages" (ឬ push commit ថ្មី)។ URL នឹងជា `https://seyhalite.github.io/c-plus-plus-programming-khmer-course/`។
+- Repository នៅជា **public** ហើយ GitHub Pages ត្រូវបានបើកដោយកំណត់ **Settings → Pages → Source: GitHub Actions**។
+- Deploy workflow run #16, attempt 2 លើ commit `93da9057`: **SUCCESS** — typecheck, tests, g++ verification 83/83, build, artifact upload និង Pages deployment។
+- GitHub Actions បានរាយការណ៍ `Reported success!` និង environment URL ខាងក្រោម។
+- URL ផលិតកម្ម៖ `https://seyhalite.github.io/c-plus-plus-programming-khmer-course/`។
 
 ## ២០២៦-១០-២៥ — Milestones 0–12 (ការចាប់ផ្តើមគម្រោងពេញលេញ)
 
@@ -148,3 +148,11 @@
 **លទ្ធផល**៖ តេស្ត **១៨៩ ឆ្លង** (ពី ១៦៥ · ដើម ១១៨) · typecheck clean · build clean។
 
 **អ្វីដែលនៅសល់ដោយស្មោះត្រង់**៖ ជម្រើសខ្លី/វែងមិនស្មើគ្នានៅតែអាចជាបេក្ខភាពសម្រាប់ការទាយ (ឧ. `l1-hello-world-ex3` ចម្លើយត្រូវ ៦៩ តួ vs មធ្យមភាគ ៣៦)។ shuffle ដោះស្រាយភាពលំអៀង **ទីតាំង** ប៉ុន្តែមិនមែនភាពលំអៀង **ប្រវែង** ទេ — ត្រូវការសរសេរមាតិកាឡើងវិញដោយដៃ (៩ លំហាត់ បានរាយបញ្ជីក្នុង REVIEW)។
+
+
+## ២០២៦-១១-០៨ — កែលម្អការរៀន std::cin និង Code Challenge Editor
+
+- **មេរៀន `l1-cin-input`**៖ ពង្រីកការពន្យល់ជាជំហានៗ (ប្រកាសអថេរ → អាន input → គណនា → បញ្ចេញ output) ជាមួយការតាមដាន input `5` → output `15`, ពន្យល់ whitespace/token និងការអានច្រើនតម្លៃ។
+- **ឧទាហរណ៍ និងលំហាត់**៖ ប្តូរឧទាហរណ៍ទៅជាការអានចំនួនគត់; បន្ថែមការព្យាករណ៍លទ្ធផលសម្រាប់ input ពីរ; ពង្រីក code challenge `n + 10` ដោយបញ្ជាក់ input/output format និង test cases សម្រាប់ `5`, `-3`, `0`, `42`។
+- **Code challenge editor**៖ ប្រើ CodeMirror + C++ language support ដើម្បីបង្ហាញ syntax highlighting, line numbers និង editing experience ស្រដៀង playground; រក្សា textarea fallback ប្រសិនបើ CodeMirror មិនអាចផ្ទុកបាន។
+- **UX និងសុវត្ថិភាព**៖ បន្ថែមសេចក្តីណែនាំអំពី stdin/stdout និងការយល់ព្រមមុនផ្ញើកូដទៅ Wandbox; ប្តូរសារ status ដំបូងឲ្យបញ្ជាក់ថាត្រៀមរួច មិនមែនកំពុងរត់។ បន្ថែម regression tests សម្រាប់មាតិកា និង editor។
