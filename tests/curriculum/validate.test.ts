@@ -255,8 +255,6 @@ describe('curriculum: common-mistake coverage', () => {
 });
 
 describe('curriculum: diagram schema validity', () => {
-  const withDiagrams = published.filter((l) => (l.diagrams?.length ?? 0) > 0);
-
   it('every published lesson includes at least one learning diagram', () => {
     for (const l of published) {
       expect(l.diagrams?.length ?? 0, `${l.id} must include a learning diagram`).toBeGreaterThanOrEqual(1);
