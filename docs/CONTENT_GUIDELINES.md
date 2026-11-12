@@ -34,6 +34,7 @@
   - បើចន្លោះជា **អត្ថបទ/ពាក្យខ្មែរ** (មិនមែនកូដ) ត្រូវដាក់ `prose: true` — grader នឹងអត់ឱន case និងទទួលយកពាក្យខ្លីដែលសំដៅធាតុដូចគ្នា។
   - template កូដ C++ ត្រូវតែជា ASCII សុទ្ធ **ក្រៅពី comment**។ អក្សរខ្មែរក្នុងកូដ (ក្រៅ comment/string) នឹងមិន compile ទេ — CI មាន test ទប់ស្កាត់។
   - រាល់ចម្លើយក្នុង `acceptedAnswers` ត្រូវបាន CI សាកល្បងថា **ជាប់ពិត** (`tests/curriculum/grading-guards.test.ts`)។
+  - បើ `template` ជាកម្មវិធី C++ ពេញលេញ (មាន `#include` និង `int main()`), CI នឹង compile ចម្លើយនីមួយៗក្នុងបរិបទកូដពេញលេញផងដែរ (`tests/curriculum/cpp-examples.test.ts`)។ សម្រាប់ template ដែលជាបំណែកកូដ វានៅតែត្រូវបានពិនិត្យដោយ grading/schema guards ព្រោះមិនអាច compile ដាច់ដោយឡែកបាន។
 - code_challenge: ត្រូវមាន test cases ≥ ១ (ណែនាំ ២+ រួមទាំង edge case ឧ. ចំនួនអវិជ្ជមាន) និង `solutionCode` ដែល CI ផ្ទៀងផ្ទាត់។
 - hints ត្រូវបង្ហាញជាបណ្តើរៗ៖ ជំនួយទី ១ = ទិសដៅ ជំនួយចុង = ជិតចម្លើយ ប៉ុន្តែ **មិនដែលបង្ហាញចម្លើយពេញ** (CI មាន test ទប់ស្កាត់ hint ដែលមានចម្លើយវែង ≥ ៨ អក្សរនៅខាងក្នុង)។
 
