@@ -40,7 +40,7 @@ export function brandLogo(size = 36): HTMLElement {
   svg.setAttribute('width', String(size));
   svg.setAttribute('height', String(size));
   svg.setAttribute('role', 'img');
-  svg.setAttribute('aria-label', 'Khmer C++ Academy');
+  svg.setAttribute('aria-label', 'សាលា C++ ខ្មែរ');
   svg.classList.add('brand-logo');
   svg.innerHTML = `<rect width="64" height="64" rx="14" fill="#1e5eff"/><text x="32" y="42" font-family="Verdana, sans-serif" font-size="24" font-weight="bold" fill="#fff" text-anchor="middle">C++</text><rect x="12" y="50" width="40" height="4" rx="2" fill="#ffc800"/>`;
   const name = el('span', { class: 'brand-name' }, APP_NAME, el('small', {}, 'រៀន C++ ជាភាសាខ្មែរ'));

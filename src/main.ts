@@ -10,6 +10,7 @@ import '@fontsource/fira-code/400.css';
 import './styles/tokens.css';
 import './styles/base.css';
 import './styles/components.css';
+import './styles/learning-experience.css';
 
 import { route, setNotFound, startRouter } from './app/router';
 import { renderShell, goMain, highlightNav, showToast } from './app/layout';

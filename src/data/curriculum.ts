@@ -11,7 +11,7 @@ import { plannedLevels, plannedLessons } from '../curriculum/levels/planned-leve
 // Curriculum index — ប្រភពតែមួយសម្រាប់ទិន្នន័យកម្រិត និងមេរៀន
 // ============================================================
 
-export const APP_NAME = 'Khmer C++ Academy';
+export const APP_NAME = 'សាលា C++ ខ្មែរ';
 export const APP_VERSION = '1.1.0';
 export const CPP_STANDARD = 'C++17';
 
