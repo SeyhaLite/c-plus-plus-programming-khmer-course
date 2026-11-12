@@ -7,27 +7,27 @@ Design tokens — Khmer C++ Academy
 
 :root {
   /* Brand */
-  --c-primary: #1e5eff;
-  --c-primary-hover: #1749cc;
-  --c-primary-soft: #e3ecff;
-  --c-accent: #ffc800;
+  --c-primary: #147b68;
+  --c-primary-hover: #0e6254;
+  --c-primary-soft: #e0f3ed;
+  --c-accent: #e6ad3c;
 
   /* Semantic */
-  --c-success: #1a9e56;
+  --c-success: #16845c;
   --c-success-soft: #e0f5e9;
   --c-error: #d63636;
   --c-error-soft: #fdeaea;
   --c-warning: #b06f00;
   --c-warning-soft: #fdf3e0;
-  --c-info: #0e7490;
+  --c-info: #167d83;
 
   /* Surfaces */
-  --c-bg: #f6f8fc;
+  --c-bg: #f3f7f5;
   --c-surface: #ffffff;
-  --c-surface-2: #eef1f7;
-  --c-border: #d7dce6;
-  --c-text: #1b2434;
-  --c-text-muted: #51607a;
+  --c-surface-2: #edf3f0;
+  --c-border: #d5e2dc;
+  --c-text: #1c2d28;
+  --c-text-muted: #597168;
   --c-text-on-primary: #ffffff;
 
   /* Lesson status (មិនពឹងផ្អែកតែលើពណ៌ — មានសញ្ញា/អក្សរផង) */
@@ -77,29 +77,29 @@ Design tokens — Khmer C++ Academy
   --ease: cubic-bezier(0.4, 0, 0.2, 1);
 
   /* Focus */
-  --focus-ring: 0 0 0 3px rgba(30, 94, 255, 0.45);
+  --focus-ring: 0 0 0 3px rgba(20, 123, 104, 0.38);
 }
 
 [data-theme='dark'] {
-  --c-primary: #6d9bff;
-  --c-primary-hover: #8fb1ff;
-  --c-primary-soft: #1c2b4d;
-  --c-accent: #ffd84d;
+  --c-primary: #64d0ae;
+  --c-primary-hover: #83e0c2;
+  --c-primary-soft: #183a34;
+  --c-accent: #f0c36a;
 
-  --c-success: #4ade80;
+  --c-success: #62d6a1;
   --c-success-soft: #14331f;
   --c-error: #f87171;
   --c-error-soft: #3a1a1a;
-  --c-warning: #fbbf24;
+  --c-warning: #f2c46c;
   --c-warning-soft: #38290d;
 
-  --c-bg: #0f1522;
-  --c-surface: #171f30;
-  --c-surface-2: #1f2940;
-  --c-border: #2c3852;
-  --c-text: #e8edf7;
-  --c-text-muted: #9fadc7;
-  --c-text-on-primary: #0f1522;
+  --c-bg: #111b1a;
+  --c-surface: #182522;
+  --c-surface-2: #20322d;
+  --c-border: #344940;
+  --c-text: #e7f1ec;
+  --c-text-muted: #a6b9ae;
+  --c-text-on-primary: #102923;
 
   --c-status-locked: #5b6880;
   --c-status-planned: #6b6660;

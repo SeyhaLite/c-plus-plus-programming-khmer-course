@@ -91,7 +91,7 @@ export function renderHome(host: HTMLElement): void {
 
   // Snippets
   if (s.snippets.length > 0) {
-    const snipCard = el('div', { class: 'card' }, el('h2', { style: 'font-size:1.1rem' }, icon('save', 20), ' Snippets ដែលបានរក្សាទុក'));
+    const snipCard = el('div', { class: 'card' }, el('h2', { style: 'font-size:1.1rem' }, icon('save', 20), ' កូដដែលបានរក្សាទុក'));
     s.snippets.slice(0, 3).forEach((sn) => {
       snipCard.append(el('div', { style: 'display:flex;justify-content:space-between;gap:.5rem;padding:.25rem 0;font-size:.9rem' },
         el('span', {}, sn.title),
@@ -110,7 +110,7 @@ export function renderHome(host: HTMLElement): void {
       el('li', {}, el('span', {}, 'ស្ទ្រីកបច្ចុប្បន្ន'), el('strong', {}, `${s.streak.count} ថ្ងៃ`)),
       el('li', {}, el('span', {}, 'មេរៀនបានបញ្ចប់'), el('strong', {}, `${overall.done}/${overall.total} (${overall.percent}%)`)),
       el('li', {}, el('span', {}, 'សមិទ្ធផល'), el('strong', {}, `${s.achievements.length}/${achievements.length}`)),
-      el('li', {}, el('span', {}, 'មេរៀនដែលមានសរុប'), el('strong', {}, `${totalPublishedLessons()} published`)),
+      el('li', {}, el('span', {}, 'មេរៀនដែលមានសរុប'), el('strong', {}, `${totalPublishedLessons()} មេរៀន`)),
     )
   );
 

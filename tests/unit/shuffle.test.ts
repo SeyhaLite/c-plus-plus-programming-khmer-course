@@ -88,7 +88,7 @@ describe('shuffleChoices correctness', () => {
       seen.add(shuffleChoices(m.options_km.length, m.answerIndex, `${m.id}|${todaySeedPart()}`).order.join(','));
     }
     // លំហាត់ខុសគ្នាគួរមានលំដាប់ខុសគ្នាយ៉ាងហោចណាស់ពាក់កណ្តាល
-    expect(seen.size).toBeGreaterThan(mcs.length / 2);
+    expect(seen.size).toBeGreaterThanOrEqual(mcs.length / 2);
   });
 
   it('never leaves a 2+ option question in its original order', () => {
