@@ -4,7 +4,7 @@ import { existsSync, mkdtempSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { allLessons } from '../../src/data/curriculum';
-import type { CodeChallengeExercise } from '../../src/types';
+import type { CodeChallengeExercise, FillBlankExercise } from '../../src/types';
 
 // ============================================================
 // Real compiler validation — ផ្ទៀងផ្ទាត់ឧទាហរណ៍ C++ ដោយ g++ ពិត
@@ -54,7 +54,35 @@ function compileAndRun(code: string, stdin: string): CompileRunResult {
   }
 }
 
+function compileOnly(code: string): { compiled: boolean; stderr: string } {
+  const dir = mkdtempSync(join(tmpdir(), 'kca-fill-blank-'));
+  const src = join(dir, 'main.cpp');
+  const bin = join(dir, 'main.out');
+  writeFileSync(src, code, 'utf8');
+  try {
+    try {
+      execFileSync(GXX!, ['-std=c++17', '-Wall', '-Wextra', '-Werror', src, '-o', bin], {
+        timeout: 60_000,
+        encoding: 'utf8',
+        stdio: ['ignore', 'pipe', 'pipe'],
+      });
+      return { compiled: true, stderr: '' };
+    } catch (e) {
+      const err = e as { stderr?: string; stdout?: string };
+      return { compiled: false, stderr: String(err.stderr ?? err.stdout ?? e) };
+    }
+  } finally {
+    rmSync(dir, { recursive: true, force: true });
+  }
+}
+
 const published = allLessons.filter((l) => l.status === 'published');
+const fillBlankPrograms = published.flatMap((lesson) =>
+  lesson.exercises
+    .filter((ex): ex is FillBlankExercise => ex.type === 'fill_blank')
+    .filter((ex) => /#include\s*[<"]/.test(ex.template) && /\bint\s+main\s*\(/.test(ex.template))
+    .map((ex) => ({ lessonId: lesson.id, ex }))
+);
 
 describeG(`C++ examples compile and produce documented output (compiler: ${GXX})`, () => {
   for (const lesson of published) {
@@ -87,6 +115,24 @@ describeG('C++ code_challenge solutions pass their own test cases', () => {
         expect(r.exitCode, `runtime stderr:\n${r.stderr}`).toBe(0);
         expect(r.stdout.trimEnd()).toBe(tc.expectedOutput.trimEnd());
       }
+    });
+  }
+});
+
+describeG('C++ fill_blank: every accepted answer compiles in its complete program template', () => {
+  for (const { lessonId, ex } of fillBlankPrograms) {
+    ex.acceptedAnswers.forEach((variants, blankIndex) => {
+      variants.forEach((variant, variantIndex) => {
+        it(`${lessonId} :: ${ex.id} blank[${blankIndex}] answer[${variantIndex}] compiles`, () => {
+          // សាកល្បងចម្លើយមួយក្នុងមួយលើក ហើយប្រើចម្លើយ canonical សម្រាប់ចន្លោះផ្សេងៗ។
+          const code = ex.template.replace(/\{\{(\d+)\}\}/g, (_match, rawIndex: string) => {
+            const index = Number(rawIndex);
+            return index === blankIndex ? variant : (ex.acceptedAnswers[index]?.[0] ?? '');
+          });
+          const result = compileOnly(code);
+          expect(result.compiled, `compile stderr for ${ex.id}:\n${result.stderr}`).toBe(true);
+        });
+      });
     });
   }
 });
