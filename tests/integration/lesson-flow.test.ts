@@ -310,6 +310,16 @@ describe('lesson route behavior', () => {
     expect(host.textContent).toContain('Hello World');
     expect(host.querySelectorAll('.exercise').length).toBeGreaterThanOrEqual(3);
     expect(host.textContent).toContain('លទ្ធផលរំពឹងទុក');
+
+    // GDQuest-inspired course workspace: lesson path, guided content and progress.
+    expect(host.querySelector('.lesson-course-nav')).toBeTruthy();
+    expect(host.querySelector('.lesson-main-column')).toBeTruthy();
+    expect(host.querySelector('.lesson-side')).toBeTruthy();
+    expect(host.querySelector('.lesson-course-nav [aria-current="page"]')?.textContent).toContain('Hello World');
+    expect(host.textContent).toContain('អនុវត្ត និងពិនិត្យចម្លើយ');
+    const checkButtons = [...host.querySelectorAll('.check-btn')];
+    expect(checkButtons.length).toBeGreaterThan(0);
+    expect(checkButtons.every((button) => button.textContent?.includes('ពិនិត្យចម្លើយ'))).toBe(true);
   });
 
   it('shows an honest "planned" notice for unpublished lessons', () => {
