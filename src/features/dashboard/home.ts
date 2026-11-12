@@ -26,7 +26,7 @@ export function renderHome(host: HTMLElement): void {
   const hero = el('section', { class: 'hero' },
     el('div', { style: 'flex:1;min-width:260px' },
       el('h1', {}, 'សួស្តី! សូមស្វាគមន៍មកកាន់ Khmer C++ Academy'),
-      el('p', {}, 'រៀន C++ ពីមូលដ្ឋានដល់កម្រិតវិជ្ជាជីវៈ ជាភាសាខ្មែរ — មេរៀនតាមជំហាន លំហាត់អន្តរកម្ម និងកន្លែងសរសេរកូដពិតប្រាកដ។ ឥតគិតថ្លៃទាំងស្រុង។'),
+      el('p', {}, 'ចាប់ផ្តើមរៀន C++ ពីមូលដ្ឋានជាភាសាខ្មែរ — កម្រិត ០–៥ មានមេរៀនពេញលេញ។ កម្រិត ៦–១២ កំពុងរៀបចំ។ មានមេរៀនតាមជំហាន លំហាត់អន្តរកម្ម និងកន្លែងសរសេរកូដពិតប្រាកដ។ ឥតគិតថ្លៃទាំងស្រុង។'),
       el('div', { style: 'display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem' },
         recommended
           ? el('a', { class: 'btn', href: `${basePath()}/levels/${recommended.level_id}/lessons/${recommended.id}` }, icon('play', 18), recommended ? `បន្តរៀន៖ ${recommended.title_km}` : 'ចាប់ផ្តើម')

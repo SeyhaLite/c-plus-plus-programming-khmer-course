@@ -33,6 +33,7 @@ Test Files  13 passed (13)
 - **placement-integrity.test.ts** — ភាពត្រឹមត្រូវនៃតេស្តចំណេះដឹង៖ កំណត់ត្រាភាពលំអៀងដើម (៨/៨ នៅទីតាំងទី ១) · shuffle ធ្វើឲ្យ «ចុចជម្រើសដំបូងជានិច្ច» ធ្លាក់មកកម្រិតចៃដន្យ · seed ខុសគ្នារវាងការធ្វើម្តងទៀត · `scoreToLevel` monotonic
 - **grading-guards.test.ts** — ការពារកំហុស grading មិនឲ្យត្រឡប់៖ រាល់ `acceptedAnswers` ដែលប្រកាសត្រូវតែ **ជាប់ពិត** តាម grader (បើអត់ លំហាត់មិនអាចឆ្លើយបាន) · ចម្លើយត្រឹមត្រូវដែលមានអក្សរលាក់/homoglyph ត្រូវតែជាប់ **ហើយ** មានការពន្យល់ · near-miss feedback សម្រាប់ចម្លើយខ្លី · template C++ គ្មានអក្សរខ្មែរក្រៅ comment (លើកលែង `prose: true`) · expectedOutput គ្មានបន្ទាត់ទទេខាងក្នុង/ចន្លោះចុងបន្ទាត់
 - **cpp-examples.test.ts** — ឧទាហរណ៍ published ទាំងអស់ដែលមាន expectedOutput ត្រូវ compile+run ដោយ g++ `-std=c++17 -Wall -Wextra -Werror` ហើយ stdout ត្រូវនឹង fixture ពិតប្រាកដ; code_challenge solutions ត្រូវឆ្លង test cases របស់វា
+- **fill_blank compiler regression** — ចម្លើយ `acceptedAnswers` នីមួយៗសម្រាប់ template ដែលជាកម្មវិធី C++ ពេញលេញ (មាន `#include` និង `int main()`) ត្រូវ compile ដាច់ដោយឡែកក្នុងបរិបទ template ដោយ g++/clang++។ Template ដែលជាបំណែកកូដមិនត្រូវបាន compile ដាច់ដោយឡែកទេ។
 
 ### Integration (`tests/integration/`, happy-dom)
 - លំហាត់គ្រប់ប្រភេទ (លើកលែង code_challenge ដែលត្រូវការ network — មើលខាងក្រោម)៖ grade, retry, review queue add/remove, progressive hints, XP persistence

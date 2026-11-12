@@ -26,6 +26,9 @@ describe('app boot (main.ts entry)', () => {
     const main = app.querySelector('#main')!;
     expect(main.textContent).toContain('Khmer C++ Academy');
     expect(main.querySelector('.hero')).toBeTruthy();
+    expect(main.textContent).toContain('កម្រិត ០–៥ មានមេរៀនពេញលេញ');
+    expect(main.textContent).toContain('កម្រិត ៦–១២ កំពុងរៀបចំ');
+    expect(main.textContent).not.toContain('កម្រិតវិជ្ជាជីវៈ');
     // nav active state
     expect(app.querySelector('.main-nav a[aria-current="page"]')).toBeTruthy();
   });
