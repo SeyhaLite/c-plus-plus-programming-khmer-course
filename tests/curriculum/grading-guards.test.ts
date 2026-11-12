@@ -11,7 +11,7 @@ import type { Exercise, FillBlankExercise, Lesson, PredictOutputExercise } from 
 // ហើយទោះបីជាវាយចម្លើយត្រឹមត្រូវក៏នៅតែមិនជាប់។ មូលហេតុពិត៖
 //   ១. អក្សរលាក់ (ZWSP/BOM/bidi) និងអក្សរដូច ASCII (Cyrillic/Greek/fullwidth)
 //      បង្កើត Levenshtein = ១ ប៉ុន្តែមើលមិនឃើញ → ជាប់គាំងជាអចិន្ត្រៃយ៍។
-//   ២. ចម្លើយត្រឹមត្រូវដែលសមមូល (cout, i+=1, i = i + 1, "and") ត្រូវបានបដិសេធ
+//   ២. ចម្លើយត្រឹមត្រូវដែលសមមូល (std::cout, i+=1, i = i + 1, "and") ត្រូវបានបដិសេធ
 //      ព្រោះ acceptedAnswers មានតែមួយទម្រង់។
 //   ៣. STD::COUT (មិនដំណើរការក្នុង C++) ត្រូវបាន **ទទួលយក** ព្រោះ case-insensitive។
 //   ៤. fuzzyClose មាន gate `length < 4` → ចម្លើយខ្លី (%, &&, //, \n) គ្មានមតិអ្វីសោះ។
@@ -69,8 +69,12 @@ describe('fill_blank: no accepted answer is a single fragile form', () => {
     const hello = fillBlanks.find((x) => x.ex.id === 'l1-hello-world-ex2')?.ex as FillBlankExercise | undefined;
     if (hello) {
       const acc = hello.acceptedAnswers[0];
-      for (const typed of ['std::cout', 'cout', 'std:: cout', '  std::cout  ']) {
+      for (const typed of ['std::cout', 'std:: cout', '  std::cout  ']) {
         expect(gradeBlank(typed, acc, { text: hello.prose }).ok, `should accept ${JSON.stringify(typed)}`).toBe(true);
+      }
+      // cout តែមួយមិនមាន namespace std ក្នុង template នេះទេ ហើយ std::endl មិនមែន output stream ទេ។
+      for (const invalid of ['cout', 'std::endl']) {
+        expect(gradeBlank(invalid, acc, { text: hello.prose }).ok, `must reject invalid C++ answer ${JSON.stringify(invalid)}`).toBe(false);
       }
       // C++ ជាភាសា case-sensitive — ចម្លើយអក្សរធំមិនដំណើរការទេ ដូច្នេះមិនត្រូវទទួលយក
       expect(gradeBlank('STD::COUT', acc, { text: hello.prose }).ok).toBe(false);
