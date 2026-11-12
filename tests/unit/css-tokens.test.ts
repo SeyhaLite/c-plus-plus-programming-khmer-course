@@ -48,6 +48,12 @@ describe('css source hygiene', () => {
     expect(btnRule![1], 'button rule must set color (incident: black text on dark surfaces)').toContain('color:');
   });
 
+  it('mobile lesson navigation uses page scrolling instead of a nested 300px scroll box', () => {
+    const src = readFileSync(join(stylesDir, 'learning-experience.css'), 'utf8');
+    expect(src).toContain('.lesson-course-nav { position: static; max-height: none; overflow: visible; }');
+    expect(src).not.toContain('.lesson-course-nav { position: static; max-height: 300px; }');
+  });
+
   it('tokens.css defines the dark theme overrides', () => {
     const src = readFileSync(join(stylesDir, 'tokens.css'), 'utf8');
     expect(src).toMatch(/\[data-theme=['"]dark['"]\]\s*\{/);
