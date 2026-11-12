@@ -1,6 +1,6 @@
 import { el } from '../utils/dom';
 import { icon } from './icons';
-import { APP_NAME, APP_VERSION } from '../data/curriculum';
+import { APP_VERSION } from '../data/curriculum';
 import { getState } from '../services/progress';
 import { basePath, currentRoute, navigate } from './router';
 import { openBugReportDialog } from '../features/bug-reports/dialog';
