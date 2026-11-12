@@ -43,7 +43,7 @@ export function brandLogo(size = 36): HTMLElement {
   svg.setAttribute('aria-label', 'សាលា C++ ខ្មែរ');
   svg.classList.add('brand-logo');
   svg.innerHTML = `<rect width="64" height="64" rx="14" fill="#1e5eff"/><text x="32" y="42" font-family="Verdana, sans-serif" font-size="24" font-weight="bold" fill="#fff" text-anchor="middle">C++</text><rect x="12" y="50" width="40" height="4" rx="2" fill="#ffc800"/>`;
-  const name = el('span', { class: 'brand-name' }, APP_NAME, el('small', {}, 'រៀន C++ ជាភាសាខ្មែរ'));
+  const name = el('span', { class: 'brand-name' }, 'សាលា C++ ខ្មែរ', el('small', {}, 'រៀន C++ ជាភាសាខ្មែរ'));
   wrap.append(svg, name);
   return wrap;
 }
@@ -93,7 +93,7 @@ export function renderShell(): HTMLElement {
   const topbar = el(
     'header',
     { class: 'topbar' },
-    el('div', { class: 'topbar-inner' }, el('a', { href: `${basePath()}/`, class: 'brand-link', 'aria-label': `${APP_NAME} — ទំព័រដើម` }, brandLogo()), statsEl, menuBtn)
+    el('div', { class: 'topbar-inner' }, el('a', { href: `${basePath()}/`, class: 'brand-link', 'aria-label': 'សាលា C++ ខ្មែរ — ទំព័រដើម' }, brandLogo()), statsEl, menuBtn)
   );
 
   const nav = el(
@@ -113,7 +113,7 @@ export function renderShell(): HTMLElement {
   const footer = el(
     'footer',
     { class: 'footer' },
-    el('p', {}, `${APP_NAME} v${APP_VERSION} · ឥតគិតថ្លៃ · ទិន្នន័យរក្សាទុកក្នុង browser របស់អ្នក · ដំណើរការលើ GitHub Pages`),
+    el('p', {}, `សាលា C++ ខ្មែរ v${APP_VERSION} · ឥតគិតថ្លៃ · ទិន្នន័យរក្សាទុកក្នុង browser របស់អ្នក · ដំណើរការលើ GitHub Pages`),
     el(
       'p',
       {},

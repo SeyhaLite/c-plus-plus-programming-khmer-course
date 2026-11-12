@@ -151,7 +151,7 @@ export function renderLessonView(lesson: Lesson, host: HTMLElement): void {
         el('h3', {}, example.title_km),
         el('div', { class: 'code-block' }, pre, copyBtn),
         example.expectedOutput !== undefined
-          ? el('div', {}, el('div', { class: 'output-label' }, 'លទ្ធផលដែលគួរទទួលបាន' + (example.stdin ? ' · ទិន្នន័យបញ្ចូល៖ ' + JSON.stringify(example.stdin) : '')),
+          ? el('div', {}, el('div', { class: 'output-label' }, 'លទ្ធផលរំពឹងទុក' + (example.stdin ? ' · ទិន្នន័យបញ្ចូល៖ ' + JSON.stringify(example.stdin) : '')),
               el('div', { class: 'output-block', 'aria-label': 'លទ្ធផលដែលគួរទទួលបាន' }, example.expectedOutput.replace(/\n$/, '')))
           : el('p', { class: 'help lesson-example-note' }, 'ឧទាហរណ៍នេះជាពាក្យបញ្ជា terminal ដូច្នេះមិនមានលទ្ធផលកម្មវិធីទេ។'),
         example.note_km ? el('p', { class: 'lesson-example-note' }, el('strong', {}, 'ចំណាំ៖ '), example.note_km) : null
@@ -234,7 +234,8 @@ export function renderLessonView(lesson: Lesson, host: HTMLElement): void {
     panel.append(
       mascotBubble({ state: 'happy', text_km: pickPhrase(cheerComplete) }),
       el('span', { class: 'lesson-completion__eyebrow' }, 'មេរៀននេះបានបញ្ចប់'),
-      el('h2', { style: 'margin-top:.5rem' }, 'អបអរសាទរ! អ្នកធ្វើបានហើយ។'),
+      el('h2', { style: 'margin-top:.5rem' }, 'សង្ខេបមេរៀន'),
+      el('p', { class: 'lesson-completion__congrats' }, 'អបអរសាទរ! អ្នកធ្វើបានហើយ។'),
       el('p', {}, lesson.summary_km),
       el('div', { class: 'lesson-completion__score' },
         el('strong', {}, '+25 XP'),
