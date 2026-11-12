@@ -126,6 +126,12 @@
 .lesson-example-card { margin-bottom: .8rem; padding: clamp(.85rem, 2vw, 1.2rem); }
 .lesson-example-card h3 { font-size: 1rem; margin-bottom: .7rem; }
 .lesson-example-card pre { background: #14231f; color: #e3efe8; border-color: #29463b; padding: 1.1rem; border-radius: 12px; }
+.lesson-example-card pre .tok-kw { color: #8dbaff; }
+.lesson-example-card pre .tok-type { color: #ffc28d; }
+.lesson-example-card pre .tok-str { color: #9be2ae; }
+.lesson-example-card pre .tok-num { color: #ffd47e; }
+.lesson-example-card pre .tok-comment { color: #afc0b7; }
+.lesson-example-card pre .tok-pre { color: #d7b5ff; }
 .lesson-example-card .copy-btn { top: 8px; }
 .lesson-example-note { color: var(--c-text-muted); font-size: var(--fs-sm); margin-top: .5rem; }
 .lesson-mistake-card { padding: 1rem; }
